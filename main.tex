@@ -1,0 +1,200 @@
+% !TEX root = main_edited.tex
+
+\documentclass[modern]{lsstdescnote_customized}
+\usepackage{lsstdesc_macros}
+\usepackage{xcolor}
+\usepackage{soul}
+\newcommand{\themekey}[1]{\textbf{\textcolor{Ink}{#1}}}
+\newcommand{\themebullet}{\noindent\textcolor{ThemeBlue}{\textbf{·}}\hspace{4pt}}
+\definecolor{DESCred}{rgb}{0.63,0.00,0.20}
+\hypersetup{colorlinks=true,breaklinks=true,
+  citecolor=DESCred,filecolor=DESCred,linkcolor=DESCred,urlcolor=DESCred}
+  
+% ====== PREAMBLE SNIPPET ======
+% Dependencies
+\usepackage[dvipsnames,table]{xcolor}
+\usepackage[most]{tcolorbox}
+\tcbuselibrary{skins,breakable}
+
+\usepackage{booktabs}   % nicer horizontal rules
+\usepackage{tabularx}   % auto-width table with X columns
+\usepackage{array}      % extended column definitions
+\usepackage{ragged2e}   % better ragged-right in X columns
+
+\usepackage{hyperref}
+\usepackage[acronym]{glossaries}
+% \newglossary[mlg]{methods}{mls}{mln}{AI/ML Methods}
+% \newglossary[clg]{challenges}{cls}{cln}{Cross-cutting Challenges}
+\makenoidxglossaries
+\input{methods_and_challenges}
+
+% % Glossary wrappers
+% \newcommand{\meth}[1]{\gls{#1}}
+% \newcommand{\challenge}[1]{\gls{#1}}
+
+% Softer color palette
+\definecolor{ThemeBlue}{HTML}{2563EB}      % Modern blue
+\definecolor{AccentBlue}{HTML}{DBEAFE}     % Light blue background
+\definecolor{ThemeMint}{HTML}{10B981}      % Fresh green
+\definecolor{AccentMint}{HTML}{D1FAE5}     % Light green background
+\definecolor{DESCRed}{HTML}{a71437}
+\definecolor{ThemeRed}{HTML}{c24b60}
+\definecolor{Ink}{HTML}{1F2937}
+\colorlet{InkMuted}{black!60}
+
+\tcbset{
+  before skip=12pt, after skip=12pt,
+  boxsep=0pt, left=12pt, right=12pt, top=10pt, bottom=10pt,
+  breakable, enhanced,
+}
+
+% Option 1: Minimal left accent bar (clean and modern)
+\newtcolorbox{ThemeBoxA}[1][]{
+  colback=white,
+  colframe=ThemeRed,
+  boxrule=1pt,
+  leftrule=0pt,
+  borderline west={3pt}{0pt}{DESCRed},
+  fonttitle=\sffamily\bfseries, 
+  coltitle=DESCRed,
+  title={#1},
+  arc=2pt,
+}
+
+% ============================================
+% Collaboration Macros
+% ============================================
+
+% Toggle to show/hide section instructions
+% Set to 'true' to show instructions, 'false' to hide
+\newif\ifshowinstructions
+\showinstructionstrue  % Change to \showinstructionsfalse to hide
+
+% Section instructions macro
+\newcommand{\sectioninstr}[1]{%
+  \ifshowinstructions%
+    {\color{blue!70!black}\small\textit{Instructions: #1}}%
+  \fi%
+}
+
+% Section coordinator macro - shows who is responsible for the section
+\newcommand{\coordinator}[1]{%
+  \ifshowinstructions%
+    {\color{purple!70!black}\small\textbf{Coordinator: #1}}%
+  \fi%
+}
+
+% Author color macros - customize colors and names as needed
+\newcommand{\eiffl}[1]{\textcolor{red}{#1}}
+\newcommand{\authortwo}[1]{\textcolor{blue}{#1}}
+\newcommand{\authorthree}[1]{\textcolor{green!50!black}{#1}}
+\newcommand{\authorfour}[1]{\textcolor{purple}{#1}}
+\newcommand{\authorfive}[1]{\textcolor{orange!80!black}{#1}}
+
+\renewcommand{\sectionautorefname}{Section}
+\renewcommand{\subsectionautorefname}{Section}
+\renewcommand{\subsubsectionautorefname}{Section}
+
+% Comments and notes
+\newcommand{\todo}[1]{{\color{red}[TODO: #1]}}
+\newcommand{\note}[1]{{\color{orange!80!black}[NOTE: #1]}}
+\newcommand{\authornote}[2]{{\color{blue!70!black}\textbf{[#1: #2]}}}
+
+\shorttitle{AI/ML for DESC}
+\shortauthors{LSST~DESC}
+
+\begin{document}
+
+\title{Opportunities in AI/ML for the Rubin LSST\\Dark Energy Science Collaboration}
+\input{authors}
+
+
+\begin{abstract}
+\small
+The Vera C. Rubin Observatory's Legacy Survey of Space and Time (LSST) will produce unprecedented volumes of heterogeneous astronomical data, including images, catalogs, and alerts, that challenge traditional analysis pipelines. The mission of the LSST Dark Energy Science Collaboration (DESC) is to convert these data into robust constraints on the dark sector, which requires methods that are statistically powerful, scalable, and operationally reliable. Recent advances in Machine Learning (ML) (data-driven models learning mappings) and Artificial Intelligence (AI) (Large Language Models and agentic systems that orchestrate code and complex analyses) show great promise. However, their scientific utility for precision cosmology hinges on trustworthy uncertainty quantification and reproducible integration within DESC workflows. Without these elements, these methods cannot meet the stringent requirements for cosmological inference. This white paper surveys current capabilities and future opportunities for AI/ML across DESC and outlines the methodological and infrastructure requirements for their successful, reliable deployment. We review the intersection of AI/ML with key DESC science analyses, and detail the methodological research in ML motivated by DESC's needs, focusing on Bayesian inference, uncertainty quantification, physics-informed approaches, and novelty detection. With an eye on emerging techniques we also explore specifically the potential of the latest Foundation Model methodologies and agentic AI systems. Finally, we discuss critical infrastructure requirements for software, computing, and data necessary to the successful deployment of these new methodologies, and consider associated risks as well as opportunities for broader coordination with external actors.
+\end{abstract}
+
+\maketitle
+
+%  just temporary command for table of content to have a general view/idea of the current structure of the paper (sections and subsections) as it develops.
+% Make TOC more compact
+{
+\setlength{\parskip}{0pt}
+\makeatletter
+\renewcommand{\l@section}[2]{%
+  \ifnum \c@tocdepth >\z@
+    \addpenalty\@secpenalty
+    \addvspace{2pt plus 1pt}%
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode \bfseries
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+    \endgroup
+  \fi}
+\renewcommand{\l@subsection}[2]{%
+  \ifnum \c@tocdepth >\@ne
+    \addpenalty\@secpenalty
+    \addvspace{1pt}%
+    \setlength\@tempdima{2.3em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+    \endgroup
+  \fi}
+\renewcommand{\l@subsubsection}[2]{%
+  \ifnum \c@tocdepth >2
+    \addvspace{0.5pt}%
+    \setlength\@tempdima{3.8em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+    \endgroup
+  \fi}
+\makeatother
+\tableofcontents
+}
+
+
+% ============================================
+% Document Sections
+% ============================================
+% Each section is in a separate file in the sections/ directory
+% This makes collaboration easier and keeps the main file clean
+
+\input{sections/executive_summary}
+\input{sections/introduction}
+\input{sections/sec3_ai_in_desc}
+\input{sections/sec4_methodology}
+\input{sections/sec5_emerging}
+\input{sections/sec6_infrastructure}
+\input{sections/sec7_coordination}
+\input{sections/sec8_risks_challenges}
+\input{sections/conclusion}
+
+\appendix
+
+\section{Index of AI/ML Methodologies and Challenges}
+
+\printnoidxglossary[type=methods,title={AI/ML Methods Index}]
+
+\printnoidxglossary[type=challenges,title={Cross-cutting Challenges Index}]
+
+\section{Acknowledgments}
+\input{desc-standard-ack}
+
+\newpage
+\bibliography{refs}
+
+\end{document}

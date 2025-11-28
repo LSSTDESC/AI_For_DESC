@@ -1,0 +1,195 @@
+\newpage
+\section{Emerging Techniques}
+\label{sec5:emerging_tech}
+% [Figure 2] Map of the DESC showing opportunities for FM/LLMs next to WGs, with color code for potential for transformative impact of each emerging technique
+
+\subsection{Data Foundation Models}
+\label{sec:foundation_models}
+% \coordinator{Michelle Lochner}
+% General intro FMs
+% Motivation for FM for DESC
+%    - Pre-training and reusability
+%    - Opportunities offered by multimodality
+% Technical considerations
+%    - Neural Architectures 
+%    - Training objectives 
+% Evaluation 
+
+Foundation models, AI systems trained on massive datasets to perform a broad spectrum of tasks \citep{Bommasani2021FoundationModels}, have not only revolutionized AI research but are also rapidly reshaping modern life. Vision foundation models are now enabling breakthroughs in robotics \citep{RobotApplication2024}, medical diagnostics \citep{MedicalApplication2024}, and remote sensing \citep{RemoteSensing2024}. Beyond these applications, their adoption in scientific disciplines like genetics \citep{Evo2025} and heliophysics \citep{Surya2025} has highlighted their powerful predictive capabilities and their capacity to uncover fundamental relationships in complex data. The burgeoning field of foundation models presents a significant opportunity to enable and accelerate cutting-edge astrophysics.
+
+Zoobot \citep{Zoobot2022} can be considered the first vision foundation model in optical astronomy. Having been trained on labels from the Galaxy Zoo citizen science project \citep{GalaxyZoo2008, GalaxyZoo2011, GalaxyZoo2013}, it has demonstrated versatility on a range of downstream tasks. These include broad morphological classification problems critical for studies of galaxy evolution, such as identifying merging galaxies \citep[e.g.,][]{MergerChallenge2024, MergerSims2025, MergersHSC2023}, and anomaly detection for finding rare phenomena like strong lenses \citep{walmsley25, lines25}. Formally released in \citet{ZoobotRelease2023}, Zoobot has been adapted to imaging data from multiple surveys, including DESI \citep{DECALS2019}, Euclid \citep{ZoobotEuclid2024}, HST \citep{ZoobotHST2023}, and JWST simulations \citep{ZoobotJWST2024}, among others \citep{ZoobotGAMA2024, ZoobotUNIONS2025, ZoobotHSC2025}.
+
+Foundation models have also been designed for astronomical time-series datasets, spurred by the need for automated photometric classification of Galactic and extragalactic transients in the Rubin era. Some examples of these models include Astromer \citep{Astromer2023, Astromer2025}, ASTROCO \citep{Astroco2025}, ATAT \citep{ATAT2024}, FALCO \citep{FALCO2025}, and ROMAE \citep{ROMAE2025}. While the primary requirement for these models is high classification accuracy, they also enable the discovery of new classes of transients through anomaly detection, and, in some cases, provide lightcurve interpolation for further downstream analysis.
+
+Despite early successes in modality-specific foundation-models, many astrophysical questions can only be answered by fusing different data types. This is a task where traditional methods, which rely on reducing data to summary statistics, are quickly being outpaced by powerful multimodal foundation models. Though the ideal neural architectures and training objectives for these multi-modal models are areas of active research, models have now been developed for galaxies \citep{Astroclip2024}, supernovae \citep{2024Zhang_Maven}, variable and non-variable stars \citep{2024Leung_stellarfm,AstroM2025}, and cosmology \citep{MOSAIC2025}. 
+
+\subsubsection{Foundation Models for DESC Science}
+\paragraph{Pre-training and reusability} 
+Foundation models offer a significant advantage over existing techniques by reducing heterogeneous data types into a unified and simplified numerical representation known as a latent space, representation or feature space. Instead of reprocessing a full dataset for each analysis, a single, powerful foundation model can generate rich data representations once. These representations can then be used directly or rapidly fine-tuned for numerous specific science cases, resulting in significant savings of computing resources. 
+
+This shared representational basis also changes how DESC can approach cosmological inference. Traditional analyses reduce complex image data to limited summary statistics (e.g., moments, colors, or flux ratios), inevitably discarding information. Deep learning enables direct inference from raw observations, but training bespoke networks for each task across LSST’s petabyte-scale archive is infeasible. A general-purpose foundation model, trained once at scale, can thus act as a reusable ``backbone'' for all DESC pipelines, propagating consistent representations across tasks. 
+
+For time-domain astronomy, the representations produced by foundation models are especially powerful. Because models learn features directly from the data, they are not constrained by the a priori assumptions of human-engineered features. This makes them ideal for identifying new or unexpected classes of objects via anomaly and novelty detection. Furthermore, these representations could be highly effective for standard tasks like early transient classification, which is critical for triggering spectroscopic follow-up.
+
+For simulation-based inference (\autoref{sec4:sbi}), foundation model latent spaces can act as highly flexible encoders, providing a more powerful data compression than traditional statistical summaries. In terms of data handling, multimodal models can naturally accommodate missing data when fusing datasets. Moreover, the ability to pre-train on vast unlabeled datasets allows foundation models to help solve the representativity problem (dataset shift) often encountered between training and test sets in supervised learning.
+
+\paragraph{Opportunities offered by multimodality}
+ In astronomy, multi-wavelength models learn a shared latent space from multiple observational wavelengths (e.g., optical and infrared) of the same object. Multimodal models extend this concept by integrating fundamentally different data types into a shared latent space, often through self-supervised learning techniques. While the specific AI architectures for combining heterogeneous datasets remain in active development, all approaches fundamentally treat different data types as complementary views of the same underlying astrophysical system. The resulting multimodal representations provide a computationally efficient and powerful framework for a broad spectrum of scientific analyses. Further, multimodal representation learning naturally supports the need in DESC for self-calibrated systematics: once the relationships among observables are learned jointly, systematics can be explicitly modeled and corrected for survey-wide.
+
+In the time domain, joint modeling of photometric light curves and spectra provides a direct path to improving supernova cosmology and our understanding of explosion physics. A multimodal FM trained to predict the spectral properties of a type Ia supernova from irregular photometric sequences \citep[as has been demonstrated on synthetic data;][]{2025Shen_DitSNe,2025Shen_MMVAE} may recover physically meaningful features (line velocities or continuum temperatures) that are otherwise inaccessible from broadband imaging data alone. These inferred spectra can serve as additional standardization parameters for type Ia supernovae, potentially reducing residuals in the Hubble diagram by incorporating information linked to, e.g., progenitor diversity \citep{2025Son_AgeBias} or host metallicity \citep{2013Childress_Metallicity}.
+
+Beyond improving standardization, the same cross-modal embeddings enable proactive discovery. By comparing inferred to obtained spectra, outliers can be flagged for long-term monitoring. When combined with host-galaxy properties across the transient samples discovered by Rubin LSST, these models can provide a probabilistic mapping between host galaxy and transient properties, useful for exploring population-level correlations potentially linked to supernova physics and for obtaining sub-populations of highly-standardizable type Ia supernovae.
+
+\paragraph{Challenges}
+Despite rapid progress, technical and practical challenges must be addressed before multimodal FMs can be fully integrated into DESC pipelines. Propagating observational uncertainties to all studies conducted downstream of a DESC-wide FM is critical, and the diversity of applications across spatial and temporal scales may not be well matched to a single architecture's inductive biases. Multiple application areas also require accounting for modality imbalances and missingness in extant samples, which may cause a model to over-weight existing data and under-represent rare but informative modalities. Further, domain expertise may be necessary for ensuring embeddings are not dominated by observational systematics (e.g., tracking issues, bright sky backgrounds). Some architectures have attempted to factorize instrumental and astrophysical contributions to observed data explicitly \citep[e.g.,][]{2025Audenaert_CausalFMs}, but more work is needed on this front. 
+
+\subsubsection{Training Objectives}
+Training objectives determine whether foundation models learn astrophysically meaningful structure or merely reproduce observational correlations. For DESC, these objectives must explicitly promote representations that encode physical invariants (e.g., morphology–redshift relations, color–temperature gradients) while remaining robust to the observational systematics and covariate shifts defined as calibratable in the SRD. Self-supervised learning (SSL) offers the most practical and scalable route toward this goal, as it enables the extraction of representations from vast unlabeled datasets without compromising the requirement for bias quantification and calibration in DESC.
+
+\paragraph{Self-supervised learning}
+SSL encompasses a range of approaches: reconstructive methods, such as autoencoders \citep{Autoencoders1993, Autoencoders2006}, learn to compress data into a low-dimensional bottleneck and then reconstruct the original input; contrastive learning \citep{Contrastive2020, NonContrastive2021} trains models to produce invariant representations for augmented versions of the same data point (e.g., zoomed or rotated); and predictive methods, often implemented via transformer architectures \citep{Transformers2017}, learn by predicting masked or omitted sections of data based on their surrounding context. The principal advantage of SSL is its scalability, allowing models to be trained on vast datasets without costly manual annotation. 
+
+\paragraph{Generative approaches}
+Beyond these paradigms, generative and diffusion-based models are also being adapted for self-supervised representation learning in the astronomical domain. Although originally designed for data synthesis, diffusion objectives \citep{2022Yang_Diffusion} can act as powerful denoisers and uncertainty estimators,  aligning with the DESC requirement that calibratable systematic errors remain subdominant to statistical uncertainties. The study of how to manage a good generative model in the context of galaxy image synthesis has been investigated for instance using this denoising capability of score-based diffusion models \citep{Campagne_2025}. Hybrid diffusion autoencoders \citep{2021Preechakul_DiffAEs} combine reconstructive and generative losses, yielding latent spaces that capture astrophysical variation while marginalizing over observational noise. Methods such as these will be critical for DESC to achieve unbiased shear and photometric-redshift inference with early Rubin data.
+
+\paragraph{Unsupervised learning considerations}
+As highlighted in \autoref{sec:discovery}, the vast LSST dataset will hold immense potential for scientific discoveries. Given this sheer scale, foundation models will be critical for creating powerful representations that enable anomaly detection, clustering, and similarity searches. However, a significant challenge remains: FMs are typically designed and optimized for supervised tasks, while their use for unsupervised applications is often an afterthought. Recent work by \citet{ZoobotApplications2022} and \citet{Protege2025} demonstrates this gap. They found that traditional anomaly detection methods fail when applied to the deep latent features learned by both supervised and self-supervised methods. This indicates a clear need for new research: new unsupervised methods compatible with these features must be developed (such as Astronomaly: Protege) and FMs must be optimized specifically for unsupervised discovery.
+
+\subsubsection{Architectural Innovations}
+Realizing the capabilities of foundation models for DESC science requires architectural and training advancements. Astronomical data presents unique barriers to large-scale training, including wide dynamic ranges from faint to bright objects, Poisson noise properties, multi-wavelength observations, and irregular sampling. These characteristics, combined with the science priorities of DESC, necessitate architectures that not only achieve optimal representational power on LSST data but also permit robust uncertainty propagation.
+
+% \paragraph{Neural architectures}
+%%Continuous neural fields (NeRFs, SIREN) offer a paradigm shift for representing astronomical observations as continuous functions rather than discrete pixels. For weak lensing, this could enable resolution-independent shape measurements by learning continuous representations of galaxy light profiles. DESC could leverage these architectures to naturally handle PSF convolution in function space rather than pixel space, potentially eliminating pixelization systematics entirely.
+
+%State-space models (S4, Mamba) provide linear-time sequence modeling with unbounded context, ideal for LSST's decade-long light curves. In contrast to transformers’ quadratic attention cost, SSMs maintain long-range temporal memory while preserving physical interpretability via explicit time constants and impulse responses—critical for capturing slow-evolving variability or secular evolution across the full LSST survey baseline.
+
+%%% Old version
+% Efficient attention mechanisms have matured significantly beyond standard transformers toward architectures that can scale to LSST-level data volumes. Flash Attention and its variants reduce memory footprint by 10-100x through tiling and kernel fusion, making CCD- or raft-scale attention suddenly feasible. Sparse attention patterns (Longformer's sliding window + global tokens, BigBird's random + window + global) could naturally map to astronomical hierarchies, such as by imposing local attention for nearby galaxies and global tokens for cluster properties. These designs directly support DESC’s need to jointly model small- and large-scale correlations that may affect shear, clustering, and supernova systematics.
+
+% Hierarchical Vision Transformers (e.g., Swin Transformer V2) represent an especially promising class for DESC imaging applications. Their multi-resolution attention windows mirror the multi-scale nature of cosmological information, from pixel-level PSF modeling to large-scale galaxy clustering. Such architectures could unify weak-lensing and large-scale-structure analyses under a shared image encoder, enabling end-to-end uncertainty propagation across spatial scales as a direct step toward DESC’s requirement for cross-probe consistency in systematic control.
+
+% Finally, architectures supporting multimodal data fusion are essential for LSST-scale inference. Early-fusion models \citep[e.g., Chameleon][]{Chameleon2024} integrate multiple data types during training, while late-fusion approaches merge specialized encoders post hoc \citep{2023Pereira_LateFusion}. Architectures like the Perceiver family \citep{2021Jaegle_Perceiver,2021Jaegle_PerceiverIO} generalize these ideas further by learning compressed latent arrays that can flexibly accommodate new data modalities. This is an operational advantage for DESC, where evolving survey conditions and ancillary datasets (DESI, Roman, 4MOST/TiDES) demand continuous integration into the shared analysis space.
+
+\paragraph{Attention}
+Efficient attention mechanisms, which allow models to weigh the importance of different parts of the input data, have evolved significantly beyond standard transformers, offering new architectures that can scale to LSST-level data volumes. Methods like Flash Attention \citep{FlashAttention2022} use techniques such as tiling and kernel fusion to reduce the memory footprint by 10-–100$\times$. This significant reduction for the first time makes practical application of attention mechanisms at the scale of individual CCDs or rafts. 
+
+\paragraph{Hierarchical Approaches}
+Astronomical data is inherently hierarchical, with structures ranging from individual galaxies to massive clusters. Sparse attention models like Longformer \citep{Longformer2020} and BigBird \citep{BigBird2020} are well-suited to this, as their architecture directly mirrors this physical structure. They use local attention (e.g., sliding windows) to model interactions between nearby objects, while global tokens aggregate information about the entire system. These designs are critical for DESC, as they enable the joint modeling of small- and large-scale correlations essential for controlling systematics in shear, clustering, and supernova analyses. This hierarchical approach is well-developed in vision models, with Hierarchical Vision Transformers \citep[e.g., Swin Transformer V2,][]{Swin2022} being especially promising for DESC imaging. Unlike the token patterns in sparse models, these architectures use multi-resolution attention windows that mirror the multi-scale nature of cosmological information, enabling pixel-level PSF modeling up to large-scale galaxy clustering. This design could allow for the unification of weak lensing and large-scale structure analyses under a shared image encoder. Such a model would facilitate end-to-end uncertainty propagation across spatial scales, directly addressing the DESC requirement for cross-probe consistency in systematic control.
+
+\paragraph{Mixture-of-Experts}
+The principle of a shared, unifying backbone extends to Mixture-of-Experts (MoE) architectures, which offer natural alignment with DESC objectives. Rather than training independent networks for each object class or redshift regime, sparse MoE layers -- such as the Switch Transformer \citep{Switch2022} and Mixtral \citep{Mixtral2024} -- can dynamically route inputs through specialized sub-networks while preserving a common latent backbone. This paradigm mirrors the DESC software model itself: probe-specific inference modules built atop a common analysis infrastructure. For example, expert sub-networks could specialize in quiescent versus star-forming galaxies or early- versus late-time transients, while shared latent features will ensure cross-consistency in calibration and selection functions across working groups.
+
+\paragraph{Data Fusion}
+A final architectural requirement is multimodal data fusion, driven by the operational need to combine LSST data with a continuous stream of ancillary datasets (e.g., DESI, Roman, 4MOST/TiDES) as well as managing evolving observing conditions. This challenge can be addressed with early-fusion models, which integrate data types during training \citep[e.g., Chameleon][]{Chameleon2024}, or late-fusion approaches that merge specialized encoders post hoc \citep{2023Pereira_LateFusion}. More generalized architectures, like the Perceiver family \citep{2021Jaegle_Perceiver, 2021Jaegle_PerceiverIO}, are particularly advantageous. By learning a single, compressed latent array, they are explicitly designed to flexibly accommodate new data modalities. This provides a clear operational path for DESC to continuously update and expand its shared analysis space.
+
+Together, these architectural innovations suggest a coherent design philosophy for DESC foundation models: hierarchical representations that preserve cosmological structure, modular routing across scientific workflows, and learned compression layers capable of cross-probe alignment. Each of these desiderata drive toward reproducible, uncertainty-aware analyses within a unified DESC software framework.
+
+
+
+\subsubsection{Evaluation}
+FMs promise a significant leap in efficiency, enabling generalization across tasks and reduction of the research time and computational resources required for bespoke models. However, this versatility carries a critical risk: FMs can inherit and propagate biases from their training data. This risk is particularly important in cosmology, where rigorous evaluation of bias and uncertainty is non-negotiable. Therefore, establishing a common framework of benchmarks to validate FMs for sensitive scientific applications must be a research priority, as this is not standard practice in many industry-developed methods.
+
+\paragraph{Benchmarks}
+Any DESC methodology employing a FM should be accompanied by a comprehensive suite of benchmarks designed to evaluate:
+\begin{itemize}
+\item Predictive performance across representative science tasks;
+\item Calibration of uncertainties and probabilistic outputs;
+\item Robustness of algorithmic behavior to survey systematics;
+\item Sensitivity to biases introduced by training data or simulation assumptions
+\end{itemize}
+
+Beyond standard metrics, DESC evaluation metrics should be compositional, assessing performance hierarchically across the scientific workflow. Benchmarks should test low-level operations such as deblending and denoising, intermediate analyses including morphology or photometry, high-level physical inference such as redshift or stellar mass estimation, and final cosmological parameter recovery. This multi-level structure would identify precisely which stages contribute the largest uncertainty or bias to the dark energy equation-of-state constraint and guide model retraining or correction.
+
+\paragraph{Interpretability}
+Mechanistic interpretability will provide a complementary route to validation. Techniques such as attention visualization, activation clustering, or sparse dictionary learning can be adapted to determine whether internal model representations recover known astrophysical relations including the color–magnitude diagram, the fundamental plane, or the Tully–Fisher relation. Developing astronomy-specific interpretability tools would enable DESC to quantify whether FMs encode physically meaningful structure or merely reproduce empirical correlations.
+
+\paragraph{Distribution shift}
+Evaluation under distribution shift is also essential for robustness. DESC models must maintain reliability under temporal drift across survey years, spatial variation in observing conditions, and transfer to external datasets such as Euclid or Roman. Dedicated stress tests should replace the assumption of IID validation, using importance-weighted calibration errors and worst-group accuracy measures to reveal biases that emerge only under covariate change. These tests will be crucial for ensuring that DESC FMs remain stable as LSST transitions from early to full survey operations.
+
+\paragraph{Long-term impact}
+Finally, the deployment of large-scale models must consider sustainability and community governance. Training and fine-tuning FMs require substantial computational and environmental resources, underscoring the need for shared development, standardized documentation, and reproducible training pipelines. Strategic coordination within DESC and with external collaborations will ensure that these models serve as transparent, scientifically verifiable, and environmentally responsible assets for the next generation of cosmological analysis.
+
+\subsection{Large Language Models \& Agentic AI}
+% \coordinator{Clecio R. Bom}
+\label{sec:llm_agentic}
+%1. Large Language Models for DESC
+
+ %  1.1 Overview
+ %      - Foundation model capabilities and relevance to DESC workflows
+   
+  % 1.2 Desiderata for successful AI/LLM integration in DESC:
+   
+%       - Facilitated access to data and analysis / Education and onboarding
+%         • Natural language interfaces to databases (e.g., ChatGaia)
+ %        • Infrastructure training and documentation
+ %        • Dedicated RAG for all software and technical documentation
+       
+%       - Proactive agents for data inspection and knowledge synthesis
+ %        • Automated data quality assessment
+%         • Cross-dataset analysis and anomaly detection
+       
+%       - Literature search and research assistance
+%         • Paper synthesis and knowledge management
+       
+ %      - Automated scientist workflows
+ %        • Domain-specific agents (e.g., Denario, CMBAgent)
+ %        • Integration of specialized knowledge with data and compute access
+       
+ %      - Efficient optimization of limited expert feedback
+ %        • Human-in-the-loop strategies for collaboration-wide learning
+ %        • Connection to foundation model development
+   
+ %  1.3 Implementation Considerations
+ %      - Risk-benefit analysis (accuracy, privacy, computational costs)
+ %      - DESC-specific benchmarks leveraging unique data challenges
+
+Large language models (LLMs) and multi-agent systems (MAS) represent a new class of foundation models capable of performing high-level reasoning, hypothesis generation, and workflow orchestration across scientific domains. In astronomy, these systems extend beyond perception and representation to enable dynamic reasoning over code, data, and documentation. Their emergence aligns directly with DESC’s long-term objective to establish reproducible and efficient analysis frameworks that minimize human feedback while preserving scientific validity.
+
+\subsubsection{Overview}
+
+Recent works suggest  that LLMs can coordinate end-to-end scientific workflows. \citet{laverick2024mas} implemented an LLM-driven multi-agent system for cosmological parameter estimation from the Atacama Cosmology Telescope (ACT), integrating retrieval-augmented generation (RAG) with local code execution. Distinct agents that serve as, e.g., ``manager,'' ``coder,'' ``experiment-RAG,'' and ``software-RAG'', collaboratively retrieved literature, executed Monte Carlo Markov Chain pipelines, and synthesized posterior constraints, converting what was once a labor-intensive workflow into an auditable, agent-mediated loop of experimentation and inference.
+
+This capacity for orchestration reflects a broader transition from model-centric AI to \textit{agentic science}, where autonomous systems plan, reason, and execute experiments with minimal supervision \citep{zhou2025autonomous, xu2025opensourceplanning, CMBAGENT_2025}. However, automation introduces epistemic risks. As emphasized by \citet{ilievski2025aligning}, human scientific generalization relies on abstraction, causal reasoning, and conceptual transfer, whereas current AI systems often depend on statistical interpolation and distributional heuristics. For DESC—where analyses frequently extrapolate beyond training regimes, from rare transient classification to high-redshift inference—agents that merely interpolate can produce superficially plausible yet scientifically invalid results. The design of agentic frameworks must therefore prioritize conceptual alignment, emphasizing reasoning grounded in physical principles, provenance tracking, and transparent uncertainty propagation \citep{wu2023autogen, ilievski2025aligning}.
+
+\bigskip
+\noindent{\bf Scientific Potential.}
+By integrating such systems within DESC’s data pipelines, agents can automatically test calibration procedures, generate human-readable explanations for results, and suggest retraining strategies. These agents have the potential to act as intelligent research assistants: executing, validating, and interpreting analyses under human oversight. Their long-term promise lies not only in efficiency processing of existing workflows but in augmenting scientific reasoning, translating between natural language, code, and physical abstraction.
+
+\subsubsection{Desiderata for Successful AI/LLM Integration in DESC}
+
+\paragraph{Facilitated access to data and analysis.}
+Natural-language interfaces built atop LLMs can dramatically reduce the barrier to accessing DESC’s simulation and analysis infrastructure. RAG-based systems \citep{lewis2020rag,fan2024survey} allow LLMs to remain grounded in up-to-date, domain-specific knowledge while  mitigating %(JEC) : \sout{avoiding}, by experience, hallucination remains a pb in RAG and one should build hallucination detection system in paralell which is an endless. If you do not agree keep "avoiding" word....
+hallucinated results. Systems such as ChatGaia demonstrate that conversational querying of stellar databases and catalog crossmatches is feasible at scale. For DESC, an analogous interface could provide seamless access to Rubin/LSST data products, DESC documentation, and simulation catalogs, enabling new members to interact with complex pipelines through natural language. This directly supports collaboration-wide education, onboarding, and reproducibility.
+
+\paragraph{Proactive agents for data inspection and knowledge synthesis.}
+Multi-agent Systems frameworks permit agents to monitor and diagnose data streams in real time. Using local embeddings of image, catalog, and telemetry data, agents could autonomously flag photometric outliers, cross-dataset inconsistencies, or nightly calibration drifts. Comparable architectures are now emerging in other fields: e.g., agentic systems for real-time climate monitoring and autonomous laboratory instrumentation \citep{pierre2023ai, mandal2025evaluating}. In DESC, similar agents could manage nightly data-quality summaries, report unexpected deviations to experts, and generate RAG-enhanced explanations tied to the survey’s provenance logs.  
+
+In parallel, LLMs are enabling large-scale knowledge synthesis. One example of this in astrophysics is Pathfinder \citep{iyer2024pathfinder}, which applies semantic retrieval and citation-aware summarization across $\sim$350,000 astrophysical papers in ADS, allowing users to move from keyword-centric searches to concept-level exploration. Embedded within DESC’s software ecosystem, such systems could dynamically summarize instrument performance trends, algorithm changes, or cross-probe findings, enabling fast, collaborative knowledge transfer.
+
+\paragraph{Literature search and research assistance.}
+Domain-specialized LLMs, such as AstroSage-Llama-3.1-8B \citep{dehaan2025astrosage}, demonstrate that compact, astronomy-tuned models can rival much larger general-purpose LLMs at a fraction of the computational cost. Integrating these models into DESC’s internal infrastructure could enable contextual question-answering and literature synthesis directly within analysis notebooks. For example, an LLM agent could parse DESC pipeline documentation, identify related publications, and draft code examples linked to verified repositories. By unifying human-readable documentation, code, and literature into a retrieval-augmented knowledge graph, DESC could maintain a continuously evolving, auditable record of methodological provenance that would not be possible from human effort alone.
+
+\paragraph{Automated scientific workflows.}
+MAS architectures such as Mephisto \citep{mephisto} and Denario \citep{Denario_2025} illustrate how LLM-driven agents can coordinate complex, multi-step analyses. In Mephisto, agents interpret multi-band galaxy observations, call the CIGALE astrophysical SED-fitting code \citep{cigale}, and iteratively refine stellar population parameters through feedback loops. Denario extends this paradigm to a full research lifecycle, spanning idea generation, data selection, modeling, interpretation, and manuscript drafting integrating reasoning, execution, and documentation within a closed agentic loop.  
+
+For DESC, such frameworks could orchestrate photometric redshift validation, transient classification, or simulation–real comparisons. Each agent can perform specific tasks (data ingestion, model training, diagnostic visualization) under a shared governance layer to ensure that each action is logged, unit-tested, and reversible. The result is an ecosystem of automation without loss of traceability.
+
+\paragraph{Efficient optimization of limited expert feedback.}
+DESC’s scale makes manual supervision of all AI systems infeasible. Human-in-the-loop frameworks address this by using expert feedback to refine agentic models efficiently. Active-learning strategies allow LLMs to request clarification only for ambiguous cases, optimizing annotation throughput \citep{settles2009active, christiano2017feedback}. Such loops could guide automated anomaly detection or simulation-based inference pipelines, ensuring that model refinements are scientifically meaningful. Recent work evaluating RAG agents for astrophysical QA tasks \citep{hyk2025queries} suggests that combining expert oversight with structured retrieval logs improves reliability and transparency. Connecting these feedback mechanisms to DESC’s foundation-model development ensures that lessons from one analysis (e.g., transient classification) propagate across the collaboration’s full machine-learning stack.
+
+\subsubsection{Implementation Considerations}
+
+Integrating LLMs and MAS into DESC’s data ecosystem introduces both opportunity and risk. Benefits include improved reproducibility, faster analysis cycles, and democratized access to complex pipelines. Risks include propagation of biases, code-generation errors, data-privacy violations, and environmental cost.  
+A risk–benefit analysis must quantify not only computational cost against the anticipated scientific yield but also epistemic reliability — how confidently can a model’s recommendation be traced, reproduced, and validated? Frameworks such as the \textit{ScienceBoard} benchmark \citep{scienceboard2025} now measure LLM scientific reasoning under domain shifts, providing a template for DESC-specific evaluations.
+
+\paragraph{Evaluation and benchmarking.}
+LLMs must be evaluated beyond text-generation metrics. DESC benchmarks should measure: (1) factual accuracy on domain literature; (2) code validity and runtime safety; (3) reproducibility under random seed variation; and (4) robustness to distribution shift and systematic missingness (early vs late LSST years, cross-survey transfers). Existing efforts in autonomous science evaluation, such as \textit{DiscoveryWorld} \citep{discoveryworld} and the AI Scientist benchmark \citep{xu_ai_scientist}, demonstrate compositional assessments of reasoning, hypothesis testing, and execution fidelity. Complementary to these general frameworks, \citet{ye2025replicationbench} introduce \textit{ReplicationBench}, an astrophysics-specific benchmark that evaluates whether AI agents can faithfully reproduce published research papers. By decomposing studies into author-validated tasks that test methodological adherence and quantitative accuracy, \textit{ReplicationBench} exposes persistent gaps in scientific reliability—critical context for assessing agent performance in DESC applications. DESC could adopt similar multi-level benchmarks to assess agentic performance across deblending, photometry, and cosmological inference tasks.
+
+\paragraph{Governance and reproducibility.}
+Governance mechanisms must accompany agentic integration. Each automated workflow should maintain full *provenance metadata*—including prompts, model version, retrieved sources, and execution logs. Sandboxed environments can enforce deterministic behavior and ensure that code emitted by agents is executed within secure, auditable contexts \citep{zhou2025autonomous}. Verifiable autonomy requires that every AI-derived result includes uncertainty estimates, validation metadata, and reproducibility tokens linking outputs to inputs. These measures echo the emerging norm of “executable transparency” in computational astrophysics.
+
+\paragraph{Infrastructure integration.}
+Finally, the physical deployment of LLMs within DESC must respect both scale and sustainability. Compact open-weight models fine-tuned on DESC’s public datasets could balance capability with energy efficiency. A dedicated RAG layer connecting DESC documentation, simulation archives, and survey data products would form the backbone of an agentic knowledge graph. By coupling this infrastructure to controlled APIs and authenticated data services, DESC can safely experiment with LLM-assisted reasoning under real survey conditions, transforming static documentation into an interactive scientific interface.
+
+\bigskip
+\noindent In summary, LLMs and MAS have the potential to become trusted collaborators in DESC’s scientific ecosystem. Their integration promises not merely faster pipelines but qualitatively new modes of discovery—where agents amplify, rather than replace, human scientific insight.

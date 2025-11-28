@@ -1,0 +1,79 @@
+## Core LaTeX auxiliary files
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
+.*.lb
+
+## Intermediate documents
+*.dvi
+*.xdv
+*-converted-to.*
+
+## Bibliography auxiliary files
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.run.xml
+
+## Build tool auxiliary files
+*.fdb_latexmk
+*.synctex
+*.synctex(busy)
+*.synctex.gz
+*.synctex.gz(busy)
+*.pdfsync
+
+## Build tool directories
+.latexmkrc
+
+## Auxiliary and intermediate files from other packages
+*.alg
+*.loa
+*.nav
+*.snm
+*.vrb
+*.acn
+*.acr
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.lzo
+*.lzs
+*.slg
+*.slo
+*.sls
+*.idx
+*.ilg
+*.ind
+*.ist
+
+## Editors and IDEs
+*.swp
+*.swo
+*~
+.DS_Store
+*.bak
+*.backup
+
+## Output files (comment out if you want to track PDFs)
+*.pdf
+*.ps
+*.dvi
+
+## Python (if using Python scripts for build)
+__pycache__/
+*.py[cod]
+*$py.class
+
+*Notes.bib

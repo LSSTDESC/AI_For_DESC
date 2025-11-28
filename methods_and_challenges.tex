@@ -1,0 +1,363 @@
+% methods_challenges.tex
+%
+% Assumes in main preamble:
+%   \usepackage{xcolor}
+%   \usepackage[acronym]{glossaries}
+%   \makeglossaries
+%
+% Then include this file with:
+%   \input{methods_challenges}
+%
+% In the body, use:
+%   \meth{sbi}, \challenge{uq-calibration}, ...
+% and print the indices with e.g.:
+%   \printglossary[type=methods,title={AI/ML Methods Index}]
+%   \printglossary[type=challenges,title={Cross-cutting Challenges Index}]
+
+% ------------------------------------------------------------------
+% Glossary types
+% ------------------------------------------------------------------
+
+\newglossary[mlg]{methods}{mls}{mln}{AI/ML Methods}
+\newglossary[clg]{challenges}{cls}{cln}{Cross-cutting Challenges}
+
+% Macros to invoke entries in the text
+\newcommand{\meth}[1]{\gls{#1}}
+\newcommand{\challenge}[1]{\gls{#1}}
+
+% ------------------------------------------------------------------
+% Color code for METHOD families (Cool/Professional - Anchored on Rhino)
+% ------------------------------------------------------------------
+% F1: Probabilistic & Bayesian Inference         -> aiMethBayes (Rhino - User Anchor)
+% F2: Generative Modeling                        -> aiMethGen (Muted Purple)
+% F3: Deep Learning Architectures                -> aiMethDeep (Muted Cyan)
+% F4: Physics-Informed & Differentiable          -> aiMethPhys (Muted Green)
+% F5: Representation & Discovery                 -> aiMethRepr (Muted Teal)
+% F6: Data Processing & Vision                   -> aiMethVis (Steel Blue)
+
+\definecolor{aiMethBayes}{HTML}{263654} % Rhino (User Anchor)
+\definecolor{aiMethGen}{HTML}{5D4C76}   % Muted Purple
+\definecolor{aiMethDeep}{HTML}{4A7A8C}  % Muted Cyan
+\definecolor{aiMethPhys}{HTML}{5C7A63}  % Muted Green
+\definecolor{aiMethRepr}{HTML}{3E8E7E}  % Muted Teal
+\definecolor{aiMethVis}{HTML}{5B7C99}   % Steel Blue
+
+\newcommand{\aimethbayes}[1]{\textcolor{aiMethBayes}{\textsf{#1}}}
+\newcommand{\aimethgen}[1]{\textcolor{aiMethGen}{\textsf{#1}}}
+\newcommand{\aimethdeep}[1]{\textcolor{aiMethDeep}{\textsf{#1}}}
+\newcommand{\aimethphys}[1]{\textcolor{aiMethPhys}{\textsf{#1}}}
+\newcommand{\aimethrepr}[1]{\textcolor{aiMethRepr}{\textsf{#1}}}
+\newcommand{\aimethvis}[1]{\textcolor{aiMethVis}{\textsf{#1}}}
+
+% ------------------------------------------------------------------
+% Color code for CHALLENGE families (Warm/Earthy - Anchored on Mule Fawn/Tussock)
+% ------------------------------------------------------------------
+% G1: Uncertainty & Calibration                  -> aiChUQ (Mule Fawn - User Anchor)
+% G2: Robustness & Generalization                -> aiChRobust (Tussock - User Anchor)
+% G3: Physics & Systematics                      -> aiChPhys (Muted Pink/Rose)
+% G4: Data & Scalability                         -> aiChData (Dark Pumice/Taupe)
+
+\definecolor{aiChUQ}{HTML}{92402D}      % Mule Fawn (User Anchor)
+\definecolor{aiChRobust}{HTML}{C2814C}  % Tussock (User Anchor)
+\definecolor{aiChPhys}{HTML}{C06C84}    % Muted Pink
+\definecolor{aiChData}{HTML}{7D7068}    % Dark Pumice/Taupe (Readable version of Pumice)
+
+\newcommand{\aichuq}[1]{\textcolor{aiChUQ}{\textsf{#1}}}
+\newcommand{\aichrobust}[1]{\textcolor{aiChRobust}{\textsf{#1}}}
+\newcommand{\aichphys}[1]{\textcolor{aiChPhys}{\textsf{#1}}}
+\newcommand{\aichdata}[1]{\textcolor{aiChData}{\textsf{#1}}}
+
+% ------------------------------------------------------------------
+% METHOD ENTRIES (IDs used with \meth{...})
+% ------------------------------------------------------------------
+
+% F1: Probabilistic & Bayesian Inference
+
+\newglossaryentry{sbi}{%
+  type=methods,
+  name={\aimethbayes{Simulation-based inference (SBI)}},
+  text={\aimethbayes{SBI}},
+  description={Implicit-likelihood Bayesian inference using forward simulations and neural density estimators}
+}
+
+\newglossaryentry{neural-density-estimation}{%
+  type=methods,
+  name={\aimethbayes{Neural density estimation}},
+  text={\aimethbayes{Neural density estimation}},
+  description={Neural networks trained to approximate probability densities, often used within SBI}
+}
+
+\newglossaryentry{npe}{%
+  type=methods,
+  name={\aimethbayes{Neural posterior estimation (NPE)}},
+  text={\aimethbayes{NPE}},
+  description={Direct neural approximation to the posterior distribution over parameters given simulated data}
+}
+
+\newglossaryentry{hierarchical-bayes}{%
+  type=methods,
+  name={\aimethbayes{Bayesian hierarchical modeling}},
+  text={\aimethbayes{Hierarchical Bayes}},
+  description={Hierarchical probabilistic models that share information across objects or populations}
+}
+
+\newglossaryentry{variational-inference}{%
+  type=methods,
+  name={\aimethbayes{Variational inference (VI)}},
+  text={\aimethbayes{VI}},
+  description={Optimization-based approach to approximating posterior distributions}
+}
+
+\newglossaryentry{ensembles}{%
+  type=methods,
+  name={\aimethbayes{Deep ensembles}},
+  text={\aimethbayes{Ensembles}},
+  description={Collections of models combined for improved performance and uncertainty quantification}
+}
+
+\newglossaryentry{gaussian-process}{%
+  type=methods,
+  name={\aimethbayes{Gaussian processes}},
+  text={\aimethbayes{Gaussian processes}},
+  description={Non-parametric Bayesian regression and emulation for scalar or functional outputs}
+}
+
+% F2: Generative Modeling
+
+\newglossaryentry{diffusion-model}{%
+  type=methods,
+  name={\aimethgen{Diffusion / score-based models}},
+  text={\aimethgen{Diffusion models}},
+  description={Generative models that iteratively denoise data from a noise process, often used for images and fields}
+}
+
+\newglossaryentry{normalizing-flow}{%
+  type=methods,
+  name={\aimethgen{Normalizing flows}},
+  text={\aimethgen{Normalizing flows}},
+  description={Invertible neural networks used as flexible density models in likelihoods, posteriors, or simulators}
+}
+
+\newglossaryentry{vae}{%
+  type=methods,
+  name={\aimethgen{Variational autoencoders (VAEs)}},
+  text={\aimethgen{VAEs}},
+  description={Latent-variable generative models trained via variational inference}
+}
+
+\newglossaryentry{emulator}{%
+  type=methods,
+  name={\aimethgen{Emulators}},
+  text={\aimethgen{Emulators}},
+  description={Surrogate models (often GP- or NN-based) that approximate expensive simulations or likelihoods}
+}
+
+\newglossaryentry{neural-surrogate}{%
+  type=methods,
+  name={\aimethgen{Neural surrogates}},
+  text={\aimethgen{Neural surrogates}},
+  description={Neural network models trained to mimic the input--output behaviour of complex physical simulations}
+}
+
+% F3: Deep Learning Architectures
+
+\newglossaryentry{cnn}{%
+  type=methods,
+  name={\aimethdeep{Convolutional neural networks (CNNs)}},
+  text={\aimethdeep{CNNs}},
+  description={Convolution-based neural networks for image-like data, widely used for classification and regression}
+}
+
+\newglossaryentry{transformer}{%
+  type=methods,
+  name={\aimethdeep{Transformers}},
+  text={\aimethdeep{Transformers}},
+  description={Attention-based neural architectures for sequences, time series, or generic sets of tokens (including Vision Transformers)}
+}
+
+\newglossaryentry{rnn}{%
+  type=methods,
+  name={\aimethdeep{Recurrent neural networks (RNNs)}},
+  text={\aimethdeep{RNNs}},
+  description={Sequence models (e.g.\ LSTMs, GRUs) for time series and light curves}
+}
+
+\newglossaryentry{gnn}{%
+  type=methods,
+  name={\aimethdeep{Graph neural networks (GNNs)}},
+  text={\aimethdeep{GNNs}},
+  description={Neural networks designed to operate on graph-structured data, such as cosmic webs or halo catalogs}
+}
+
+\newglossaryentry{deep-network}{%
+  type=methods,
+  name={\aimethdeep{Deep neural networks}},
+  text={\aimethdeep{Deep networks}},
+  description={Generic deep learning architectures not otherwise categorized}
+}
+
+% F4: Physics-Informed & Differentiable
+
+\newglossaryentry{differentiable-programming}{%
+  type=methods,
+  name={\aimethphys{Differentiable programming}},
+  text={\aimethphys{Differentiable programming}},
+  description={Formulation of simulations and models as differentiable programs amenable to gradient-based inference}
+}
+
+\newglossaryentry{physics-informed}{%
+  type=methods,
+  name={\aimethphys{Physics-informed ML}},
+  text={\aimethphys{Physics-informed ML}},
+  description={Machine learning models that incorporate physical laws or constraints (e.g., PINNs, Hamiltonian NN)}
+}
+
+\newglossaryentry{symbolic-regression}{%
+  type=methods,
+  name={\aimethphys{Symbolic regression}},
+  text={\aimethphys{Symbolic regression}},
+  description={Learning analytic mathematical expressions that describe data or physical relationships}
+}
+
+% F5: Representation & Discovery
+
+\newglossaryentry{neural-compression}{%
+  type=methods,
+  name={\aimethrepr{Neural compression}},
+  text={\aimethrepr{Neural compression}},
+  description={Learned low-dimensional representations (summary statistics or latents) of complex data}
+}
+
+\newglossaryentry{self-supervised}{%
+  type=methods,
+  name={\aimethrepr{Self-supervised learning}},
+  text={\aimethrepr{Self-supervised learning}},
+  description={Learning representations from unlabeled data by solving pretext tasks (e.g., masking, contrastive learning)}
+}
+
+\newglossaryentry{som}{%
+  type=methods,
+  name={\aimethrepr{Self-Organizing Maps (SOMs)}},
+  text={\aimethrepr{SOMs}},
+  description={Topology-preserving maps used for exploratory analysis and domain coverage characterization}
+}
+
+\newglossaryentry{anomaly-detection}{%
+  type=methods,
+  name={\aimethrepr{Anomaly detection}},
+  text={\aimethrepr{Anomaly detection}},
+  description={Identifying rare or out-of-distribution examples in data, crucial for new physics discovery}
+}
+
+\newglossaryentry{active-learning}{%
+  type=methods,
+  name={\aimethrepr{Active learning}},
+  text={\aimethrepr{Active learning}},
+  description={Strategies that adaptively select the most informative data points for labeling or follow-up}
+}
+
+% F6: Data Processing & Vision
+
+\newglossaryentry{instance-segmentation}{%
+  type=methods,
+  name={\aimethvis{Instance segmentation}},
+  text={\aimethvis{Instance segmentation}},
+  description={Pixel-level segmentation of individual objects, relevant for deblending crowded scenes}
+}
+
+\newglossaryentry{object-detection}{%
+  type=methods,
+  name={\aimethvis{Object detection}},
+  text={\aimethvis{Object detection}},
+  description={Identifying and localizing objects in images (e.g., YOLO)}
+}
+
+\newglossaryentry{deblending}{%
+  type=methods,
+  name={\aimethvis{Deblending algorithms}},
+  text={\aimethvis{Deblending}},
+  description={Separating overlapping light profiles from multiple sources}
+}
+
+% ------------------------------------------------------------------
+% CHALLENGE ENTRIES (IDs used with \challenge{...})
+% ------------------------------------------------------------------
+
+% G1: Uncertainty & Calibration
+
+\newglossaryentry{uq-calibration}{%
+  type=challenges,
+  name={\aichuq{Uncertainty quantification \& calibration}},
+  text={\aichuq{UQ \& calibration}},
+  description={Obtaining well-calibrated posteriors and predictive distributions, including shear and photo-$z$ calibration. Addressed in \autoref{sec4:Bayes}, \autoref{sec4:sbi}, and \autoref{sec4:validation}}
+}
+
+\newglossaryentry{metrics}{%
+  type=challenges,
+  name={\aichuq{Metrics \& evaluation}},
+  text={\aichuq{Metrics \& evaluation}},
+  description={Defining task-relevant metrics and validation protocols that reflect DESC science requirements}
+}
+
+% G2: Robustness & Generalization
+
+\newglossaryentry{covariate-shift}{%
+  type=challenges,
+  name={\aichrobust{Covariate shift \& domain adaptation}},
+  text={\aichrobust{Covariate shift}},
+  description={Differences between training and target data distributions (e.g.\ sims vs.\ survey, bright vs.\ faint). Addressed in \autoref{sec4:model-misspec} and \autoref{sec:discovery}}
+}
+
+\newglossaryentry{model-misspecification}{%
+  type=challenges,
+  name={\aichrobust{Model misspecification}},
+  text={\aichrobust{Model misspecification}},
+  description={Errors arising when the model (simulation or likelihood) does not accurately match the data-generating process. Addressed in \autoref{sec4:model-misspec}, \autoref{sec4:physics-informed}, and \autoref{sec4:hybrid-gen-phys}}
+}
+
+\newglossaryentry{out-of-distribution}{%
+  type=challenges,
+  name={\aichrobust{Out-of-distribution (OOD) detection}},
+  text={\aichrobust{OOD detection}},
+  description={Identifying data points that lie outside the training distribution to avoid confident but wrong predictions. Addressed in \autoref{sec:discovery}}
+}
+
+% G3: Physics & Systematics
+
+\newglossaryentry{systematics-modeling}{%
+  type=challenges,
+  name={\aichphys{Systematics modeling}},
+  text={\aichphys{Systematics}},
+  description={Modeling astrophysical and instrumental systematics, complex mass models, and intrinsic degeneracies. Addressed in \autoref{sec4:physics-informed} and \autoref{sec4:physics-constraints}}
+}
+
+\newglossaryentry{blending-crowding}{%
+  type=challenges,
+  name={\aichphys{Blending \& crowding}},
+  text={\aichphys{Blending \& crowding}},
+  description={Unrecognized blends, crowded fields, and deblending errors affecting photometry and shape measurements}
+}
+
+% G4: Data & Scalability
+
+\newglossaryentry{scalability}{%
+  type=challenges,
+  name={\aichdata{Scalability \& compute efficiency}},
+  text={\aichdata{Scalability}},
+  description={Handling LSST-scale datasets, high-dimensional parameter spaces, and costly likelihood or simulation calls. Addressed in \autoref{sec4:Bayes} and \autoref{sec4:sbi}}
+}
+
+\newglossaryentry{data-sparsity}{%
+  type=challenges,
+  name={\aichdata{Data sparsity \& rare events}},
+  text={\aichdata{Data sparsity}},
+  description={Imbalanced classes, rare transients, and limited labeled samples in key regions of parameter space}
+}
+
+\newglossaryentry{multi-modal}{%
+  type=challenges,
+  name={\aichdata{Multi-modal integration}},
+  text={\aichdata{Multi-modal integration}},
+  description={Combining heterogeneous data sources (images, catalogs, time-series, spectra) into unified models}
+}
+
