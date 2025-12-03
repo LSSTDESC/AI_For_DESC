@@ -8,73 +8,105 @@
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <style>
-        body {
+        * { box-sizing: border-box; }
+        html, body {
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
             background: white;
         }
-
-        /* Tailwind-like classes used in the component */
-        .bg-white { background-color: white; }
-        .rounded-xl { border-radius: 0.75rem; }
-        .shadow-lg { box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        .border { border-width: 1px; }
-        .border-slate-200 { border-color: #e2e8f0; }
-        .p-8 { padding: 2rem; }
-        .mb-6 { margin-bottom: 1.5rem; }
-        .flex { display: flex; }
-        .items-center { align-items: center; }
-        .justify-between { justify-content: space-between; }
-        .gap-6 { gap: 1.5rem; }
-        .gap-4 { gap: 1rem; }
-        .gap-3 { gap: 0.75rem; }
-        .gap-2 { gap: 0.5rem; }
-        .flex-wrap { flex-wrap: wrap; }
-        .pb-6 { padding-bottom: 1.5rem; }
-        .border-b { border-bottom-width: 1px; }
-        .w-4 { width: 1rem; }
-        .h-4 { height: 1rem; }
-        .text-slate-600 { color: #475569; }
-        .text-slate-700 { color: #334155; }
-        .text-slate-800 { color: #1e293b; }
-        .text-slate-500 { color: #64748b; }
-        .rounded { border-radius: 0.25rem; }
-        .px-4 { padding-left: 1rem; padding-right: 1rem; }
-        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
-        .rounded-lg { border-radius: 0.5rem; }
-        .border-2 { border-width: 2px; }
-        .transition-all { transition: all 0.3s ease; }
-        .transition-colors { transition: background-color 0.3s ease, color 0.3s ease; }
-        .border-indigo-500 { border-color: #6366f1; }
-        .bg-indigo-50 { background-color: #eef2ff; }
-        .text-indigo-700 { color: #4338ca; }
-        .text-indigo-900 { color: #312e81; }
-        .text-indigo-600 { color: #4f46e5; }
-        .border-slate-300 { border-color: #cbd5e1; }
-        .hover\:border-slate-400:hover { border-color: #94a3b8; }
-        .bg-slate-100 { background-color: #f1f5f9; }
-        .hover\:bg-slate-200:hover { background-color: #e2e8f0; }
-        .relative { position: relative; }
-        .justify-center { justify-content: center; }
-        .max-w-full { max-width: 100%; }
+        #root {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            min-height: 0;
+        }
+        .controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 1rem;
+        }
+        .legend {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.95rem;
+            color: #475569;
+        }
+        .legend-color {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 0.25rem;
+        }
+        .button-group {
+            display: flex;
+            gap: 0.75rem;
+        }
+        button {
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            border: 2px solid;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+        }
+        .btn-toggle {
+            border-color: #cbd5e1;
+            background: white;
+            color: #334155;
+        }
+        .btn-toggle:hover {
+            border-color: #94a3b8;
+        }
+        .btn-toggle.active {
+            border-color: #6366f1;
+            background: #eef2ff;
+            color: #4338ca;
+        }
+        .btn-clear {
+            border-color: #cbd5e1;
+            background: #f1f5f9;
+            color: #334155;
+        }
+        .btn-clear:hover {
+            background: #e2e8f0;
+        }
+        .svg-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+            overflow: hidden;
+        }
+        svg {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+        }
         .cursor-pointer { cursor: pointer; }
         .pointer-events-none { pointer-events: none; }
-        .mt-6 { margin-top: 1.5rem; }
-        .pt-6 { padding-top: 1.5rem; }
-        .border-t { border-top-width: 1px; }
-        .p-4 { padding: 1rem; }
-        .border-indigo-200 { border-color: #c7d2fe; }
-        .mb-2 { margin-bottom: 0.5rem; }
-        .grid { display: grid; }
-        .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-        .mt-3 { margin-top: 0.75rem; }
-        .bg-blue-50 { background-color: #eff6ff; }
-        .border-blue-200 { border-color: #bfdbfe; }
-        .text-blue-900 { color: #1e3a8a; }
-
-        /* Hide Lucide icons since we'll use simple alternatives */
-        .lucide-icon { display: none; }
     </style>
 </head>
 <body>
@@ -83,419 +115,312 @@
     <script type="text/babel">
         const { useState, useMemo } = React;
 
-        const rawData = [
+        const COLORS = {
+            scienceCase: { color: '#A10034', bgColor: '#fce7ed' },
+            methodology: { color: '#93A8AC', bgColor: '#f0f3f4' },
+            challenge: { color: '#F3C969', bgColor: '#fef9ed' }
+        };
+
+        const DATA = [
           {
             id: 'photoz',
-            name: '3.1.1 Photometric redshifts',
-            shortName: 'Photo-z',
-            methodologies: ['SBI', 'Self-Organizing Maps', 'Deep learning', 'Hierarchical Bayesian models', 'Emulators'],
-            challenges: ['UQ & calibration', 'Scalability & compute efficiency', 'Covariate shift & domain adaptation']
+            name: 'Photo-z',
+            methodologies: ['SBI and Density Estimation', 'Hierarchical Bayesian models', 'Emulators'],
+            challenges: ['Covariate shift', 'UQ', 'Scalability', 'Metrics & evaluation']
           },
           {
             id: 'stronglens',
-            name: '3.1.2 Strong Lensing',
-            shortName: 'Strong Lensing',
-            methodologies: ['Deep learning', 'SBI', 'Anomaly detection'],
-            challenges: ['Data sparsity & rare events']
+            name: 'Strong Lensing',
+            methodologies: ['SBI and Density Estimation', 'Anomaly detection'],
+            challenges: ['Data sparsity & rare events', 'Covariate shift']
           },
           {
             id: 'weaklens',
-            name: '3.1.3 Weak Lensing',
-            shortName: 'Weak Lensing',
-            methodologies: ['SBI', 'Neural compression', 'Differentiable programming'],
-            challenges: ['UQ & calibration', 'Scalability & compute efficiency']
+            name: 'Weak Lensing',
+            methodologies: ['SBI and Density Estimation', 'Differentiable programming', 'Hierarchical Bayesian models'],
+            challenges: ['Covariate shift', 'UQ', 'Scalability']
           },
           {
             id: 'clusters',
-            name: '3.1.4 Galaxy Clusters',
-            shortName: 'Galaxy Clusters',
-            methodologies: ['SBI'],
-            challenges: ['Covariate shift & domain adaptation', 'UQ & calibration']
+            name: 'Galaxy Clusters',
+            methodologies: ['SBI and Density Estimation', 'Hierarchical Bayesian models'],
+            challenges: ['Covariate shift', 'UQ', 'Scalability']
           },
           {
             id: 'sn',
-            name: '3.1.5 Supernova cosmology & transients',
-            shortName: 'SN & Transients',
-            methodologies: ['Deep learning', 'Active learning'],
-            challenges: ['Covariate shift & domain adaptation', 'Model misspecification', 'Data sparsity & rare events', 'Scalability & compute efficiency']
+            name: 'SN & Transients',
+            methodologies: ['SBI and Density Estimation', 'Active learning', 'Anomaly detection'],
+            challenges: ['Covariate shift', 'Data sparsity & rare events', 'Scalability']
           },
           {
             id: 'theory',
-            name: '3.1.6 Theory & Modeling',
-            shortName: 'Theory & Modeling',
-            methodologies: ['Emulators', 'Differentiable programming', 'SBI'],
-            challenges: ['Scalability & compute efficiency', 'Model misspecification']
+            name: 'Theory & Modeling',
+            methodologies: ['Emulators', 'Differentiable programming', 'SBI and Density Estimation'],
+            challenges: ['Covariate shift', 'Scalability']
           },
           {
             id: 'sims',
-            name: '3.1.7 Cosmological & Survey Simulations',
-            shortName: 'Simulations',
-            methodologies: ['Emulators', 'Generative models', 'Differentiable programming', 'SBI'],
-            challenges: ['Covariate shift & domain adaptation']
+            name: 'Simulations',
+            methodologies: ['Emulators', 'Generative models', 'Differentiable programming', 'SBI and Density Estimation'],
+            challenges: ['Covariate shift', 'Scalability', 'Metrics & evaluation']
           },
           {
             id: 'deblend',
-            name: '3.2.1 Deblending',
-            shortName: 'Deblending',
-            methodologies: ['Generative models', 'SBI'],
-            challenges: ['Metrics & evaluation']
+            name: 'Deblending',
+            methodologies: ['Generative models', 'SBI and Density Estimation'],
+            challenges: ['Data sparsity & rare events', 'Metrics & evaluation']
           },
           {
             id: 'shape',
-            name: '3.2.2 Shape measurement',
-            shortName: 'Shape Measurement',
-            methodologies: ['Differentiable programming', 'Deep learning', 'SBI'],
-            challenges: ['Covariate shift & domain adaptation', 'UQ & calibration']
+            name: 'Shape Measurement',
+            methodologies: ['Differentiable programming', 'SBI and Density Estimation'],
+            challenges: ['Covariate shift', 'UQ', 'Data sparsity & rare events']
           }
         ];
 
         function processData() {
-          const methodologyCount = new Map();
-          const challengeCount = new Map();
-
-          rawData.forEach(sc => {
-            sc.methodologies.forEach(m => {
-              methodologyCount.set(m, (methodologyCount.get(m) || 0) + 1);
-            });
-            sc.challenges.forEach(c => {
-              challengeCount.set(c, (challengeCount.get(c) || 0) + 1);
-            });
-          });
-
           const methodologies = new Map();
+          const challenges = new Map();
 
-          // Use consistent colors for each category
-          const categoryColors = {
-            scienceCase: { color: '#A10034', bgColor: '#fce7ed' },
-            methodology: { color: '#93A8AC', bgColor: '#f0f3f4' },
-            challenge: { color: '#F3C969', bgColor: '#fef9ed' }
-          };
-
-          methodologyCount.forEach((count, method) => {
-            methodologies.set(method, {
-              count,
-              color: categoryColors.methodology.color,
-              bgColor: categoryColors.methodology.bgColor
-            });
+          DATA.forEach(sc => {
+            sc.methodologies.forEach(m => methodologies.set(m, (methodologies.get(m) || 0) + 1));
+            sc.challenges.forEach(c => challenges.set(c, (challenges.get(c) || 0) + 1));
           });
 
           return {
-            scienceCases: rawData,
-            methodologies,
-            challenges: challengeCount
+            scienceCases: DATA,
+            methodologies: Array.from(methodologies.keys()).sort(),
+            challenges: Array.from(challenges.keys()).sort((a, b) =>
+              (challenges.get(b) || 0) - (challenges.get(a) || 0)
+            )
           };
         }
 
-        function InteractiveDiagram() {
-          const [hoveredMethod, setHoveredMethod] = useState(null);
-          const [hoveredCase, setHoveredCase] = useState(null);
-          const [hoveredChallenge, setHoveredChallenge] = useState(null);
-          const [lockedSelection, setLockedSelection] = useState(null);
-          const [paperMode, setPaperMode] = useState(false); // Default to interactive mode
+        function ChordDiagram() {
+          const [hovered, setHovered] = useState({ type: null, value: null });
+          const [locked, setLocked] = useState(null);
+          const [paperMode, setPaperMode] = useState(false);
 
           const data = useMemo(() => processData(), []);
-
-          // Category color scheme
-          const categoryColors = {
-            scienceCase: { color: '#A10034', bgColor: '#fce7ed' },
-            methodology: { color: '#93A8AC', bgColor: '#f0f3f4' },
-            challenge: { color: '#F3C969', bgColor: '#fef9ed' }
-          };
-
-          const activeMethod = lockedSelection?.type === 'method' ? lockedSelection.value : hoveredMethod;
-          const activeCase = lockedSelection?.type === 'case' ? lockedSelection.value : hoveredCase;
-          const activeChallenge = lockedSelection?.type === 'challenge' ? lockedSelection.value : hoveredChallenge;
+          const active = locked || hovered;
 
           const handleClick = (type, value) => {
             if (paperMode) return;
-            if (lockedSelection?.type === type && lockedSelection?.value === value) {
-              setLockedSelection(null);
-            } else {
-              setLockedSelection({ type, value });
-            }
+            setLocked(locked?.type === type && locked?.value === value ? null : { type, value });
           };
 
-          // Calculate circular positions
-          const centerX = 600;
-          const centerY = 500;
-          const radius = 380;
+          const setHover = (type, value) => {
+            if (!locked && !paperMode) setHovered({ type, value });
+          };
 
-          const allMethodologies = Array.from(data.methodologies.keys()).sort();
-          const allChallenges = Array.from(data.challenges.keys()).sort((a, b) =>
-            (data.challenges.get(b) || 0) - (data.challenges.get(a) || 0)
-          );
+          const clearHover = () => {
+            if (!locked && !paperMode) setHovered({ type: null, value: null });
+          };
 
-          // Position calculations
-          const casePositions = new Map();
-          const methodPositions = new Map();
-          const challengePositions = new Map();
+          // SVG dimensions
+          const centerX = 600, centerY = 500, radius = 380;
 
-          // Divide circle into three equal sections with small gaps for visual separation
-          const gapAngle = 3; // Small gap between sections
+          // Calculate positions on circle
+          const calcPositions = (items, startAngle, endAngle, margin) => {
+            const positions = new Map();
+            const sectionSize = endAngle - startAngle;
+            const marginSize = sectionSize * margin;
+            const step = (sectionSize - 2 * marginSize) / Math.max(1, items.length - 1);
 
-          // Science cases: top-left (90° to 210°) - 120° section
-          const caseStartAngle = 90 + gapAngle;
-          const caseEndAngle = 210 - gapAngle;
-          const caseSectionSize = caseEndAngle - caseStartAngle;
-          const caseMargin = caseSectionSize * 0.1; // 10% margin on each end
-          const caseAngleStep = (caseSectionSize - 2 * caseMargin) / Math.max(1, data.scienceCases.length - 1);
-
-          data.scienceCases.forEach((sc, i) => {
-            const angle = caseStartAngle + caseMargin + i * caseAngleStep;
-            const rad = (angle * Math.PI) / 180;
-            casePositions.set(sc.id, {
-              x: centerX + radius * Math.cos(rad),
-              y: centerY + radius * Math.sin(rad),
-              angle
+            items.forEach((item, i) => {
+              const angle = startAngle + marginSize + i * step;
+              const rad = (angle * Math.PI) / 180;
+              positions.set(item.id || item, {
+                x: centerX + radius * Math.cos(rad),
+                y: centerY + radius * Math.sin(rad),
+                angle
+              });
             });
-          });
+            return positions;
+          };
 
-          // Methodologies: bottom (210° to 330°) - 120° section
-          const methodStartAngle = 210 + gapAngle;
-          const methodEndAngle = 330 - gapAngle;
-          const methodSectionSize = methodEndAngle - methodStartAngle;
-          const methodMargin = methodSectionSize * 0.05; // 5% margin on each end
-          const methodAngleStep = (methodSectionSize - 2 * methodMargin) / Math.max(1, allMethodologies.length - 1);
+          const casePos = calcPositions(data.scienceCases, 93, 207, 0.1);
+          const methodPos = calcPositions(data.methodologies, 213, 327, 0.05);
+          const challengePos = calcPositions(data.challenges, 333, 447, 0.1);
 
-          allMethodologies.forEach((method, i) => {
-            const angle = methodStartAngle + methodMargin + i * methodAngleStep;
-            const rad = (angle * Math.PI) / 180;
-            methodPositions.set(method, {
-              x: centerX + radius * Math.cos(rad),
-              y: centerY + radius * Math.sin(rad),
-              angle
-            });
-          });
+          // Determine what to highlight
+          const getHighlighted = () => {
+            const cases = new Set(), methods = new Set(), challenges = new Set();
 
-          // Challenges: top-right (330° to 450° = 330° to 90°) - 120° section
-          const challengeStartAngle = 330 + gapAngle;
-          const challengeEndAngle = 450 - gapAngle; // 450° = 90° (wraps around)
-          const challengeSectionSize = challengeEndAngle - challengeStartAngle;
-          const challengeMargin = challengeSectionSize * 0.1; // 10% margin on each end
-          const challengeAngleStep = (challengeSectionSize - 2 * challengeMargin) / Math.max(1, allChallenges.length - 1);
-
-          allChallenges.forEach((challenge, i) => {
-            const angle = challengeStartAngle + challengeMargin + i * challengeAngleStep;
-            const rad = (angle * Math.PI) / 180;
-            challengePositions.set(challenge, {
-              x: centerX + radius * Math.cos(rad),
-              y: centerY + radius * Math.sin(rad),
-              angle
-            });
-          });
-
-          // Determine highlights
-          const getHighlightedCases = () => {
-            const highlighted = new Set();
-            if (activeMethod) {
+            if (active.type === 'case') {
+              cases.add(active.value);
+              const sc = data.scienceCases.find(s => s.id === active.value);
+              sc?.methodologies.forEach(m => methods.add(m));
+              sc?.challenges.forEach(c => challenges.add(c));
+            }
+            if (active.type === 'method') {
+              methods.add(active.value);
               data.scienceCases.forEach(sc => {
-                if (sc.methodologies.includes(activeMethod)) {
-                  highlighted.add(sc.id);
+                if (sc.methodologies.includes(active.value)) {
+                  cases.add(sc.id);
+                  sc.challenges.forEach(c => challenges.add(c));
                 }
               });
             }
-            if (activeChallenge) {
+            if (active.type === 'challenge') {
+              challenges.add(active.value);
               data.scienceCases.forEach(sc => {
-                if (sc.challenges.includes(activeChallenge)) {
-                  highlighted.add(sc.id);
+                if (sc.challenges.includes(active.value)) {
+                  cases.add(sc.id);
+                  sc.methodologies.forEach(m => methods.add(m));
                 }
               });
             }
-            if (activeCase) {
-              highlighted.add(activeCase);
-            }
-            return highlighted;
+            return { cases, methods, challenges };
           };
 
-          const getHighlightedMethods = () => {
-            const highlighted = new Set();
-            if (activeMethod) {
-              highlighted.add(activeMethod);
-            }
-            if (activeCase) {
-              const caseData = data.scienceCases.find(sc => sc.id === activeCase);
-              caseData?.methodologies.forEach(m => highlighted.add(m));
-            }
-            if (activeChallenge) {
-              data.scienceCases.forEach(sc => {
-                if (sc.challenges.includes(activeChallenge)) {
-                  sc.methodologies.forEach(m => highlighted.add(m));
-                }
-              });
-            }
-            return highlighted;
-          };
+          const highlighted = getHighlighted();
+          const hasSelection = !paperMode && active.type;
 
-          const getHighlightedChallenges = () => {
-            const highlighted = new Set();
-            if (activeChallenge) {
-              highlighted.add(activeChallenge);
-            }
-            if (activeCase) {
-              const caseData = data.scienceCases.find(sc => sc.id === activeCase);
-              caseData?.challenges.forEach(c => highlighted.add(c));
-            }
-            if (activeMethod) {
-              data.scienceCases.forEach(sc => {
-                if (sc.methodologies.includes(activeMethod)) {
-                  sc.challenges.forEach(c => highlighted.add(c));
-                }
-              });
-            }
-            return highlighted;
-          };
+          // Generate chords
+          const chords = [];
+          data.scienceCases.forEach(sc => {
+            const cPos = casePos.get(sc.id);
 
-          const highlightedCases = getHighlightedCases();
-          const highlightedMethods = getHighlightedMethods();
-          const highlightedChallenges = getHighlightedChallenges();
-
-          const hasActiveSelection = !paperMode && (activeMethod || activeCase || activeChallenge);
-
-          // Generate chord paths
-          const generateChords = () => {
-            const chords = [];
-
-            data.scienceCases.forEach(sc => {
-              const casePos = casePositions.get(sc.id);
-
-              // Science cases to methodologies (grey)
-              sc.methodologies.forEach(method => {
-                const methodPos = methodPositions.get(method);
-                const isHighlighted = paperMode ||
-                  (highlightedCases.has(sc.id) && highlightedMethods.has(method));
-
-                // Bezier curve from case to method through center
-                const controlDist = 150;
-                const path = `M ${casePos.x} ${casePos.y} Q ${centerX} ${centerY - controlDist} ${methodPos.x} ${methodPos.y}`;
-
-                chords.push({
-                  path,
-                  color: categoryColors.methodology.color,
-                  opacity: paperMode ? 0.25 : (isHighlighted ? 0.7 : 0.1),
-                  strokeWidth: isHighlighted ? 3 : 2,
-                  highlighted: isHighlighted
-                });
-              });
-
-              // Science cases to challenges (red)
-              sc.challenges.forEach(challenge => {
-                const challengePos = challengePositions.get(challenge);
-                const isHighlighted = paperMode ||
-                  (highlightedCases.has(sc.id) && highlightedChallenges.has(challenge));
-
-                // Direct Bezier curve from case to challenge through center
-                const controlDist = 150;
-                const path = `M ${casePos.x} ${casePos.y} Q ${centerX + controlDist} ${centerY} ${challengePos.x} ${challengePos.y}`;
-
-                chords.push({
-                  path,
-                  color: categoryColors.scienceCase.color,
-                  opacity: paperMode ? 0.2 : (isHighlighted ? 0.6 : 0.08),
-                  strokeWidth: isHighlighted ? 2.5 : 1.5,
-                  highlighted: isHighlighted
-                });
-              });
-            });
-
-            // Methodologies to challenges (yellow)
-            // Connect a methodology to a challenge if any science case uses both
-            const methodChallengeConnections = new Map();
-            data.scienceCases.forEach(sc => {
-              sc.methodologies.forEach(method => {
-                sc.challenges.forEach(challenge => {
-                  const key = `${method}::${challenge}`;
-                  if (!methodChallengeConnections.has(key)) {
-                    methodChallengeConnections.set(key, true);
-                  }
-                });
-              });
-            });
-
-            methodChallengeConnections.forEach((_, key) => {
-              const [method, challenge] = key.split('::');
-              const methodPos = methodPositions.get(method);
-              const challengePos = challengePositions.get(challenge);
-
-              const isHighlighted = paperMode ||
-                (highlightedMethods.has(method) && highlightedChallenges.has(challenge));
-
-              // Bezier curve from method to challenge through center
-              const controlDist = 150;
-              const path = `M ${methodPos.x} ${methodPos.y} Q ${centerX} ${centerY + controlDist} ${challengePos.x} ${challengePos.y}`;
-
+            // Science cases to methodologies
+            sc.methodologies.forEach(method => {
+              const mPos = methodPos.get(method);
+              const isHighlighted = paperMode || (highlighted.cases.has(sc.id) && highlighted.methods.has(method));
               chords.push({
-                path,
-                color: categoryColors.challenge.color,
-                opacity: paperMode ? 0.2 : (isHighlighted ? 0.6 : 0.08),
-                strokeWidth: isHighlighted ? 2.5 : 1.5,
-                highlighted: isHighlighted
+                path: `M ${cPos.x} ${cPos.y} Q ${centerX} ${centerY - 150} ${mPos.x} ${mPos.y}`,
+                color: COLORS.methodology.color,
+                opacity: paperMode ? 0.25 : (isHighlighted ? 0.7 : 0.1),
+                width: isHighlighted ? 3 : 2,
+                glow: isHighlighted && !paperMode
               });
             });
 
-            return chords;
+            // Science cases to challenges
+            sc.challenges.forEach(challenge => {
+              const chPos = challengePos.get(challenge);
+              const isHighlighted = paperMode || (highlighted.cases.has(sc.id) && highlighted.challenges.has(challenge));
+              chords.push({
+                path: `M ${cPos.x} ${cPos.y} Q ${centerX + 150} ${centerY} ${chPos.x} ${chPos.y}`,
+                color: COLORS.scienceCase.color,
+                opacity: paperMode ? 0.2 : (isHighlighted ? 0.6 : 0.08),
+                width: isHighlighted ? 2.5 : 1.5,
+                glow: isHighlighted && !paperMode
+              });
+            });
+          });
+
+          // Methodologies to challenges
+          const methodChallengeLinks = new Map();
+          data.scienceCases.forEach(sc => {
+            sc.methodologies.forEach(m => {
+              sc.challenges.forEach(c => {
+                methodChallengeLinks.set(`${m}::${c}`, true);
+              });
+            });
+          });
+
+          methodChallengeLinks.forEach((_, key) => {
+            const [method, challenge] = key.split('::');
+            const mPos = methodPos.get(method);
+            const chPos = challengePos.get(challenge);
+            const isHighlighted = paperMode || (highlighted.methods.has(method) && highlighted.challenges.has(challenge));
+            chords.push({
+              path: `M ${mPos.x} ${mPos.y} Q ${centerX} ${centerY + 150} ${chPos.x} ${chPos.y}`,
+              color: COLORS.challenge.color,
+              opacity: paperMode ? 0.2 : (isHighlighted ? 0.6 : 0.08),
+              width: isHighlighted ? 2.5 : 1.5,
+              glow: isHighlighted && !paperMode
+            });
+          });
+
+          // Render node
+          const renderNode = (item, pos, type, colorConfig, activeCheck, highlightCheck, labelRadius) => {
+            const isActive = activeCheck(item);
+            const isHighlighted = highlightCheck(item);
+            const isDimmed = hasSelection && !isHighlighted;
+            const labelRad = (pos.angle * Math.PI) / 180;
+            const labelX = centerX + labelRadius * Math.cos(labelRad);
+            const labelY = centerY + labelRadius * Math.sin(labelRad);
+
+            let textAnchor = 'middle';
+            if (type === 'case') textAnchor = pos.angle > 90 && pos.angle < 270 ? 'end' : 'start';
+            if (type === 'challenge') textAnchor = pos.angle > 270 || pos.angle < 90 ? 'start' : 'end';
+            if (type === 'method') textAnchor = pos.angle < 270 ? 'end' : 'start';
+
+            return React.createElement('g', { key: item.id || item },
+              React.createElement('circle', {
+                cx: pos.x,
+                cy: pos.y,
+                r: isActive ? 14 : (type === 'method' ? 12 : 10),
+                fill: (paperMode || isHighlighted || isActive) ? colorConfig.color : colorConfig.bgColor,
+                stroke: colorConfig.color,
+                strokeWidth: isActive ? 3 : 2,
+                opacity: isDimmed ? 0.3 : 1,
+                className: paperMode ? '' : 'cursor-pointer',
+                style: { transition: 'all 0.2s ease' },
+                onMouseEnter: () => setHover(type, item.id || item),
+                onMouseLeave: clearHover,
+                onClick: () => handleClick(type, item.id || item)
+              }),
+              React.createElement('text', {
+                x: labelX,
+                y: labelY,
+                textAnchor,
+                dominantBaseline: 'middle',
+                className: 'pointer-events-none',
+                fontSize: type === 'method' ? '16' : '17',
+                fontWeight: isActive ? 'bold' : (type === 'method' ? '500' : 'normal'),
+                fill: type === 'method' ? '#1e293b' : '#334155',
+                opacity: isDimmed ? 0.3 : 1,
+                style: { transition: 'all 0.2s ease' }
+              }, item.name || item)
+            );
           };
 
-          const chords = generateChords();
-
-          return React.createElement('div', { className: 'bg-white rounded-xl shadow-lg border border-slate-200 p-8' },
-            // Controls bar - always visible with toggle button
-            React.createElement('div', { className: 'mb-6 flex items-center justify-between gap-6 flex-wrap pb-6 border-b border-slate-200' },
-              // Legend and title - only shown in interactive mode
-              !paperMode && React.createElement('div', { className: 'flex items-center gap-6' },
-                React.createElement('div', { className: 'flex items-center gap-2' },
-                  React.createElement('span', { className: 'text-slate-600' }, 'Interactive chord diagram')
+          return React.createElement('div', { className: 'container' },
+            // Controls
+            React.createElement('div', { className: 'controls' },
+              !paperMode && React.createElement('div', { className: 'legend' },
+                React.createElement('span', { style: { color: '#475569', fontSize: '0.95rem' } }, 'Interactive chord diagram'),
+                React.createElement('div', { className: 'legend-item' },
+                  React.createElement('div', { className: 'legend-color', style: { backgroundColor: COLORS.scienceCase.color } }),
+                  React.createElement('span', null, 'Science ', React.createElement('br'), 'Cases')
                 ),
-                React.createElement('div', { className: 'flex items-center gap-4' },
-                  React.createElement('div', { className: 'flex items-center gap-2' },
-                    React.createElement('div', { className: 'w-4 h-4 rounded', style: { backgroundColor: categoryColors.scienceCase.color }}),
-                    React.createElement('span', { className: 'text-slate-600' }, 'Science Cases')
-                  ),
-                  React.createElement('div', { className: 'flex items-center gap-2' },
-                    React.createElement('div', { className: 'w-4 h-4 rounded', style: { backgroundColor: categoryColors.methodology.color }}),
-                    React.createElement('span', { className: 'text-slate-600' }, 'Methodologies')
-                  ),
-                  React.createElement('div', { className: 'flex items-center gap-2' },
-                    React.createElement('div', { className: 'w-4 h-4 rounded', style: { backgroundColor: categoryColors.challenge.color }}),
-                    React.createElement('span', { className: 'text-slate-600' }, 'Challenges')
-                  )
+                React.createElement('div', { className: 'legend-item' },
+                  React.createElement('div', { className: 'legend-color', style: { backgroundColor: COLORS.methodology.color } }),
+                  React.createElement('span', null, 'Methodologies')
+                ),
+                React.createElement('div', { className: 'legend-item' },
+                  React.createElement('div', { className: 'legend-color', style: { backgroundColor: COLORS.challenge.color } }),
+                  React.createElement('span', null, 'Challenges')
                 )
               ),
-
-              // Toggle button - always visible
-              React.createElement('div', { className: 'flex items-center gap-3' + (paperMode ? ' ml-auto' : '') },
+              React.createElement('div', { className: 'button-group', style: paperMode ? { marginLeft: 'auto' } : {} },
                 React.createElement('button', {
-                  onClick: () => {
-                    setPaperMode(!paperMode);
-                    setLockedSelection(null);
-                  },
-                  className: paperMode
-                    ? 'px-4 py-2 rounded-lg border-2 transition-all flex items-center gap-2 border-indigo-500 bg-indigo-50 text-indigo-700'
-                    : 'px-4 py-2 rounded-lg border-2 transition-all flex items-center gap-2 border-slate-300 bg-white text-slate-700 hover:border-slate-400'
-                },
-                  paperMode ? 'Switch to Interactive' : 'Switch to Paper Mode'
-                ),
-
-                lockedSelection && !paperMode && React.createElement('button', {
-                  onClick: () => setLockedSelection(null),
-                  className: 'px-4 py-2 bg-slate-100 hover:bg-slate-200 rounded-lg text-slate-700 transition-colors'
+                  onClick: () => { setPaperMode(!paperMode); setLocked(null); },
+                  className: 'btn-toggle' + (paperMode ? ' active' : '')
+                }, paperMode ? 'Switch to Interactive' : 'Switch to Paper Mode'),
+                locked && !paperMode && React.createElement('button', {
+                  onClick: () => setLocked(null),
+                  className: 'btn-clear'
                 }, 'Clear selection')
               )
             ),
 
-            // Chord diagram
-            React.createElement('div', { className: 'relative flex justify-center' },
-              React.createElement('svg', { width: 1200, height: 1000, className: 'max-w-full' },
+            // SVG Diagram
+            React.createElement('div', { className: 'svg-container' },
+              React.createElement('svg', { viewBox: '0 0 1200 1000', preserveAspectRatio: 'xMidYMid meet' },
                 React.createElement('defs', null,
                   React.createElement('filter', { id: 'glow' },
-                    React.createElement('feGaussianBlur', { stdDeviation: '3', result: 'coloredBlur' }),
+                    React.createElement('feGaussianBlur', { stdDeviation: '3', result: 'blur' }),
                     React.createElement('feMerge', null,
-                      React.createElement('feMergeNode', { in: 'coloredBlur' }),
+                      React.createElement('feMergeNode', { in: 'blur' }),
                       React.createElement('feMergeNode', { in: 'SourceGraphic' })
                     )
                   )
                 ),
 
-                // DESC Logo embedded in SVG at top left
+                // Logo
                 React.createElement('image', {
                   href: 'desc_logo.png',
                   x: 10,
@@ -504,265 +429,136 @@
                   preserveAspectRatio: 'xMinYMin meet'
                 }),
 
-                // Background circle with sections
-                React.createElement('g', null,
-                  // Full background circle
-                  React.createElement('circle', {
-                    cx: centerX,
-                    cy: centerY,
-                    r: radius,
-                    fill: 'none',
-                    stroke: '#f1f5f9',
-                    strokeWidth: '1'
-                  }),
+                // Background circle
+                React.createElement('circle', {
+                  cx: centerX,
+                  cy: centerY,
+                  r: radius,
+                  fill: 'none',
+                  stroke: '#f1f5f9',
+                  strokeWidth: '1'
+                }),
 
-                  // Section arcs with different colors
-                  // Science cases section (90° to 210°)
-                  React.createElement('path', {
-                    d: `M ${centerX + radius * Math.cos(90 * Math.PI / 180)} ${centerY + radius * Math.sin(90 * Math.PI / 180)} A ${radius} ${radius} 0 0 1 ${centerX + radius * Math.cos(210 * Math.PI / 180)} ${centerY + radius * Math.sin(210 * Math.PI / 180)}`,
+                // Section arcs
+                [
+                  { start: 90, end: 210, color: COLORS.scienceCase.color },
+                  { start: 210, end: 330, color: COLORS.methodology.color },
+                  { start: 330, end: 450, color: COLORS.challenge.color }
+                ].map((arc, i) => {
+                  const startRad = (arc.start * Math.PI) / 180;
+                  const endRad = (arc.end * Math.PI) / 180;
+                  const startX = centerX + radius * Math.cos(startRad);
+                  const startY = centerY + radius * Math.sin(startRad);
+                  const endX = centerX + radius * Math.cos(endRad);
+                  const endY = centerY + radius * Math.sin(endRad);
+                  const largeArc = arc.end - arc.start > 180 ? 1 : 0;
+
+                  return React.createElement('path', {
+                    key: i,
+                    d: `M ${startX} ${startY} A ${radius} ${radius} 0 ${largeArc} 1 ${endX} ${endY}`,
                     fill: 'none',
-                    stroke: categoryColors.scienceCase.color,
+                    stroke: arc.color,
                     strokeWidth: '6',
                     strokeOpacity: '0.4'
-                  }),
+                  });
+                }),
 
-                  // Methodologies section (210° to 330°)
-                  React.createElement('path', {
-                    d: `M ${centerX + radius * Math.cos(210 * Math.PI / 180)} ${centerY + radius * Math.sin(210 * Math.PI / 180)} A ${radius} ${radius} 0 0 1 ${centerX + radius * Math.cos(330 * Math.PI / 180)} ${centerY + radius * Math.sin(330 * Math.PI / 180)}`,
-                    fill: 'none',
-                    stroke: categoryColors.methodology.color,
-                    strokeWidth: '6',
-                    strokeOpacity: '0.4'
-                  }),
-
-                  // Challenges section (330° to 90°, wrapping around through 0°)
-                  React.createElement('path', {
-                    d: `M ${centerX + radius * Math.cos(330 * Math.PI / 180)} ${centerY + radius * Math.sin(330 * Math.PI / 180)} A ${radius} ${radius} 0 0 1 ${centerX + radius * Math.cos(90 * Math.PI / 180)} ${centerY + radius * Math.sin(90 * Math.PI / 180)}`,
-                    fill: 'none',
-                    stroke: categoryColors.challenge.color,
-                    strokeWidth: '6',
-                    strokeOpacity: '0.4'
-                  }),
-
-                  // Radial boundary lines
-                  // Boundary at 90°
-                  React.createElement('line', {
+                // Boundary lines
+                [90, 210, 330].map(angle => {
+                  const rad = (angle * Math.PI) / 180;
+                  return React.createElement('line', {
+                    key: angle,
                     x1: centerX,
                     y1: centerY,
-                    x2: centerX + (radius + 30) * Math.cos(90 * Math.PI / 180),
-                    y2: centerY + (radius + 30) * Math.sin(90 * Math.PI / 180),
+                    x2: centerX + (radius + 30) * Math.cos(rad),
+                    y2: centerY + (radius + 30) * Math.sin(rad),
                     stroke: '#cbd5e1',
                     strokeWidth: '2',
                     strokeDasharray: '4,4',
                     opacity: '0.6'
-                  }),
-
-                  // Boundary at 210°
-                  React.createElement('line', {
-                    x1: centerX,
-                    y1: centerY,
-                    x2: centerX + (radius + 30) * Math.cos(210 * Math.PI / 180),
-                    y2: centerY + (radius + 30) * Math.sin(210 * Math.PI / 180),
-                    stroke: '#cbd5e1',
-                    strokeWidth: '2',
-                    strokeDasharray: '4,4',
-                    opacity: '0.6'
-                  }),
-
-                  // Boundary at 330°
-                  React.createElement('line', {
-                    x1: centerX,
-                    y1: centerY,
-                    x2: centerX + (radius + 30) * Math.cos(330 * Math.PI / 180),
-                    y2: centerY + (radius + 30) * Math.sin(330 * Math.PI / 180),
-                    stroke: '#cbd5e1',
-                    strokeWidth: '2',
-                    strokeDasharray: '4,4',
-                    opacity: '0.6'
-                  })
-                ),
+                  });
+                }),
 
                 // Chords
                 React.createElement('g', null,
-                  chords.map((chord, idx) =>
+                  chords.map((chord, i) =>
                     React.createElement('path', {
-                      key: idx,
+                      key: i,
                       d: chord.path,
                       stroke: chord.color,
-                      strokeWidth: chord.strokeWidth,
+                      strokeWidth: chord.width,
                       strokeOpacity: chord.opacity,
                       fill: 'none',
                       strokeLinecap: 'round',
                       style: {
                         transition: 'all 0.3s ease',
-                        filter: chord.highlighted && !paperMode ? 'url(#glow)' : 'none'
+                        filter: chord.glow ? 'url(#glow)' : 'none'
                       }
                     })
                   )
                 ),
 
-                // Science Cases
-                data.scienceCases.map(sc => {
-                  const pos = casePositions.get(sc.id);
-                  const isHighlighted = highlightedCases.has(sc.id);
-                  const isActive = activeCase === sc.id;
-                  const isDimmed = hasActiveSelection && !isHighlighted;
-
-                  const labelRadius = radius + 40;
-                  const labelRad = (pos.angle * Math.PI) / 180;
-                  const labelX = centerX + labelRadius * Math.cos(labelRad);
-                  const labelY = centerY + labelRadius * Math.sin(labelRad);
-
-                  return React.createElement('g', { key: sc.id },
-                    React.createElement('circle', {
-                      cx: pos.x,
-                      cy: pos.y,
-                      r: isActive ? 14 : 10,
-                      fill: (paperMode || isHighlighted || isActive) ? categoryColors.scienceCase.color : categoryColors.scienceCase.bgColor,
-                      stroke: categoryColors.scienceCase.color,
-                      strokeWidth: isActive ? 3 : 2,
-                      opacity: isDimmed ? 0.3 : 1,
-                      className: paperMode ? '' : 'cursor-pointer',
-                      style: { transition: 'all 0.2s ease' },
-                      onMouseEnter: () => !lockedSelection && !paperMode && setHoveredCase(sc.id),
-                      onMouseLeave: () => !lockedSelection && !paperMode && setHoveredCase(null),
-                      onClick: () => handleClick('case', sc.id)
-                    }),
-                    React.createElement('text', {
-                      x: labelX,
-                      y: labelY,
-                      textAnchor: pos.angle > 90 && pos.angle < 270 ? 'end' : 'start',
-                      dominantBaseline: 'middle',
-                      className: 'text-slate-700 pointer-events-none',
-                      fontSize: '15',
-                      fontWeight: isActive ? 'bold' : 'normal',
-                      opacity: isDimmed ? 0.3 : 1,
-                      style: { transition: 'all 0.2s ease' }
-                    }, sc.shortName)
-                  );
-                }),
+                // Science cases
+                data.scienceCases.map(sc => renderNode(
+                  sc,
+                  casePos.get(sc.id),
+                  'case',
+                  COLORS.scienceCase,
+                  (s) => active.type === 'case' && active.value === s.id,
+                  (s) => highlighted.cases.has(s.id),
+                  410
+                )),
 
                 // Methodologies
-                allMethodologies.map(method => {
-                  const pos = methodPositions.get(method);
-                  const methodData = data.methodologies.get(method);
-                  const isHighlighted = highlightedMethods.has(method);
-                  const isActive = activeMethod === method;
-                  const isDimmed = hasActiveSelection && !isHighlighted;
-
-                  const labelRadius = radius + 50;
-                  const labelRad = (pos.angle * Math.PI) / 180;
-                  const labelX = centerX + labelRadius * Math.cos(labelRad);
-                  const labelY = centerY + labelRadius * Math.sin(labelRad);
-
-                  return React.createElement('g', { key: method },
-                    React.createElement('circle', {
-                      cx: pos.x,
-                      cy: pos.y,
-                      r: isActive ? 16 : 12,
-                      fill: paperMode || isHighlighted || isActive ? methodData.color : methodData.bgColor,
-                      stroke: methodData.color,
-                      strokeWidth: isActive ? 4 : 2,
-                      opacity: isDimmed ? 0.3 : 1,
-                      className: paperMode ? '' : 'cursor-pointer',
-                      style: { transition: 'all 0.2s ease' },
-                      onMouseEnter: () => !lockedSelection && !paperMode && setHoveredMethod(method),
-                      onMouseLeave: () => !lockedSelection && !paperMode && setHoveredMethod(null),
-                      onClick: () => handleClick('method', method)
-                    }),
-                    React.createElement('text', {
-                      x: labelX,
-                      y: labelY,
-                      textAnchor: 'middle',
-                      dominantBaseline: 'middle',
-                      className: 'text-slate-800 pointer-events-none',
-                      fontSize: '14',
-                      fontWeight: isActive ? 'bold' : '500',
-                      opacity: isDimmed ? 0.3 : 1,
-                      style: { transition: 'all 0.2s ease' }
-                    }, method)
-                  );
-                }),
+                data.methodologies.map(method => renderNode(
+                  method,
+                  methodPos.get(method),
+                  'method',
+                  COLORS.methodology,
+                  (m) => active.type === 'method' && active.value === m,
+                  (m) => highlighted.methods.has(m),
+                  420
+                )),
 
                 // Challenges
-                allChallenges.map(challenge => {
-                  const pos = challengePositions.get(challenge);
-                  const isHighlighted = highlightedChallenges.has(challenge);
-                  const isActive = activeChallenge === challenge;
-                  const isDimmed = hasActiveSelection && !isHighlighted;
+                data.challenges.map(challenge => renderNode(
+                  challenge,
+                  challengePos.get(challenge),
+                  'challenge',
+                  COLORS.challenge,
+                  (c) => active.type === 'challenge' && active.value === c,
+                  (c) => highlighted.challenges.has(c),
+                  410
+                )),
 
-                  const labelRadius = radius + 40;
-                  const labelRad = (pos.angle * Math.PI) / 180;
-                  const labelX = centerX + labelRadius * Math.cos(labelRad);
-                  const labelY = centerY + labelRadius * Math.sin(labelRad);
-
-                  return React.createElement('g', { key: challenge },
-                    React.createElement('circle', {
-                      cx: pos.x,
-                      cy: pos.y,
-                      r: isActive ? 14 : 10,
-                      fill: (paperMode || isHighlighted || isActive) ? categoryColors.challenge.color : categoryColors.challenge.bgColor,
-                      stroke: categoryColors.challenge.color,
-                      strokeWidth: isActive ? 3 : 2,
-                      opacity: isDimmed ? 0.3 : 1,
-                      className: paperMode ? '' : 'cursor-pointer',
-                      style: { transition: 'all 0.2s ease' },
-                      onMouseEnter: () => !lockedSelection && !paperMode && setHoveredChallenge(challenge),
-                      onMouseLeave: () => !lockedSelection && !paperMode && setHoveredChallenge(null),
-                      onClick: () => handleClick('challenge', challenge)
-                    }),
-                    React.createElement('text', {
-                      x: labelX,
-                      y: labelY,
-                      textAnchor: pos.angle > 270 || pos.angle < 90 ? 'start' : 'end',
-                      dominantBaseline: 'middle',
-                      className: 'text-slate-700 pointer-events-none',
-                      fontSize: '15',
-                      fontWeight: isActive ? 'bold' : 'normal',
-                      opacity: isDimmed ? 0.3 : 1,
-                      style: { transition: 'all 0.2s ease' }
-                    }, challenge)
-                  );
-                }),
-
-                // Section labels - centered on each arc
-                // Science Cases label at 150° (midpoint of 90° to 210°) - LEFT side
-                React.createElement('text', {
-                  x: centerX + (radius + 200) * Math.cos(150 * Math.PI / 180),
-                  y: centerY + (radius + 200) * Math.sin(150 * Math.PI / 180),
-                  textAnchor: 'middle',
-                  dominantBaseline: 'middle',
-                  className: 'text-slate-500',
-                  fontSize: '20',
-                  fontWeight: '700'
-                }, 'Science Cases'),
-                // Methodologies label at 270° (midpoint of 210° to 330°) - TOP
-                React.createElement('text', {
-                  x: centerX + (radius + 100) * Math.cos(270 * Math.PI / 180),
-                  y: centerY + (radius + 100) * Math.sin(270 * Math.PI / 180),
-                  textAnchor: 'middle',
-                  dominantBaseline: 'hanging',
-                  className: 'text-slate-500',
-                  fontSize: '20',
-                  fontWeight: '700'
-                }, 'Methodologies'),
-                // Challenges label at 30° (midpoint of 330° to 90° via 0°) - RIGHT side
-                React.createElement('text', {
-                  x: centerX + (radius + 200) * Math.cos(30 * Math.PI / 180),
-                  y: centerY + (radius + 200) * Math.sin(30 * Math.PI / 180),
-                  textAnchor: 'middle',
-                  dominantBaseline: 'middle',
-                  className: 'text-slate-500',
-                  fontSize: '20',
-                  fontWeight: '700'
-                }, 'Challenges')
+                // Section labels
+                [
+                  { label: 'Science\nCases', angle: 150, offset: 230 },
+                  { label: 'Methodologies', angle: 270, offset: 100 },
+                  { label: 'Challenges', angle: 30, offset: 230 }
+                ].map(({ label, angle, offset }) => {
+                  const rad = (angle * Math.PI) / 180;
+                  const lines = label.split('\n');
+                  return React.createElement('text', {
+                    key: label,
+                    x: centerX + (radius + offset) * Math.cos(rad),
+                    y: centerY + (radius + offset) * Math.sin(rad),
+                    textAnchor: 'middle',
+                    dominantBaseline: angle === 270 ? 'hanging' : 'middle',
+                    fontSize: '24',
+                    fontWeight: '700',
+                    fill: '#424b54'
+                  }, lines.length > 1
+                    ? lines.map((line, i) => React.createElement('tspan', { key: i, x: centerX + (radius + offset) * Math.cos(rad), dy: i === 0 ? '-0.6em' : '1.2em' }, line))
+                    : label);
+                })
               )
             )
           );
         }
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(React.createElement(InteractiveDiagram));
+        root.render(React.createElement(ChordDiagram));
     </script>
 </body>
 </html>

@@ -50,22 +50,25 @@
 \newcommand{\aimethvis}[1]{\textcolor{aiMethVis}{\textsf{#1}}}
 
 % ------------------------------------------------------------------
-% Color code for CHALLENGE families (Warm/Earthy - Anchored on Mule Fawn/Tussock)
+% Color code for CHALLENGE families (5 categories)
 % ------------------------------------------------------------------
-% G1: Uncertainty & Calibration                  -> aiChUQ (Mule Fawn - User Anchor)
-% G2: Robustness & Generalization                -> aiChRobust (Tussock - User Anchor)
-% G3: Physics & Systematics                      -> aiChPhys (Muted Pink/Rose)
-% G4: Data & Scalability                         -> aiChData (Dark Pumice/Taupe)
+% C1: Covariate Shifts                           -> aiChCovariate
+% C2: Uncertainty Quantification                 -> aiChUQ
+% C3: Scalability                                -> aiChScale
+% C4: Data Sparsity & Rare Events                -> aiChSparsity
+% C5: Metrics & Evaluation                       -> aiChMetrics
 
-\definecolor{aiChUQ}{HTML}{92402D}      % Mule Fawn (User Anchor)
-\definecolor{aiChRobust}{HTML}{C2814C}  % Tussock (User Anchor)
-\definecolor{aiChPhys}{HTML}{C06C84}    % Muted Pink
-\definecolor{aiChData}{HTML}{7D7068}    % Dark Pumice/Taupe (Readable version of Pumice)
+\definecolor{aiChCovariate}{HTML}{C2814C}  % Tussock (warm orange)
+\definecolor{aiChUQ}{HTML}{92402D}         % Mule Fawn (deep red-brown)
+\definecolor{aiChScale}{HTML}{7D7068}      % Dark Pumice/Taupe
+\definecolor{aiChSparsity}{HTML}{5D4C76}   % Muted Purple
+\definecolor{aiChMetrics}{HTML}{C06C84}    % Muted Pink
 
+\newcommand{\aichcovariate}[1]{\textcolor{aiChCovariate}{\textsf{#1}}}
 \newcommand{\aichuq}[1]{\textcolor{aiChUQ}{\textsf{#1}}}
-\newcommand{\aichrobust}[1]{\textcolor{aiChRobust}{\textsf{#1}}}
-\newcommand{\aichphys}[1]{\textcolor{aiChPhys}{\textsf{#1}}}
-\newcommand{\aichdata}[1]{\textcolor{aiChData}{\textsf{#1}}}
+\newcommand{\aichscale}[1]{\textcolor{aiChScale}{\textsf{#1}}}
+\newcommand{\aichsparsity}[1]{\textcolor{aiChSparsity}{\textsf{#1}}}
+\newcommand{\aichmetrics}[1]{\textcolor{aiChMetrics}{\textsf{#1}}}
 
 % ------------------------------------------------------------------
 % METHOD ENTRIES (IDs used with \meth{...})
@@ -283,81 +286,47 @@
 % CHALLENGE ENTRIES (IDs used with \challenge{...})
 % ------------------------------------------------------------------
 
-% G1: Uncertainty & Calibration
-
-\newglossaryentry{uq-calibration}{%
-  type=challenges,
-  name={\aichuq{Uncertainty quantification \& calibration}},
-  text={\aichuq{UQ \& calibration}},
-  description={Obtaining well-calibrated posteriors and predictive distributions, including shear and photo-$z$ calibration. Addressed in \autoref{sec4:Bayes}, \autoref{sec4:sbi}, and \autoref{sec4:validation}}
-}
-
-\newglossaryentry{metrics}{%
-  type=challenges,
-  name={\aichuq{Metrics \& evaluation}},
-  text={\aichuq{Metrics \& evaluation}},
-  description={Defining task-relevant metrics and validation protocols that reflect DESC science requirements}
-}
-
-% G2: Robustness & Generalization
+% C1: Covariate Shifts
 
 \newglossaryentry{covariate-shift}{%
   type=challenges,
-  name={\aichrobust{Covariate shift \& domain adaptation}},
-  text={\aichrobust{Covariate shift}},
-  description={Differences between training and target data distributions (e.g.\ sims vs.\ survey, bright vs.\ faint). Addressed in \autoref{sec4:model-misspec} and \autoref{sec:discovery}}
+  name={\aichcovariate{Covariate Shifts}},
+  text={\aichcovariate{Covariate shifts}},
+  description={Distribution mismatches between training and target data (e.g.\ spectroscopic selection bias, sim-to-real gaps, model misspecification). Addressed in \autoref{sec4:model-misspec}, \autoref{sec4:hybrid-gen-phys}, and \autoref{sec:discovery}}
 }
 
-\newglossaryentry{model-misspecification}{%
+% C2: Uncertainty Quantification
+
+\newglossaryentry{uq}{%
   type=challenges,
-  name={\aichrobust{Model misspecification}},
-  text={\aichrobust{Model misspecification}},
-  description={Errors arising when the model (simulation or likelihood) does not accurately match the data-generating process. Addressed in \autoref{sec4:model-misspec}, \autoref{sec4:physics-informed}, and \autoref{sec4:hybrid-gen-phys}}
+  name={\aichuq{Uncertainty Quantification}},
+  text={\aichuq{UQ}},
+  description={Obtaining well-calibrated posteriors and propagating uncertainties to cosmological constraints. Addressed in \autoref{sec4:Bayes}, \autoref{sec4:sbi}, and \autoref{sec4:validation}}
 }
 
-\newglossaryentry{out-of-distribution}{%
-  type=challenges,
-  name={\aichrobust{Out-of-distribution (OOD) detection}},
-  text={\aichrobust{OOD detection}},
-  description={Identifying data points that lie outside the training distribution to avoid confident but wrong predictions. Addressed in \autoref{sec:discovery}}
-}
-
-% G3: Physics & Systematics
-
-\newglossaryentry{systematics-modeling}{%
-  type=challenges,
-  name={\aichphys{Systematics modeling}},
-  text={\aichphys{Systematics}},
-  description={Modeling astrophysical and instrumental systematics, complex mass models, and intrinsic degeneracies. Addressed in \autoref{sec4:physics-informed} and \autoref{sec4:physics-constraints}}
-}
-
-\newglossaryentry{blending-crowding}{%
-  type=challenges,
-  name={\aichphys{Blending \& crowding}},
-  text={\aichphys{Blending \& crowding}},
-  description={Unrecognized blends, crowded fields, and deblending errors affecting photometry and shape measurements}
-}
-
-% G4: Data & Scalability
+% C3: Scalability
 
 \newglossaryentry{scalability}{%
   type=challenges,
-  name={\aichdata{Scalability \& compute efficiency}},
-  text={\aichdata{Scalability}},
-  description={Handling LSST-scale datasets, high-dimensional parameter spaces, and costly likelihood or simulation calls. Addressed in \autoref{sec4:Bayes} and \autoref{sec4:sbi}}
+  name={\aichscale{Scalability}},
+  text={\aichscale{Scalability}},
+  description={Handling LSST-scale data volumes, real-time alert processing, and high-dimensional inference. Addressed in \autoref{sec4:Bayes}, \autoref{sec4:sbi}, and \autoref{sec4:hybrid-gen-phys}}
 }
+
+% C4: Data Sparsity & Rare Events
 
 \newglossaryentry{data-sparsity}{%
   type=challenges,
-  name={\aichdata{Data sparsity \& rare events}},
-  text={\aichdata{Data sparsity}},
-  description={Imbalanced classes, rare transients, and limited labeled samples in key regions of parameter space}
+  name={\aichsparsity{Data Sparsity \& Rare Events}},
+  text={\aichsparsity{Data sparsity}},
+  description={Limited labeled samples, rare transients, class imbalance, and challenging edge cases like blending. Addressed in \autoref{sec:discovery}}
 }
 
-\newglossaryentry{multi-modal}{%
+% C5: Metrics & Evaluation
+
+\newglossaryentry{metrics}{%
   type=challenges,
-  name={\aichdata{Multi-modal integration}},
-  text={\aichdata{Multi-modal integration}},
-  description={Combining heterogeneous data sources (images, catalogs, time-series, spectra) into unified models}
+  name={\aichmetrics{Metrics \& Evaluation}},
+  text={\aichmetrics{Metrics}},
+  description={Task-relevant metrics, validation frameworks, benchmarking, and stress tests for DESC science. Addressed in \autoref{sec4:validation} and \autoref{sec4:physics-constraints}}
 }
-
