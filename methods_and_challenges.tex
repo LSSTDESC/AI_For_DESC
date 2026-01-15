@@ -80,14 +80,14 @@
   type=methods,
   name={\aimethbayes{Simulation-based inference (SBI)}},
   text={\aimethbayes{SBI}},
-  description={Implicit-likelihood Bayesian inference using forward simulations and neural density estimators}
+  description={Implicit-likelihood Bayesian inference using forward simulations and \acrshort{nde} techniques}
 }
 
 \newglossaryentry{neural-density-estimation}{%
   type=methods,
-  name={\aimethbayes{Neural density estimation}},
-  text={\aimethbayes{Neural density estimation}},
-  description={Neural networks trained to approximate probability densities, often used within SBI}
+  name={\aimethbayes{Neural density estimation (NDE)}},
+  text={\aimethbayes{NDE}},
+  description={Neural networks trained to approximate probability densities, often used within \acrshort{acr:sbi}}
 }
 
 \newglossaryentry{npe}{%
@@ -115,7 +115,7 @@
   type=methods,
   name={\aimethbayes{Deep ensembles}},
   text={\aimethbayes{Ensembles}},
-  description={Collections of models combined for improved performance and uncertainty quantification}
+  description={Collections of models combined for improved performance and \acrshort{acr:uq}}
 }
 
 \newglossaryentry{gaussian-process}{%
@@ -145,21 +145,21 @@
   type=methods,
   name={\aimethgen{Variational autoencoders (VAEs)}},
   text={\aimethgen{VAEs}},
-  description={Latent-variable generative models trained via variational inference}
+  description={Latent-variable generative models trained via \acrshort{vi}}
 }
 
 \newglossaryentry{emulator}{%
   type=methods,
   name={\aimethgen{Emulators}},
   text={\aimethgen{Emulators}},
-  description={Surrogate models (often GP- or NN-based) that approximate expensive simulations or likelihoods}
+  description={Surrogate models (often Gaussian process- or neural network-based) that approximate expensive simulations or likelihoods}
 }
 
 \newglossaryentry{neural-surrogate}{%
   type=methods,
   name={\aimethgen{Neural surrogates}},
   text={\aimethgen{Neural surrogates}},
-  description={Neural network models trained to mimic the input--output behaviour of complex physical simulations}
+  description={Neural network models trained to mimic the input--output behavior of complex physical simulations}
 }
 
 % F3: Deep Learning Architectures
@@ -175,14 +175,14 @@
   type=methods,
   name={\aimethdeep{Transformers}},
   text={\aimethdeep{Transformers}},
-  description={Attention-based neural architectures for sequences, time series, or generic sets of tokens (including Vision Transformers)}
+  description={Attention-based neural architectures for sequences, time series, or generic sets of tokens (including vision transformers)}
 }
 
 \newglossaryentry{rnn}{%
   type=methods,
   name={\aimethdeep{Recurrent neural networks (RNNs)}},
   text={\aimethdeep{RNNs}},
-  description={Sequence models (e.g.\ LSTMs, GRUs) for time series and light curves}
+  description={Sequence models (e.g.\ \acrshortpl{lstm}, \acrshortpl{gru}) for time series and light curves}
 }
 
 \newglossaryentry{gnn}{%
@@ -212,7 +212,7 @@
   type=methods,
   name={\aimethphys{Physics-informed ML}},
   text={\aimethphys{Physics-informed ML}},
-  description={Machine learning models that incorporate physical laws or constraints (e.g., PINNs, Hamiltonian NN)}
+  description={Machine learning models that incorporate physical laws or constraints (e.g., \acrshortpl{pinn}, \acrshortpl{enn})}
 }
 
 \newglossaryentry{symbolic-regression}{%
@@ -240,7 +240,7 @@
 
 \newglossaryentry{som}{%
   type=methods,
-  name={\aimethrepr{Self-Organizing Maps (SOMs)}},
+  name={\aimethrepr{Self-organizing maps (SOMs)}},
   text={\aimethrepr{SOMs}},
   description={Topology-preserving maps used for exploratory analysis and domain coverage characterization}
 }
@@ -272,7 +272,7 @@
   type=methods,
   name={\aimethvis{Object detection}},
   text={\aimethvis{Object detection}},
-  description={Identifying and localizing objects in images (e.g., YOLO)}
+  description={Identifying and localizing objects in images (e.g., \acrshort{yolo})}
 }
 
 \newglossaryentry{deblending}{%
@@ -330,3 +330,185 @@
   text={\aichmetrics{Metrics}},
   description={Task-relevant metrics, validation frameworks, benchmarking, and stress tests for DESC science. Addressed in \autoref{sec4:validation} and \autoref{sec4:physics-constraints}}
 }
+
+% ------------------------------------------------------------------
+% ACRONYMS (used with \acrlong{...}, \acrshort{...}, \acrfull{...}
+% ------------------------------------------------------------------
+
+\newacronym{4most}{4MOST}{4-meter Multi-Object Spectroscopic Telescope}
+\newacronym{act}{ACT}{Atacama Cosmology Telescope}
+\newacronym{ads}{ADS}{\acrshort{sao} Astrophysics Data System}
+\newacronym{adql}{ADQL}{Astronomical Data Query Language}
+\newacronym{agn}{AGN}{active galactic nuclei}
+\newacronym{agnsc}{AGNSC}{\href{https://agn.science.lsst.org/}{Active Galactic Nuclei Science Collaboration}}
+\newacronym{ai}{AI}{artificial intelligence}
+\newacronym{alcf}{ALCF}{Argonne Leadership Computing Facility}
+\newacronym{alerce}{ALeRCE}{Automatic Learning for the Rapid Classification of Events}
+\newacronym{alma}{ALMA}{Atacama Large Millimeter Array}
+\newacronym{ampel}{AMPEL}{Alert Management, Photometry, and Evaluation of Light curves}
+\newacronym{amsc}{AmSC}{American Science Cloud}
+\newacronym{anacal}{AnaCal}{Analytic Calibration}
+\newacronym{antares}{ANTARES}{Arizona--NOIRLab Temporal Analysis and Response to Events System}
+\newacronym{api}{API}{application programming interface}
+\newacronym{ascend}{ASCEND}{A Statement of Community Engagement and Needs for Digital Research Infrastructure}
+\newacronym{ascr}{ASCR}{Advanced Scientific Computing Research}
+\newacronym{atat}{ATAT}{Astronomical Transformer for time series And Tabular data}
+\newacronym{bliss}{BLISS}{Bayesian Light Source Separator}
+\newacronym{bnn}{BNN}{Bayesian neural network}
+\newacronym{camb}{CAMB}{Code for Anisotropies in the Microwave Background}
+\newacronym{candels}{CANDELS}{Cosmic Assembly Near-infrared Deep Extragalactic Legacy Survey}
+\newacronym{ccd}{CCD}{charge-coupled device}
+\newacronym{cc-in2p3}{CC-IN2P3}{\acrshort{in2p3} Computing Centre}
+\newacronym{cd}{CD}{continuous delivery/deployment}
+\newacronym{ci}{CI}{continuous integration}
+\newacronym{cigale}{CIGALE}{Code Investigating GALaxy Evolution}
+\newacronym{clmm}{CLMM}{Cluster Lens Mass Modeling tool}
+\newacronym{cmb}{CMB}{cosmic microwave background}
+\newacronym{cmnn}{CMNN}{color-matched nearest-neighbors}
+\newacronym{acr:cnn}{CNN}{convolutional neural network}
+\newacronym{cosmodc2}{CosmoDC2}{Cosmological Data Challenge 2}
+\newacronym{cpu}{CPU}{central processing unit}
+\newacronym{csd3}{CSD3}{Cambridge Service for Data Driven Discovery}
+\newacronym{csp}{CSP}{Carnegie Supernova Project}
+\newacronym{deepdisc}{DeepDISC}{Detection, Instance Segmentation, and Classification with Deep Learning}
+\newacronym{decals}{DECaLS}{Dark Energy Camera Legacy Survey}
+\newacronym{des}{DES}{Dark Energy Survey}
+\newacronym{desc}{DESC}{\href{https://lsstdesc.org}{Dark Energy Science Collaboration}}
+\newacronym{desi}{DESI}{Dark Energy Spectroscopic Instrument}
+\newacronym{dl}{DL}{deep learning}
+\newacronym{dnf}{DNF}{directional neighborhood fitting}
+\newacronym{doe}{DOE}{Department of Energy}
+\newacronym{dsps}{DSPS}{Differentiable Stellar Population Synthesis}
+\newacronym{elasticc}{ELAsTiCC}{Extended LSST Astronomical Time Series Classification Challenge}
+\newacronym{ellis}{ELLIS}{European Laboratory for Learning and Intelligent Systems}
+\newacronym{enn}{ENN}{equivariant neural network}
+\newacronym{esa}{ESA}{European Space Agency}
+\newacronym{esnet}{ESNet}{Energy Sciences Network}
+\newacronym{eucaif}{EuCAIF}{European Coalition for AI for Fundamental Physics}
+\newacronym{eurohpc}{EuroHPC}{European High-Performance Computing Joint Undertaking}
+\newacronym{fm}{FM}{foundation model}
+\newacronym{fsps}{FSPS}{Flexible Stellar Population Synthesis}
+\newacronym{galsc}{GSC}{\href{https://sites.google.com/view/lsstgsc/home}{Galaxies Science Collaboration}}
+\newacronym{gan}{GAN}{generative adversarial network}
+\newacronym{ggns}{GGNS}{gradient-guided nested sampling}
+\newacronym{acr:gnn}{GNN}{graph neural network}
+\newacronym{gpz}{GPz}{Gaussian Processes for Photo-$z$}
+\newacronym{gpu}{GPU}{graphics processing unit}
+\newacronym{gru}{GRU}{gated recurrent unit}
+\newacronym{hats}{HATS}{Hierarchical Adaptive Tiling Scheme}
+\newacronym{hmc}{HMC}{Hamiltonian Monte Carlo}
+\newacronym{hod}{HOD}{halo occupancy distribution}
+\newacronym{hpc}{HPC}{high-performance computing}
+\newacronym{hpdf}{HPDF}{High Performance Data Facility}
+\newacronym{hsc}{HSC}{Hyper Suprime-Cam}
+\newacronym{hst}{\textit{HST}}{\textit{Hubble Space Telescope}}
+\newacronym{ia}{IA}{Intrinsic Alignment}
+\newacronym{iaifi}{IAIFI}{NSF Institute for Artificial Intelligence and Fundamental Interactions}
+\newacronym{idac}{IDAC}{Independent Data Access Center}
+\newacronym{iid}{IID}{independent and identically distributed}
+\newacronym{imnn}{IMNN}{information-maximizing neural network}
+\newacronym{in2p3}{IN2P3}{Institut National de Physique Nucl\'{e}aire et de Physique des Particules}
+\newacronym{ir}{IR}{infrared}
+\newacronym{iri}{IRI}{Integrated Research Infrastructure}
+\newacronym{issc}{ISSC}{\href{https://issc.science.lsst.org/}{Informatics and Statistics Science Collaboration}}
+\newacronym{jupiter}{JUPITER}{Joint Undertaking Pioneer for Innovative and Transformative Exascale Research}
+\newacronym{jwst}{\textit{JWST}}{\textit{James Webb Space Telescope}}
+\newacronym{kids}{KiDS}{Kilo Degree Survey}
+\newacronym{kne}{KNe}{kilonovae}
+\newacronym{knn}{kNN}{$k$-nearest neighbors}
+\newacronym{lccf}{LCCF}{Leadership Class Computing Facility}
+\newacronym{lcdm}{$\Lambda$CDM}{cold dark matter with cosmological constant}
+\newacronym{lincc}{LINCC Frameworks}{LSST Interdisciplinary Network for Collaboration and Computing Frameworks}
+\newacronym{llm}{LLM}{large language model}
+\newacronym{lmc}{LMC}{Langevin Monte Carlo}
+\newacronym{lsst}{LSST}{Legacy Survey of Space and Time}
+\newacronym{lsst-da}{LSST-DA}{LSST Discovery Alliance}
+\newacronym{lstm}{LSTM}{long short-term memory}
+\newacronym{lumi}{LUMI}{Large Unified Modern Infrastructure}
+\newacronym{madness}{MADNESS}{Maximum A posteriori with Deep NEural networks for Source Separation}
+\newacronym{map}{MAP}{maximum a posteriori}
+\newacronym{mas}{MAS}{multi-agent systems}
+\newacronym{mchmc}{MCHMC}{micro-canonical Hamiltonian Monte Carlo}
+\newacronym{mclmc}{MCLMC}{micro-canonical Langevin Monte Carlo}
+\newacronym{mcmc}{MCMC}{Markov chain Monte Carlo}
+\newacronym{ml}{ML}{machine learning}
+\newacronym{moc}{MOC}{multi-order coverage}
+\newacronym{moe}{MoE}{mixture-of-experts}
+\newacronym{mvit}{MViT}{multiscale vision transformers}
+\newacronym{nasa}{NASA}{National Aeronautics and Space Administration}
+\newacronym{nde}{NDE}{neural density estimation}
+\newacronym{nersc}{NERSC}{National Energy Research Scientific Computing Center}
+\newacronym{nfw}{NFW}{Navarro--Frenk--White}
+\newacronym{nle}{NLE}{neural likeliood estimation}
+\newacronym{noirlab}{NOIRLab}{National Optical-Infrared Astronomy Research Laboratory}
+\newacronym{acr:npe}{NPE}{neural posterior estimation}
+\newacronym{nre}{NRE}{neural ratio estimation}
+\newacronym{nsf}{NSF}{National Science Foundation}
+\newacronym{nuts}{NUTS}{No U-Turn Sampler}
+\newacronym{ode}{ODE}{ordinary differential equation}
+\newacronym{olcf}{OLCF}{Oak Ridge Leadership Computing Facility}
+\newacronym{onnx}{ONNX}{Open Neural Network Exchange}
+\newacronym{opsim}{OpSim}{Operations Simulator}
+\newacronym{pan-starrs}{Pan-STARRS}{Panoramic Survey Telescope and Rapid Response System}
+\newacronym{pdf}{PDF}{probability density function}
+\newacronym{photoz}{photo-$z$}{photometric redshift}
+\newacronym{pinn}{PINN}{physics-informed neural network}
+\newacronym{pisn}{PISN}{pair instability supernova}
+\newacronym{pit}{PIT}{probability integral transform}
+\newacronym{plasticc}{PLAsTiCC}{Photometric LSST Astronomical Time Series Classification Challenge}
+\newacronym{psf}{PSF}{point-spread function}
+\newacronym{qa}{QA}{question answering}
+\newacronym{rag}{RAG}{retrieval-augmented generation}
+\newacronym{rail}{RAIL}{Redshift Assessment Infrastructure Layers}
+\newacronym{rd}{R\&D}{research \& development}
+\newacronym{redmapper}{RedMaPPer}{Red-sequence Matched-filter Probabilistic Percolation}
+\newacronym{resnet}{ResNet}{residual network}
+\newacronym{resspect}{RESSPECT}{Recommendation System for Spectroscopic followup}
+\newacronym{rhmc}{RHMC}{Riemann Hamiltonian Monte Carlo}
+\newacronym{acr:rnn}{RNN}{recurrent neural network}
+\newacronym{rsp}{RSP}{Rubin Science Platform}
+\newacronym{sao}{SAO}{Smithsonian Astrophysical Observatory}
+\newacronym{sassafras}{SASSAFRAS}{S/N Analysis of Simulated SpectrA for Rubin trAnsientS}
+\newacronym{acr:sbi}{SBI}{simulation-based inference}
+\newacronym{sbm}{SBM}{score-based model}
+\newacronym{sde}{SDE}{stochastic differential equation}
+\newacronym{sdss}{SDSS}{Sloan Digital Sky Survey}
+\newacronym{sed}{SED}{spectral energy distribution}
+\newacronym{sfh}{SFH}{star formation history}
+\newacronym{sfr}{SFR}{star formation rate}
+\newacronym{ssfr}{sSFR}{specific star formation rate}
+\newacronym{skai}{SkAI}{NSF--Simons AI Institute for the Sky}
+\newacronym{slac}{SLAC}{Stanford Linear Accelerator Center}
+\newacronym{slacs}{SLACS}{Sloan Lens ACS (Advanced Camera for Surveys) Survey}
+\newacronym{slsc}{SLSC}{\href{https://sites.google.com/view/lsst-stronglensing}{Strong Lensing Science Collaboration}}
+\newacronym{smwlv}{SMWLVSC}{\href{https://rubin-smwlv.github.io/}{Stars, Milky Way, and Local Volume Science Collaboration}}
+\newacronym{snana}{SNANA}{Supernova Analysis package}
+\newacronym{sne}{SNe}{supernovae}
+\newacronym{snia}{SN Ia}{Type Ia supernova}
+\newacronym{snr}{SNR}{signal-to-noise ratio}
+\newacronym{so}{SO}{Simons Observatory}
+\newacronym{soar}{SOAR}{Southern Astrophysical Research Telescope}
+\newacronym{acr:som}{SOM}{self-organizing map}
+\newacronym{spherex}{\textit{SPHEREx}}{\textit{Spectro-Photometer for the History of the Universe, Epoch of Reionization, and Ices Explorer}}
+\newacronym{sps}{SPS}{stellar population synthesis}
+\newacronym{spt}{SPT}{South Pole Telescope}
+\newacronym{ssl}{SSL}{self-supervised Learning}
+\newacronym{sql}{SQL}{structured query language}
+\newacronym{sssc}{SSSC}{\href{https://lsst-sssc.github.io}{Solar System Science Collaboration}}
+\newacronym{stratlearn}{StratLearn}{stratified learning}
+\newacronym{svm}{SVM}{support vector machine}
+\newacronym{sz}{SZ}{Sunyaev--Zeldovich}
+\newacronym{tides}{TiDES}{Time Domain Extragalactic Survey}
+\newacronym{tpz}{TPZ}{Trees for Photo-$z$}
+\newacronym{tvs}{TVSSC}{\href{https://lsst-tvssc.github.io/}{Transients and Variable Stars Science Collaboration}}
+\newacronym{acr:uq}{UQ}{uncertainty quantification}
+\newacronym{usdf}{USDF}{US Data Facility}
+\newacronym{uv}{UV}{ultraviolet}
+\newacronym{acr:vae}{VAE}{variational autoencoder}
+\newacronym{vi}{VI}{variational inference}
+\newacronym{wazp}{WaZP}{Wavelet Z-Photometric}
+\newacronym{wcdm}{$w$CDM}{cold dark matter with cosmological equation of state}
+\newacronym{wg}{WG}{working group}
+\newacronym{wise}{\textit{WISE}}{\textit{Wide-field Infrared Survey Explorer}}
+\newacronym{yolo}{YOLO}{You Only Look Once}
+\newacronym{ztf}{ZTF}{Zwicky Transient Facility}

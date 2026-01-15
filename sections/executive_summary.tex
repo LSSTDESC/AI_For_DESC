@@ -1,97 +1,137 @@
 \newpage
 \section{Executive Summary}
+\label{sec:exec_summary}
 
-This executive summary distills the key recommendations, opportunities, and strategic takeaways emerging from this document that can help inform a coherent AI/ML strategy for DESC. We start by establishing below the \textbf{core driving principles} that guide our strategic thinking:
+%This executive summary distills the key recommendations, opportunities, and strategic takeaways emerging from this document that can help inform a coherent AI/ML strategy for DESC. We start by establishing below the \textbf{core driving principles} that guide our strategic thinking:
+
+%\begin{itemize}
+ %   \item \textbf{Facilitating the delivery of DESC science} through the integration of AI/ML tools, while \textbf{fulfilling the stringent requirements} of precision cosmology.
+
+ %   \item Building and maintaining a \textbf{sustainable AI/ML ecosystem} required for the collaborative development, validation, and deployment \textbf{of production-grade AI/ML tools}.
+
+ %   \item Seeking out opportunities to leverage \textbf{DESC’s unique position} as a large international collaboration using community-accessible data and pursuing extremely demanding scientific objectives, to \textbf{establish DESC as a pioneer in the development of robust AI/ML practices for fundamental physics}.
+
+ %   \item Integrating AI/ML into DESC in ways that \textbf{preserve and amplify the human-centric nature of research}, strengthen collaboration quality, and \textbf{keep contributors’ work at the center}.
+%\end{itemize}
+
+The \acrlong{lsst} \acrlong{desc} (\acrshort{lsst} \acrshort{desc}) is an international collaboration whose mission is to measure the cosmic expansion history and the growth of structure using data from the Vera C. Rubin Observatory, thereby constraining the nature of dark energy and dark matter. Achieving these science goals requires jointly analyzing multiple cosmological probes---weak and strong gravitational lensing, galaxy clusters, Type Ia supernovae, and large-scale structure---each presenting distinct analysis challenges at LSST's unprecedented data volumes. Extracting robust cosmological constraints demands methods that deliver trustworthy uncertainty quantification, remain robust to systematic effects and model misspecification, and scale to the full petabyte-scale survey. These requirements motivate the integration of \acrfull{ai} and \acrfull{ml} into DESC pipelines. DESC's combination of community-accessible data, mature simulation infrastructure, and rigorous scientific standards makes the collaboration an excellent testbed for developing robust AI/ML practices for fundamental physics. 
+
+Recognizing this situation, the DESC formed the \textit{AI for DESC Task Force} with the following charge:
 \begin{itemize}
-    \item \textbf{Facilitating the delivery of DESC science} through the integration of AI/ML tools, while \textbf{fulfilling the stringent requirements} of precision cosmology.
+    \item Catalog the AI/ML needs, use cases, and projects in DESC.
+    \item Identify current gaps in the adoption of AI/ML methodologies by leveraging expert domain knowledge.
+    \item Identify the computational resources, storage, data access, and human research and managerial time needed to take full advantage of AI/ML-related opportunities.
+    \item Identify either qualitatively or quantitatively the projected gains in DESC’s science that would result from pursuing AI/ML-related opportunities.
+\end{itemize}
+The response to the task force charge is presented in this white paper. It demonstrates the breadth and importance of AI and ML research within DESC, and highlights the challenges and promising pathways for future work. %Throughout this work, we adopt the following definitions for AI/ML:
+% \begin{itemize}
+% \item \textbf{\acrfull{ai}} refers to the field of computer science concerned with building systems capable of performing tasks that typically require human intelligence, including reasoning, perception, learning, and decision-making.
+% \item \textbf{\acrfull{ml}} is a subfield of AI in which algorithms learn patterns and relationships from data to make predictions or decisions. This includes both classical methods (e.g., random forests) and deep learning methods (multi-layer neural networks).
+% \end{itemize}
+In this Executive Summary, we synthesize key recommendations and opportunities into a coherent AI/ML strategy for DESC. Three core principles guide this strategy: 
 
-    \item Building and maintaining a \textbf{sustainable AI/ML ecosystem} required for the collaborative development, validation, and deployment \textbf{of production-grade AI/ML tools}.
+\begin{itemize}
+    \item \textbf{AI/ML tools should be carefully integrated into DESC pipelines} to facilitate scientific analyses while fulfilling the stringent requirements of precision cosmology and preserving scientific accountability and transparency.
 
-    \item Seeking out opportunities to leverage \textbf{DESC’s unique position} as a large international collaboration using community-accessible data, and pursuing extremely demanding scientific objectives, to \textbf{establish DESC as a pioneer in the development of robust AI/ML practices for fundamental physics}.
+    \item A \textbf{durable AI/ML ecosystem should be built} within DESC and maintained over the survey lifetime, for the collaborative development, validation, and deployment of production-grade AI/ML tools.
 
-    \item Integrating AI/ML into DESC in ways that \textbf{preserve and amplify the human-centric nature of research}, strengthen collaboration quality, and \textbf{keep contributors’ work at the center}.
+    \item AI/ML must be integrated into DESC in ways that \textbf{preserve and support the human-centric nature of research}, improve accessibility, strengthen collaboration quality, and amplify rather than supplant members' contributions.
 \end{itemize}
 
+We have defined a series of recommendations (R) and opportunities (O) in several key areas within DESC in support of these principles. \textit{Recommendations} are actions that the collaboration should undertake to meet its scientific requirements and ensure robust integration of AI and ML into DESC pipelines. \textit{Opportunities} indicate areas where DESC can extend beyond its requirements and assume a leadership role, influence broader community standards, or explore higher-risk, higher-reward efforts. We summarize these below, along with references throughout the paper where they are discussed.
 
-\paragraph{Organizational Structure \& Governance} Effective integration of AI/ML across DESC requires coordination mechanisms and clear standards. 
+\paragraph{Advancing Key Methodological Research Directions} Challenges such as uncertainty quantification, robustness to model misspecification, and novelty detection recur across DESC science cases. Progress on these foundational challenges will benefit all probes and merit dedicated effort.
 
 \begin{itemize}
-  \item \textbf{R1: Develop DESC-wide AI/ML Coordination Mechanisms.} Establish structures (standing working group, cross-WG task forces, regular interchange meetings) to share methodological innovations across probes, tackle common challenges collectively, and minimize duplication. Facilitate rapid dissemination through workshops, tutorials, and methodological discussions. (\autoref{sec3:use_case_for_aiml})
+    \item \textbf{R1: Prioritize Fundamental Methodological Research.}  Foster collaboration-wide research in several critical areas: quantification of systematic and statistical uncertainties, simulation-based inference robustness, physics-informed modeling (hybrid generative-physical architectures), validation of neural posteriors, and novelty detection. Progress on these fundamental challenges will have an outsized impact across many DESC science cases. (\autoref{sec3:use_case_for_aiml}, \autoref{sec4:aiml_research})
 
-  \item \textbf{R2: Codify AI/ML best practices.} Extend Publication Policy with an AI/ML checklist, establish a standard of full reproducibility and provenance tracking for AI/ML results, standardize validation checks for ML methods (coverage tests, PIT histograms, distribution-shift diagnostics, stress tests under deliberate misspecification.) Cross-working group deliverables that use machine learning, such as foundation models and simulations, should be supported by comprehensive benchmarks that are solicited from DESC members and represent a broad array of science cases. (\autoref{sec3:use_case_for_aiml}, 
-  \autoref{sec4:aiml_research}, \autoref{sec5:emerging_tech})
-\end{itemize}
-
-\paragraph{Advancing Key Methodological Research Directions} Several foundational ML challenges recur across DESC science cases and merit dedicated investment.
-\begin{itemize}
-    \item \textbf{R4: Invest in Foundational Methodological Research.}  Prioritize and facilitate shared research in several critical areas: uncertainty quantification, simulation-based inference robustness, physics-informed modeling (hybrid generative-physical architectures), validation of neural posteriors, and novelty detection. Progress on these foundational challenges will have an outsized impact across many DESC science cases. (\autoref{sec3:use_case_for_aiml}, \autoref{sec4:aiml_research})
-
-    \item \textbf{O1: Methodological Leadership as Strategic Opportunity.} The challenges DESC faces (robust inference under misspecification, calibrated UQ at scale, physics-informed learning) are frontier problems in machine learning broadly, creating natural opportunities to attract CS/ML collaborators and position DESC as a leader in trustworthy AI for fundamental science. (\autoref{sec4:aiml_research}, \autoref{sec7:broader_coordination})
+    \item \textbf{O1: Methodological Leadership in Trustworthy AI.} The challenges DESC faces (robust inference under misspecification, calibrated uncertainty quantification at scale, physics-informed learning) are frontier problems in machine learning broadly, creating natural opportunities to attract specialist collaborators and position DESC as a leader in trustworthy AI for fundamental science. (\autoref{sec4:aiml_research}, \autoref{sec7:broader_coordination})
     
-    \item \textbf{O2: Leverage DESC Simulation Assets as Community Benchmarks.} DESC's combination of petabyte-scale community data, stringent scientific requirements, and rich simulation assets (PLAsTiCC, ELAsTiCC, CosmoDC2) makes it an ideal testbed for pioneering robust AI/ML practices. Benchmarks and governance standards developed here can become reference implementations for fundamental physics, while attracting CS/ML collaborators who see DESC's frontier challenges as compelling research problems. (\autoref{sec3:use_case_for_aiml}, \autoref{sec4:aiml_research}, \autoref{sec7:broader_coordination})
+    \item \textbf{O2: DESC Simulation Assets as Community Benchmarks.} DESC's combination of petabyte-scale community data, stringent scientific requirements, and rich simulation assets---e.g.\ the \acrfull{plasticc}, \acrfull{elasticc}, and \acrfull{cosmodc2}---makes it an ideal testbed for pioneering robust AI/ML practices. Benchmarks and governance standards developed here can become reference implementations for fundamental physics, and attract colleagues in mathematics and computer science who see DESC's frontier challenges as compelling application areas for new methods. (\autoref{sec3:use_case_for_aiml}, \autoref{sec4:aiml_research}, \autoref{sec7:broader_coordination})
 \end{itemize}
 
 
-\paragraph{Foundation Models} Large-scale foundation models are transforming AI capabilities, and DESC must develop both the infrastructure to deploy them and the benchmarks to validate them for precision cosmology.
+\paragraph{Foundation Models} Foundation models, which produce generalizable representations of large-scale, heterogeneous, and multi-modal datasets, are transforming AI capabilities. DESC must develop both the infrastructure to deploy them and the benchmarks to validate them for precision cosmology.
 \begin{itemize}
 
-\item \textbf{R5: Invest in Shared Foundation Model Infrastructure.} Develop a shared foundation model backbone for DESC, consistent across data modalities, of production-grade quality, and served behind stable APIs. (\autoref{sec5:emerging_tech}, \autoref{sec6:infra_requirements})
+\item \textbf{R2: Develop Shared Foundation Model Infrastructure.} Build a shared foundation model backbone for DESC, consistent across data modalities and of production-grade quality, and served behind stable APIs. (\autoref{sec5:emerging_tech}, \autoref{sec6:infra_requirements})
 
-\item \textbf{R6: Establish DESC-specific Foundation Models Validation Standards.} Create benchmarks that go beyond industry practice: uncertainty calibration, robustness to systematics, sensitivity to training biases, stress tests under distribution shift (temporal, spatial, cross-survey). 
-Develop astronomy-specific interpretability tools to verify physically meaningful representations. (\autoref{sec5:emerging_tech}, \autoref{sec:aiml_risks})
+\item \textbf{R3: Establish DESC-specific Foundation Model Validation Standards.} Create benchmarks that go beyond industry practice: uncertainty calibration, robustness to systematics, sensitivity to training biases, stress tests under distribution shift (temporal, spatial, cross-survey). 
+Develop astronomy-specific interpretability tools to verify the physically meaningful structure preserved within model representations. (\autoref{sec5:emerging_tech}, \autoref{sec:aiml_risks})
 
-\item \textbf{O3: Lead Rubin-wide Development of Foundation Models.} DESC can play a central role in coordinating foundation model development across Rubin Science Collaborations, AI institutes (SkAI, CosmicAI, IAIFI), and LINCC Frameworks, pursuing a distributed approach that prototypes at universities, scales pre-training on EuroHPC/DOE facilities, and fine-tunes near the data on DESC systems. (\autoref{sec5:emerging_tech}, \autoref{sec7:broader_coordination})
+\item \textbf{O3: Leadership of Rubin-wide Development of Foundation Models.} DESC could play a central role in coordinating foundation model development across Rubin Science Collaborations and \acrfull{lincc}, leveraging distributed computing resources from universities to \acrfull{doe} or \acrfull{eurohpc} facilities. (\autoref{sec5:emerging_tech}, \autoref{sec7:broader_coordination})
 \end{itemize}
 
-\paragraph{LLMs \& Agentic AI} LLMs and agentic AI present opportunities to accelerate research and lower barriers to complex analyses, but their integration requires deliberate governance and validation frameworks.
+\paragraph{Large Language Models \& Agentic AI} \Acrfullpl{llm} and agentic AI offer avenues to accelerate research and lower the barrier to entry for complex cosmological analyses in DESC. Harnessing this potential responsibly will require thoughtful governance and rigorous validation frameworks.
 
 \begin{itemize}
 
-  \item \textbf{R7: Establish Governance for LLMs and Agentic Systems.} Coordinate DESC-wide 
-  activities involving LLMs and agents, establish best practices including evaluation, review, and red-teaming of pilot studies. Include critical discussions of the technology's limits and effects on human researchers, involving experts across domains. Engage with LSST Data Management to ensure agentic AI can interface with data products effectively and reliably. (\autoref{sec5:emerging_tech}, \autoref{sec:aiml_risks})
+  \item \textbf{R4: Establish Governance for LLMs and Agentic Systems.} Coordinate DESC-wide 
+  activities involving LLMs and agents, establish best practices including evaluation, review, and tiger-team review of pilot studies. Include critical discussions of the technology's limitations and effects on human researchers, with input from experts across domains. Engage with Rubin Data Management to ensure that agentic AI can interface with data products effectively and reliably. (\autoref{sec5:emerging_tech}, \autoref{sec:aiml_risks})
 
-  \item \textbf{R8: Build Natural Language Interfaces to DESC Resources.} Develop RAG-based interfaces to DESC documentation, simulations, and data products, lowering onboarding barriers and democratizing access to complex pipelines. (\autoref{sec5:emerging_tech}, 
+  \item \textbf{R5: Build Natural Language Interfaces to DESC Resources.} Develop \acrfull{rag}-based interfaces to DESC documentation, simulations, and data products, lowering onboarding barriers and democratizing access to complex pipelines. (\autoref{sec5:emerging_tech}, 
   \autoref{sec6:infra_requirements})
 
-  \item \textbf{O4: Pioneer Agentic AI for Scientific Rigor and Reproducibility.} Develop 
-  "DESC research agents" that automate execution, documentation, and validation of analyses 
-  against standardized benchmarks, coupling these systems to clear governance and red-teaming procedures so that agentic workflows enhance transparency, provenance, and trust in DESCresults. (\autoref{sec5:emerging_tech}, \autoref{sec:aiml_risks})
+  \item \textbf{O4: Pioneering Agentic AI for Scientific Rigor and Reproducibility.} An important application of this work could be 
+  ``DESC research agents" that automate execution, documentation, and validation of analyses 
+  against standardized benchmarks, coupling these systems to clear governance and tiger-team review procedures so that agentic workflows enhance transparency, provenance, and trust in DESC results. (\autoref{sec5:emerging_tech}, \autoref{sec:aiml_risks})
 \end{itemize}
 
 
-\paragraph{Infrastructure \& Software} Strategic infrastructure investments (in software stacks, differentiable libraries, and data interfaces) act as multipliers that benefit all DESC science cases.
+\paragraph{Infrastructure \& Software} DESC has a mature ecosystem of cosmological analysis pipelines. Building on this foundation, strategic development of AI software stacks, differentiable programming, and computing infrastructure can act as multipliers that benefit all science cases.
+
 \begin{itemize}
-  \item \textbf{R9: Establish a Durable AI Software Stack.} Adopt a coherent set of frameworks (PyTorch for large models, JAX for differentiable physics), tooling (experiment tracking, model registries, CI/CD), and export standards (ONNX). The stack should be portable across NERSC and CC-IN2P3, sustainable over the 10-year survey, and prioritizing open governance to avoid proprietary lock-in. (\autoref{sec6:infra_requirements})
+  \item \textbf{R6: Establish a Durable AI Software Stack.} Adopt a coherent set of frameworks, tooling, and model export standards. The stack should be portable across DESC computational facilities, sustainable over the 10-year survey, and prioritize open governance to avoid proprietary lock-in. (\autoref{sec6:infra_requirements})
 
-  \item \textbf{O5: Differentiable Programming as Technical Multiplier.} Investment in the JAX-based differentiable programming ecosystem acts as a multiplier, simultaneously enabling gradient-based sampling, GPU acceleration, hybrid physics-ML models, and end-to-end optimization across DESC pipelines. (\autoref{sec3:use_case_for_aiml}, \autoref{sec4:aiml_research}, \autoref{sec6:infra_requirements})
+  \item \textbf{R7: Develop a Differentiable Programming Ecosystem.} Adoption of an interoperable differentiable programming ecosystem (e.g. based on JAX) will act as a multiplier, simultaneously enabling gradient-based sampling, GPU acceleration, hybrid physics-ML models, and end-to-end optimization across DESC pipelines. (\autoref{sec3:use_case_for_aiml}, \autoref{sec4:aiml_research}, \autoref{sec6:infra_requirements})
 
-\item \textbf{O6: Leverage Emerging AI Computing Infrastructure.} Significant new AI-oriented 
-computing is becoming available: DOE infrastructure (American Science Cloud, HPDF), the IDAC 
-network (UK Full IDAC with ASCEND), and EuroHPC systems (Leonardo, LUMI, JUPITER exascale). 
+\item \textbf{R8: Secure Access to Emerging Computing Infrastructure.} Significant new AI-oriented 
+computing is becoming available: DOE infrastructure such as the \acrfull{amsc}; the \acrfull{idac} 
+network; and EuroHPC systems such as Leonardo in Italy, \acrfull{lumi} in Finland, and the \acrfull{jupiter} exascale system in Germany. 
 DESC should engage early to shape these resources for cosmology and secure allocations for 
 foundation model training at scales infeasible on current systems. 
 (\autoref{sec6:infra_requirements}, \autoref{sec7:broader_coordination})
 \end{itemize}
 
-\paragraph{External Coordination \& Partnerships} DESC operates within a rich ecosystem of surveys, AI institutes, and computing partners: deliberate coordination amplifies impact and avoids duplicated effort.
-\begin{itemize}
-  \item \textbf{R10: Coordinate with Rubin Science Collaborations.} Partner deliberately with 
-  ISSC for methodological development, TVS for time-series and broker stress-testing, Galaxies 
-  for deblending/morphology benchmarks. Encourage sharing tools and best practices. (\autoref{sec7:broader_coordination})
+\paragraph{Organizational Structure \& Governance} The DESC is organized into computing, technical, and analysis \acrfullpl{wg}\footnote{\url{https://lsstdesc.org/pages/organization.html}}, with analysis working groups primarily aligned with key cosmological probes. Effective AI/ML integration across these groups requires consistent coordination mechanisms and clear standards for development, validation, and deployment.
 
-  \item \textbf{R11: Engage with AI Institutes and Networks.} NSF-Simons AI Institutes 
-  (\$60M, explicit LSST/cosmology themes) and European networks (e.g. EuCAIF) are natural partners. 
+\begin{itemize}
+  \item \textbf{R9: Develop DESC-wide AI/ML Coordination Mechanisms.} Establish structures (e.g., standing working group, cross-WG task forces, regular interchange meetings) to share methodological innovations across probes, tackle common challenges collectively, and minimize duplication. Facilitate rapid dissemination through workshops, tutorials, and methodological discussions. (\autoref{sec3:use_case_for_aiml})
+
+  \item \textbf{R10: Develop AI/ML Best Practice Guidelines.} Create guidelines to help DESC members develop robust AI/ML analyses, covering topics such as reproducibility, provenance tracking, validation checks, and comprehensive benchmarking—particularly for foundation models and other shared deliverables whose broad applicability demands thorough vetting before widespread adoption. (\autoref{sec3:use_case_for_aiml}, 
+  \autoref{sec4:aiml_research}, \autoref{sec5:emerging_tech})
+\end{itemize}
+
+\paragraph{Human Capital \& Sustainability} The promise of AI/ML for accelerating cosmology with LSST will not be realized without training and support of DESC members. Sustainable adoption of AI/ML also requires attention to the growing computational demands and resulting footprint these methods entail. 
+\begin{itemize}
+  \item \textbf{R11: Focus on AI/ML for Augmenting Rather Than Replacing Understanding.} DESC must strengthen and maintain the technical literacy of the collaboration in AI/ML applications as tools for science rather than supplanting understanding. (\autoref{sec:aiml_risks})
+  
+  \item \textbf{R12: Track and Optimize Resource Footprint.} DESC should develop tools for monitoring and optimizing computational resource usage of AI/ML models, enabling the collaboration to maximize scientific productivity and make informed decisions about resource allocation and environmental impact. (\autoref{sec:aiml_risks})
+\end{itemize}
+
+\paragraph{External Coordination \& Partnerships} DESC operates within a rich ecosystem of other Rubin science collaborations, AI institutes, cosmology experiments, and alert brokers that filter streaming Rubin data. Deliberate coordination between these groups will amplify impact and avoid duplicated effort.
+\begin{itemize}
+
+  \item \textbf{R13: Coordinate Across Science Collaborations.} Partner with other LSST collaborations and other cosmology experiments. The former include 
+  the \acrfull{issc}, \acrfull{tvs}, \acrfull{slsc}, \acrfull{agnsc}, and \acrfull{galsc}.  The latter include the \acrfull{desi}, the \acrfull{4most}, the \acrfull{esa} \textit{Euclid} Mission science teams, and the \textit{Nancy Grace Roman Space Telescope} science collaborations.  Areas of coordination should include methodological development, time-series and broker stress-testing, deblending/morphology benchmarks, and sharing tools and best practices. (\autoref{sec7:broader_coordination})
+
+  \item \textbf{R14: Engage with AI Institutes and Networks.} \acrfull{nsf}--Simons AI Institutes 
+  (with explicit LSST/cosmology themes), and European networks such as the \acrfull{eucaif}\footnote{\url{https://eucaif.org/}} and \acrfull{ellis}\footnote{\url{https://ellis.eu}}, are natural partners. 
   Build systematic engagement through co-funded postdocs, shared workshops, joint proposals, 
   and benchmark datasets. These efforts would connect DESC to the broader AI-for-science ecosystem. 
   (\autoref{sec7:broader_coordination})
 
-    \item \textbf{R12: Developing the human-machine interface.} Close connections should be developed between DESC, other LSST science collaborations, in-kind follow-up programmes, alert broker teams, LSST data management and citizen scientists, to facilitate active learning for classification and anomaly detection. (\autoref{sec4:aiml_research}, \autoref{sec7:broader_coordination})
+    \item \textbf{R15: Develop the Human-Machine Interface.} Develop close connections between DESC, other LSST science collaborations, in-kind follow-up programs, alert broker teams, LSST data management, and citizen scientists, to facilitate active learning for classification, anomaly detection, and human-in-the-loop interpretability. (\autoref{sec4:aiml_research}, \autoref{sec7:broader_coordination})
 
-  \item \textbf{O7: Leverage DESC's Broker Ecosystem Presence.} DESC members are embedded in 
-  all seven Rubin Community Brokers—tight coordination gives direct leverage over SN Ia sample 
+  \item \textbf{O5: DESC Integration with the Broker Ecosystem.} DESC members are embedded in 
+  all seven Rubin Community Broker teams—tight coordination gives direct leverage over SN~Ia sample 
   purity, selection effects, and host-galaxy priors, plus an on-ramp from research prototypes 
   to community-facing services. (\autoref{sec3:use_case_for_aiml}, \autoref{sec7:broader_coordination})
 \end{itemize}
+  
+%Implementing these recommendations and capitalizing on these opportunities would position DESC to fully exploit LSST's statistical power for cosmology while uncovering unexpected phenomena in the largest optical astronomical dataset ever collected. This will require sustained investment in researchers who bridge domain science and AI/ML methodology. It would also advance AI practices and benefits for fundamental science more broadly.
+
+Implementing these recommendations and capitalizing on these opportunities would position DESC to fully exploit LSST's statistical power for cosmology while uncovering unexpected phenomena in the largest optical astronomical dataset ever collected. This will require sustained investment in researchers who bridge domain science and AI/ML methodology. Such investment would benefit not only DESC, but the broader effort to advance AI as a tool for fundamental scientific discovery.
 
 % \hline
 
@@ -101,7 +141,7 @@ foundation model training at scales infeasible on current systems.
 
   % \item \textbf{R1: Develop DESC-wide AI/ML best practices.} Extend Publication Policy with an AI/ML checklist, consolidate a small set of supported AI/ML stacks, establish DESC-wide model registry with automated robustness tests, establish a standard of full reproducibility for AI/ML results. 
 
-  % \item \textbf{R2: Establish governance for LLMs and agentic systems.} Coordinate DESC-wide activities involving LLM/agents, establish best practices and evaluation/review/red-teaming of pilot studies, include critical discussions of the limits of the technology and its effects on human researchers, involving experts in other domains. DESC should engage with the LSST Data Management team to allow developed agentic AI to interface with data products effectively and reliably.
+  % \item \textbf{R2: Establish governance for LLMs and agentic systems.} Coordinate DESC-wide activities involving LLM/agents, establish best practices and evaluation/review/tiger-team review of pilot studies, include critical discussions of the limits of the technology and its effects on human researchers, involving experts in other domains. DESC should engage with the LSST Data Management team to allow developed agentic AI to interface with data products effectively and reliably.
 
   % \item \textbf{R3: Champion Differentiable Programming and Hybridization of Physical models with Generative Modeling.} Promote differentiable programming and hybrid physics-ML models that embed cosmological theory and simulators directly into AI architectures.
 
@@ -113,9 +153,9 @@ foundation model training at scales infeasible on current systems.
 
   % \item \textbf{O1: Lead Rubin-wide Development of Foundation Models.} DESC can play a key role in coordinating various actors, ranging from other Rubin LSST Science Collaborations to a wide range of academic institutions and AI institutes, on the development of frontier AI models for the Rubin Community.
 
-  % \item \textbf{O2: Pioneer Agentic AI for Scientific Rigor and Reproducibility.} Develop “DESC research agents” that automate the execution, documentation, and validation of analyses against standardized DESC benchmarks, coupling these systems to clear governance and red-teaming procedures so that agentic workflows enhance transparency, provenance, and trust in DESC results.
+  % \item \textbf{O2: Pioneer Agentic AI for Scientific Rigor and Reproducibility.} Develop “DESC research agents” that automate the execution, documentation, and validation of analyses against standardized DESC benchmarks, coupling these systems to clear governance and tiger-team review procedures so that agentic workflows enhance transparency, provenance, and trust in DESC results.
 
   % \item \textbf{O3: Establish DESC as a Hub for AI-for-Cosmology Training.} Create a sustained Rubin-focused AI/ML training program (schools, tutorials, and mentoring) built around DESC’s open-source software and challenging datasets, in partnership with leading AI institutes and industry, to train the next generation of researchers in trustworthy, physics-informed AI for cosmology.
 
- % \item \textbf{Strategic leadership in inference.} DESC should capitalize on its leadership position in simulation-based inference (SBI) and broader Bayesian methodologies, with a specific focus on mitigating model misspecification. To sustain this expertise, collaboration meetings and Dark Energy Schools should be leveraged for knowledge transfer between research groups.
+ % \item \textbf{Strategic leadership in inference.} DESC should capitalize on its leadership position in simulation-based inference (SBI) and broader Bayesian methodologies, with a specific focus on mitigating model misspecification. To sustain this expertise, collaboration meetings and Dark Energy Schools should be used to facilitate knowledge transfer between research groups.
 % \end{itemize}

@@ -662,10 +662,10 @@ revtex4-1.cls^^J^^J}\stop
 \def\ps@lsstdescnoteheads{\let\@mkboth\markboth
     \def\@evenhead{}
     \def\@evenfoot{\lower9mm\hbox to\textwidth{
-                     \thepage\hfil \rm\textsc{\@rectohead} \hfil}}}
+                     \hfil \textsc{\@rectohead} \hfil \thepage}}}
     \def\@oddhead{}
     \def\@oddfoot{\lower9mm\hbox to\textwidth{
-                     \hfil\rm\textsc{\@versohead}\hfil \thepage}}
+                     \hfil\textsc{\@versohead}\hfil \thepage}}
 
 \pagestyle{lsstdescnoteheads}
 
@@ -1086,7 +1086,7 @@ revtex4-1.cls^^J^^J}\stop
   {1.5ex plus 0.8ex minus .2ex}{0.8ex plus .2ex}{\normalfont\bf\normalsize}}
 
 \def\paragraph{\@startsection{paragraph}{4}{\z@}%
-  {1.2ex plus 0.8ex minus .2ex}{0pt}{\small\itshape}}
+  {1.2ex plus 0.8ex minus .2ex}{0pt}{\itshape}}
 
 \def\subparagraph{\@startsection{subparagraph}{5}{\z@}%
   {0.8ex plus 0.8ex minus .2ex}{-0.5\parindent}{\small\itshape}}

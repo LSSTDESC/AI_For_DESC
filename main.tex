@@ -1,6 +1,6 @@
 % !TEX root = main_edited.tex
-
 \documentclass[modern]{lsstdescnote_customized}
+%\documentclass[modern, linenumbers]{lsstdescnote_customized}
 \usepackage{lsstdesc_macros}
 \usepackage{xcolor}
 \usepackage{soul}
@@ -18,6 +18,7 @@
 
 \usepackage{booktabs}   % nicer horizontal rules
 \usepackage{tabularx}   % auto-width table with X columns
+\usepackage{enumitem}   % customizable lists
 \usepackage{array}      % extended column definitions
 \usepackage{ragged2e}   % better ragged-right in X columns
 
@@ -111,11 +112,17 @@
 
 \begin{abstract}
 \small
-The Vera C. Rubin Observatory's Legacy Survey of Space and Time (LSST) will produce unprecedented volumes of heterogeneous astronomical data, including images, catalogs, and alerts, that challenge traditional analysis pipelines. The mission of the LSST Dark Energy Science Collaboration (DESC) is to convert these data into robust constraints on the dark sector, which requires methods that are statistically powerful, scalable, and operationally reliable. Recent advances in Machine Learning (ML) (data-driven models learning mappings) and Artificial Intelligence (AI) (Large Language Models and agentic systems that orchestrate code and complex analyses) show great promise. However, their scientific utility for precision cosmology hinges on trustworthy uncertainty quantification and reproducible integration within DESC workflows. This white paper surveys current capabilities and future opportunities for AI/ML across DESC and outlines the methodological and infrastructure requirements for their successful, reliable deployment. We review the intersection of AI/ML with key DESC science analyses, and detail the methodological research in ML motivated by DESC's needs, focusing on Bayesian inference, uncertainty quantification, physics-informed approaches, and novelty detection. With an eye on emerging techniques, we also explore specifically the potential of the latest Foundation Model methodologies and agentic AI systems. Finally, we discuss critical infrastructure requirements for software, computing, and data necessary to the successful deployment of these new methodologies, and consider associated risks as well as opportunities for broader coordination with external actors.
+The Vera C.\ Rubin Observatory's Legacy Survey of Space and Time (LSST) will produce unprecedented volumes of heterogeneous astronomical data---images, catalogs, and alerts---that challenge traditional analysis pipelines. The LSST Dark Energy Science Collaboration (DESC) aims to derive robust constraints on dark energy and dark matter from these data, requiring methods that are statistically powerful, scalable, and operationally reliable. Artificial intelligence and machine learning (AI/ML) are already embedded across DESC science workflows, from photometric redshifts and transient classification to weak lensing inference and cosmological simulations. Yet their utility for precision cosmology hinges on trustworthy uncertainty quantification, robustness to covariate shift and model misspecification, and reproducible integration within DESC pipelines. This white paper surveys the current landscape of AI/ML across DESC's primary cosmological probes and cross-cutting analyses, revealing that the same core methodologies and fundamental challenges recur across disparate science cases. Since progress on these cross-cutting challenges would benefit multiple probes simultaneously, we identify key methodological research priorities, including Bayesian inference at scale, physics-informed architectures, validation frameworks, and active learning for discovery. We also examine how foundation models and LLM-driven agentic systems could reshape DESC workflows, provided their deployment is coupled with rigorous evaluation and governance. Finally, we outline software, computing, data infrastructure, and human capital requirements for reliable deployment, discuss risks and mitigation strategies, and present concrete recommendations for coordination with the broader community. Taken together, DESC's combination of community-accessible data, demanding scientific requirements, and mature simulation infrastructure makes the collaboration an excellent testbed for developing and validating robust AI/ML practices for fundamental physics.
 \end{abstract}
 
 \maketitle
 
+% ============================================
+% Contributors
+% ============================================
+\input{contributors}
+
+\newpage
 %  just temporary command for table of content to have a general view/idea of the current structure of the paper (sections and subsections) as it develops.
 % Make TOC more compact
 {
@@ -190,6 +197,15 @@ The Vera C. Rubin Observatory's Legacy Survey of Space and Time (LSST) will prod
 \printnoidxglossary[type=methods,title={AI/ML Methods Index}]
 
 \printnoidxglossary[type=challenges,title={Cross-cutting Challenges Index}]
+
+% Commands for hyperlinking acronyms:
+% \acrshort{...}: short form, hyperlinked
+% \acrlong{...}: long form, hyperlinked
+% \acrfull{...}: short (long)
+% \Acr[long/short/full]{...}: as above, but with first letter capitalized
+% \[A/a]cr[long/short/full]pl{...}: as above, but plural
+\section{Glossary of Acronyms}
+\printnoidxglossary[type=\acronymtype, title={Acronyms and Abbreviations}]
 
 \section{Acknowledgments}
 \input{desc-standard-ack}

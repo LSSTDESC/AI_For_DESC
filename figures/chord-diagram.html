@@ -125,56 +125,62 @@
           {
             id: 'photoz',
             name: 'Photo-z',
-            methodologies: ['SBI and Density Estimation', 'Hierarchical Bayesian models', 'Emulators'],
-            challenges: ['Covariate shift', 'UQ', 'Scalability', 'Metrics & evaluation']
+            methodologies: ['Simulation-Based Inference (SBI)\n& Density Estimation', 'Hierarchical Bayesian models', 'Emulators', 'Generative models'],
+            challenges: ['Covariate shift', 'Uncertainty Quantification (UQ)', 'Scalability', 'Metrics & evaluation']
           },
           {
             id: 'stronglens',
             name: 'Strong Lensing',
-            methodologies: ['SBI and Density Estimation', 'Anomaly detection'],
-            challenges: ['Data sparsity & rare events', 'Covariate shift']
+            methodologies: ['Simulation-Based Inference (SBI)\n& Density Estimation', 'Generative models'],
+            challenges: ['Data sparsity & rare events', 'Covariate shift', 'Uncertainty Quantification (UQ)']
           },
           {
             id: 'weaklens',
             name: 'Weak Lensing',
-            methodologies: ['SBI and Density Estimation', 'Differentiable programming', 'Hierarchical Bayesian models'],
-            challenges: ['Covariate shift', 'UQ', 'Scalability']
+            methodologies: ['Simulation-Based Inference (SBI)\n& Density Estimation', 'Differentiable programming', 'Hierarchical Bayesian models', 'Generative models'],
+            challenges: ['Covariate shift', 'Uncertainty Quantification (UQ)', 'Scalability']
           },
           {
             id: 'clusters',
             name: 'Galaxy Clusters',
-            methodologies: ['SBI and Density Estimation', 'Hierarchical Bayesian models'],
-            challenges: ['Covariate shift', 'UQ', 'Scalability']
+            methodologies: ['Simulation-Based Inference (SBI)\n& Density Estimation', 'Hierarchical Bayesian models'],
+            challenges: ['Covariate shift', 'Uncertainty Quantification (UQ)', 'Scalability']
           },
           {
             id: 'sn',
-            name: 'SN & Transients',
-            methodologies: ['SBI and Density Estimation', 'Active learning', 'Anomaly detection'],
-            challenges: ['Covariate shift', 'Data sparsity & rare events', 'Scalability']
+            name: 'Supernovae (SN) & Transients',
+            methodologies: ['Simulation-Based Inference (SBI)\n& Density Estimation', 'Active learning', 'Anomaly detection', 'Hierarchical Bayesian models', 'Generative models'],
+            challenges: ['Covariate shift', 'Data sparsity & rare events', 'Scalability', 'Uncertainty Quantification (UQ)']
           },
           {
             id: 'theory',
             name: 'Theory & Modeling',
-            methodologies: ['Emulators', 'Differentiable programming', 'SBI and Density Estimation'],
+            methodologies: ['Emulators', 'Differentiable programming', 'Simulation-Based Inference (SBI)\n& Density Estimation'],
             challenges: ['Covariate shift', 'Scalability']
           },
           {
             id: 'sims',
             name: 'Simulations',
-            methodologies: ['Emulators', 'Generative models', 'Differentiable programming', 'SBI and Density Estimation'],
+            methodologies: ['Emulators', 'Generative models', 'Differentiable programming', 'Simulation-Based Inference (SBI)\n& Density Estimation'],
             challenges: ['Covariate shift', 'Scalability', 'Metrics & evaluation']
+          },
+          {
+            id: 'classify',
+            name: 'Object Classification',
+            methodologies: ['Active learning'],
+            challenges: ['Covariate shift', 'Data sparsity & rare events', 'Scalability', 'Uncertainty Quantification (UQ)']
           },
           {
             id: 'deblend',
             name: 'Deblending',
-            methodologies: ['Generative models', 'SBI and Density Estimation'],
-            challenges: ['Data sparsity & rare events', 'Metrics & evaluation']
+            methodologies: ['Generative models', 'Simulation-Based Inference (SBI)\n& Density Estimation'],
+            challenges: ['Data sparsity & rare events', 'Metrics & evaluation', 'Uncertainty Quantification (UQ)']
           },
           {
             id: 'shape',
             name: 'Shape Measurement',
-            methodologies: ['Differentiable programming', 'SBI and Density Estimation'],
-            challenges: ['Covariate shift', 'UQ', 'Data sparsity & rare events']
+            methodologies: ['Differentiable programming', 'Simulation-Based Inference (SBI)\n& Density Estimation'],
+            challenges: ['Covariate shift', 'Uncertainty Quantification (UQ)', 'Data sparsity & rare events', 'Scalability']
           }
         ];
 
@@ -373,7 +379,24 @@
                 fill: type === 'method' ? '#1e293b' : '#334155',
                 opacity: isDimmed ? 0.3 : 1,
                 style: { transition: 'all 0.2s ease' }
-              }, item.name || item)
+              }, (() => {
+                const text = item.name || item;
+                const lines = text.split('\n');
+                if (lines.length > 1) {
+                  // Estimate first line center for aligning second line beneath it
+                  const firstLineWidth = 260; // approx width of "Simulation-Based Inference (SBI)" at 16px
+                  const centerX = textAnchor === 'end' ? labelX - firstLineWidth / 2
+                                : textAnchor === 'start' ? labelX + firstLineWidth / 2
+                                : labelX;
+                  return lines.map((line, i) => React.createElement('tspan', {
+                    key: i,
+                    x: i === 0 ? labelX : centerX,
+                    dy: i === 0 ? '-0.6em' : '1.2em',
+                    textAnchor: i === 0 ? undefined : 'middle'
+                  }, line));
+                }
+                return text;
+              })())
             );
           };
 
