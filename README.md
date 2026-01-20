@@ -61,4 +61,4 @@ pdflatex main.tex
 ## Interactive Resources
 
 An interactive chord diagram showing the connections between DESC science applications, AI/ML methodologies, and shared challenges is available at:
-https://codepen.io/EiffL/full/ByKxMaa
+https://lsstdesc.org/AI_For_DESC/figures/chord-diagram.html
