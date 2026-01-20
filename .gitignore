@@ -77,3 +77,7 @@ __pycache__/
 *$py.class
 
 *Notes.bib
+
+dev/
+arxiv
+arxiv_submission.tar.gz

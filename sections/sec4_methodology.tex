@@ -9,7 +9,6 @@ First, Bayesian inference and \acrshort{acr:uq} must evolve to handle the high-d
 Second, \acrshort{acr:sbi} and related implicit-likelihood methods must confront the challenge of model misspecification and covariate shifts, ensuring that learned posteriors remain valid when simulations imperfectly represent real observations.
 Third, physics-informed modeling, through differentiable programming and hybrid generative–physical architectures, offers a path toward interpretable and physically consistent deep learning, capable of representing both known and unknown components of the Universe.
 Fourth, discovery and anomaly detection are essential to LSST’s potential for unexpected science, requiring representation learning and active human-AI collaboration to identify rare and previously unmodeled phenomena.
-% Finally, LSST’s diverse data modalities (images, spectra, and time-domain signals) demand specialized neural architectures that can process astronomical data optimally while preserving physical and statistical meaning.
 
 This section examines these research directions in detail, outlining both recent progress and outstanding challenges. We emphasize not only algorithmic innovation but also the validation, calibration, and interpretability principles required to integrate AI into cosmological analysis pipelines.
 
@@ -18,14 +17,9 @@ Answering this question defines the research agenda for AI/ML in DESC and ensure
 
 
 \subsection{Bayesian Inference and Uncertainty Quantification}
-% 
-% Main points of this section:
-%  - Cover the challenges in uncertainty quantification at the frontier of current methodologies 
 
 \acrshort{acr:uq} represents perhaps the most critical challenge for deploying deep learning in precision cosmology. It is an area where \acrshort{ai} in the sciences demands solutions that differ from those in many commercial settings. Robust UQ must distinguish between aleatoric uncertainties (irreducible measurement noise) and epistemic uncertainties (model limitations and incomplete knowledge), as these have fundamentally different implications for cosmological inference and systematic error budgets.
 \acrshort{ml} is poised to be revolutionary for inference, but only if current challenges are satisfactorily addressed. 
-
-% Make the distinction here between the different configuration cases, implicit and explicit inference and how they differ from each other.
 
 \subsubsection{Explicit Likelihood-Based Bayesian Inference}
 \label{sec4:Bayes}
@@ -34,25 +28,13 @@ Answering this question defines the research agenda for AI/ML in DESC and ensure
 \themebullet \themekey{Related Methodologies.} \meth{hierarchical-bayes}, \meth{variational-inference}, \meth{gaussian-process} \\
 \themebullet \themekey{Addresses.} \challenge{uq}, \challenge{scalability}
 \end{ThemeBoxA}
-% Here we cover cases where the likelihood is explicity known
-% so, no neural density estimation for learning the likelihood or priors.
-% We still should comment on the difficulty 
-% We are going to talk about the challenges
-%   - Research and strategies for accelerated sampling leveraging differentiable likelihoods
-%   - Challenges of scaling inference to large simulation models 
-
     The inferential paradigm in astrophysical and cosmological data analysis has been for the past two decades primarily Bayesian, as this offers conceptual, methodological, and computational benefits~\citep{Trotta_2008}. The massive increase in data size and complexity afforded by \acrshort{lsst} will require a new step forward in inferential methodology, as LSST data will challenge the computational feasibility of current inferential engines. We cover in this section the case of \textit{explicit inference}, where we have the ability to directly evaluate the log-likelihood of our probabilistic models, and potentially its gradients. 
 
 \paragraph{Accelerating Posterior Inference} \acrshort{mcmc} methods have been the workhorses of likelihood-based Bayesian parameter inference to date. Notable examples are Gibbs sampling \citep{Casella1992} and parallelized versions of Metropolis--Hastings (e.g., the affine-invariant sampler by ~\citealp{goodman2010ensemble, Foreman_Mackey_2013}). For cases where multimodality and/or strong parameter degeneracies are important, nested sampling~\citep{RN599,Ashton_2022} in its many variants (e.g., \texttt{MultiNest}~\citealp{Feroz:2007kg, Feroz:2009}; \texttt{PolyChord}~\citealp{Handley:2015,Handley:2015fda}; \texttt{dynesty}~\citealp{RN1654}; \texttt{DNEst4}~\citealp{Brewer:2016scw}), recently improved with gradients~\citep{lemosGGNS}, accelerated with neural emulators~\citep{Lovick:2025wdj}, or normalizing flows~\citep{RN1653} have been key to ensuring reliable inference.  
 
 However, as analyses become increasingly complex, involving large numbers of nuisance parameters and expensive likelihood evaluations, the cost of running cosmological inference with conventional techniques becomes prohibitive. 
 
-% One avenue to speed up inference is to leverage access to the gradients of the log-posterior. Hamiltonian Monte Carlo (HMC; \citealp{neal2011hmc}) and generalizations such as the No-U-Turn Sampler (NUTS; \citealp{HoffmanGelman2014}) remain workhorses for high-dimensional sampling, and physical analogies continue to drive methodological improvements. Riemannian HMC \citep{RHMC} follows geodesics of the likelihood manifold, making it robust to severely non-Gaussian posteriors, though numerical instabilities in second-order autodifferentiation have limited its adoption. Relativity-inspired schemes \citep{RelativtyHMC} achieve similar benefits by imposing a maximum speed for the simulated particle, slowing it in regions of challenging geometry without requiring explicit curvature computation.
-
-% Other advances have come from reformulating the inference problem itself. Langevin Monte Carlo \citep{LangevineMC} recasts sampling as a stochastic differential equation whose solution dissipates from the prior into the posterior. In this framework, the Metropolis acceptance step is replaced with bias control on the SDE solution \citep{GrumittLangevin}. Microcanonical HMC \citep{Robnik2022MicrocanonicalHM} takes a different approach, exploring the posterior using a single energy shell rather than the canonical partition function. Micro-Canonical Langevin Monte Carlo (MCLMC; \citealp{MCLMC}) builds on these developments, and has already achieved order-of-magnitude speedups in field-level cosmological inference \citep{2023arXiv230709504B}.
-
-One avenue to speed up inference is to leverage access to the gradients of the log-posterior. When such gradients are available, a number of inference methods can benefit from them, including the well-established \acrshort{hmc} \citep{neal2011hmc}, as well as more modern generalizations such as \acrshort{nuts} \citep{HoffmanGelman2014}. Remarkably, physical ideas continue to lead the development of gradient-based inference techniques. \acrlong{rhmc} \citep[\acrshort{rhmc}][]{RHMC} simulates trajectories in arbitrary geometries by following the geodesics of the likelihood manifold. This makes RHMC schemes extremely robust sampling algorithms for high-dimensional inference in the face of severely non-gaussian posteriors. However, RHMC has not seen a wide spread adoption due to instability of second-order auto-differentiation needed to compute the curvature of the likelihood. In a similar vein, relativity-inspired HMC schemes \citep{RelativtyHMC} have recently been proposed that particularly target Minkowski geometries. This effectively introduces a maximum speed for the simulated particle, slowing it down in the areas of most challenging geometry, achieving most of the goals of RMHC without many of its hurdles. The recent Ray-tracing sampler \citep{2025arXiv251025824B} take a related approach, using light refraction as the guiding analogy to steer samples toward high-likelihood regions while providing a unifying framework in which HMC, LMC, and related methods emerge as special cases. As an alternative to Hamiltonian dynamics, \acrlong{lmc} (\acrshort{lmc}; \citealp{LangevineMC}) is based on a Langevin diffusion (an \acrshort{sde} whose invariant distribution is the target posterior) and in practice simulates a discretization of this process to generate approximate posterior samples. In this framework, the Metropolis adjustment that ensures the target distribution is sampled can be replaced with a bias requirement on the solution of the SDE, leading to significant speed ups \citep{GrumittLangevin}. A final avenue of improvement is to revise the assumed partition function of the particles simulated by the inference algorithm. Traditional HMC schemes assume that the distribution of particles being simulated follows a canonical partition function. However, more efficient sampling schemes can be constructed by exploring other partition functions. Microcanonical or energy-conserving HMC \citep[\acrshort{mchmc},][]{Robnik2022MicrocanonicalHM} explores the posterior distribution using a single energy shell. In a way similar to relativistic schemes, this is achieved by modifying the momentum of the particle to slow down at the regions of high-posterior density \citep{SteegHMC}, leading to a far more efficient sampling. \Acrlong{mclmc} \citep[\acrshort{mclmc};][]{MCLMC} is a sampling algorithm that combines all the ideas described above to great success. MCLMC already has been deployed to perform inference on physics problems such as lattice field theory simulations \citep{MCLMC} and even for cosmology where it has been shown to speed up field-level inference by an order of magnitude \citep{2023arXiv230709504B,simononfroy2025benchmark}. This makes MCLMC the cutting edge of gradient-based inference schemes and a promising tool to speed up analyses within \acrshort{desc}.   %\todo{Add more content to this, around additional research on gradient-based samplers or tradeoffs of MCHMC/MCLMC}. 
-%\cite{2025arXiv251025824B} uses the analogy of light refraction to design a mechanism for moving samples through the parameter space, guided by the likelihood $L(x)$, i.e  the refractive index is $n(x)=L(x)^{1/(D-1)}$, with $D$ being the dimension of the parameter space. This causes sampling paths to bend naturally toward high-likelihood regions, similar to how light refracts toward denser media. Sampling trajectories automatically move toward regions of higher probability. This ray-tracing method offers the possibility for interpreting existing samplers as (MC)HMC/(MC)LMC, etc. The experiments conducted by the author show scalability and robustness to stochastic gradient errors and can pass through the arbitrary likelihood and parameter space barrier. These key features would be worth testing in the context of DESC analysis.
+One avenue to speed up inference is to leverage access to the gradients of the log-posterior. When such gradients are available, a number of inference methods can benefit from them, including the well-established \acrshort{hmc} \citep{neal2011hmc}, as well as more modern generalizations such as \acrshort{nuts} \citep{HoffmanGelman2014}. Remarkably, physical ideas continue to lead the development of gradient-based inference techniques. \acrlong{rhmc} \citep[\acrshort{rhmc}][]{RHMC} simulates trajectories in arbitrary geometries by following the geodesics of the likelihood manifold. This makes RHMC schemes extremely robust sampling algorithms for high-dimensional inference in the face of severely non-gaussian posteriors. However, RHMC has not seen a wide spread adoption due to instability of second-order auto-differentiation needed to compute the curvature of the likelihood. In a similar vein, relativity-inspired HMC schemes \citep{RelativtyHMC} have recently been proposed that particularly target Minkowski geometries. This effectively introduces a maximum speed for the simulated particle, slowing it down in the areas of most challenging geometry, achieving most of the goals of RMHC without many of its hurdles. The recent Ray-tracing sampler \citep{2025arXiv251025824B} take a related approach, using light refraction as the guiding analogy to steer samples toward high-likelihood regions while providing a unifying framework in which HMC, LMC, and related methods emerge as special cases. As an alternative to Hamiltonian dynamics, \acrlong{lmc} (\acrshort{lmc}; \citealp{LangevineMC}) is based on a Langevin diffusion (an \acrshort{sde} whose invariant distribution is the target posterior) and in practice simulates a discretization of this process to generate approximate posterior samples. In this framework, the Metropolis adjustment that ensures the target distribution is sampled can be replaced with a bias requirement on the solution of the SDE, leading to significant speed ups \citep{GrumittLangevin}. A final avenue of improvement is to revise the assumed partition function of the particles simulated by the inference algorithm. Traditional HMC schemes assume that the distribution of particles being simulated follows a canonical partition function. However, more efficient sampling schemes can be constructed by exploring other partition functions. Microcanonical or energy-conserving HMC \citep[\acrshort{mchmc},][]{Robnik2022MicrocanonicalHM} explores the posterior distribution using a single energy shell. In a way similar to relativistic schemes, this is achieved by modifying the momentum of the particle to slow down at the regions of high-posterior density \citep{SteegHMC}, leading to a far more efficient sampling. \Acrlong{mclmc} \citep[\acrshort{mclmc};][]{MCLMC} is a sampling algorithm that combines all the ideas described above to great success. MCLMC already has been deployed to perform inference on physics problems such as lattice field theory simulations \citep{MCLMC} and even for cosmology where it has been shown to speed up field-level inference by an order of magnitude \citep{2023arXiv230709504B,simononfroy2025benchmark}. This makes MCLMC the cutting edge of gradient-based inference schemes and a promising tool to speed up analyses within \acrshort{desc}.   
 
 Alternatively, one can replace a complicated posterior distribution with a more tractable one. \acrshort{vi} aims to find an approximation to the posterior distribution $p$ by a ``surrogate" parametrized distribution $q_\phi$, whose parameters $\phi$ are trained to minimize the Kullback-Leibler divergence between $q$ and $p$ (see, e.g., \citealp{Uzsoy_2024, JAX-COSMO}, using the JAX-powered NumPyro framework, \citealp{phan2019composable}). Here gradients are only needed for $q$, not for $p$.
 
@@ -60,7 +42,6 @@ Another area of research focuses on \textit{neural sampling methods}, which leve
 
 As shown above, such inference strategies depend on differentiable components and will benefit greatly when likelihood codes are rewritten in frameworks that support automatic differentiation. An additional advantage of making probabilistic models compatible with such frameworks is that they usually support \acrshort{gpu} acceleration and vectorization, which opens up yet another avenue for acceleration---e.g.,the Numpyro \citep{phan2019composable, bingham2019pyro} and BlackJax \citep{cabezas2024blackjax} libraries written in JAX. Affine-invariant samplers \citep[see][]{Foreman_Mackey_2013} are particularly suited to vectorization on GPU hardware, as has been demonstrated in astronomy contexts (e.g.,\citealp{Thorp:2024, Thorp:2025}, using the \href{https://github.com/justinalsing/affine}{\tt affine} sampling code). 
 
-%\note{RT added the following to collect Bayesian evidence methods under one heading; possibly move this further down?} 
 \paragraph{Bayesian model comparison} Estimation of the Bayesian evidence, the central quantity for model comparison, remains challenging when the models being compared are very high dimensional. Nested sampling has been established as one of the main methods for Bayesian evidence computation, but in its original formulation it suffers from the curse of dimensionality: the efficiency of the constrained sampling step decreases rapidly as the dimensionality of parameter space increases. This has been somewhat mitigated by recent developments such as \texttt{PolyChord}~\citep{Handley:2015}, which can be used in a few hundreds of dimensions; \texttt{dynesty}~\citep{RN1654}, which uses dynamical allocation of live points \citep[see also][]{higson19}; and \acrlong{ggns}~\citep[\acrshort{ggns};][]{lemosGGNS}, which exploits gradients, generative flows and differentiable programming to achieve better efficiency and accuracy in up to $\sim 200$ dimensions.
 A suite of other methods for the evaluation of the high-dimensional average of the likelihood over the prior are also being explored, sometimes combining density estimation with neural techniques  \citep[e.g.,][]{RN590,mcewen2023,Srinivasan_2024}. However, they remain confined to moderately low-dimensional parameter spaces, of order a few tens of dimensions. 
 
@@ -68,11 +49,7 @@ The frontier represented by evidence estimation in very large dimensional (of or
 
 \paragraph{Hierarchical Bayesian Models in Extremely High Dimensions} The manyfold increase in data size requires in many cases a more sophisticated model to capture previously unimportant effects; this in turn increases the dimensionality of the parameter space (especially in hierarchical models, where the latent space dimensionality scales with the number of objects within the model); the likelihood might become intractable, or previously used approximations, such as approximate Gaussianity or linear propagation of errors~\citep{Karchev2022}, neglecting of Eddington bias~\citep{Karchev_STARNRE}, might break down. 
 
-%\sout{As mention in \autoref{sec3:wlss}, there is growing interest in conducting so-called explicit full-field inference for cosmological surveys, which implies performing inference over an entire approximated N-body simulation model, with a number of parameters in the hundreds of millions to billion parameters.} \todo{complete on the challenges here, for sure we need differentiability and extremely good samplers, cite comparison done in DESC of the cost of these models compared to SBI, and also mention more software needs for inference frameworks that would scale to distributed GPU computing systems.}
-
  \autoref{sec3:wlss} introduced so-called full-field inference for cosmological surveys, in which not only cosmological parameters are inferred but also the initial conditions that seed the evolution of the large-scale structure of the Universe~\citep{porqueres2023fieldlevelinferencecosmicshear}. The fidelity of the forward simulation directly controls the accuracy of posterior constraints on cosmological parameters; consequently, this approach requires exploring extremely high-dimensional parameter spaces (millions to billions of parameters). Sampling such spaces is intractable for traditional MCMC and instead calls for gradient-based methods, as noted above. This, in turn, demands a forward simulation that is both fast and differentiable (see \autoref{sec3:sims}) to make full-field inference at LSST scale attainable.
-
-% A practical choice is particle--mesh (PM) simulations, which are fast and can be made differentiable relatively easily~\citep{Feng_2016}. Several JAX-based~\citep{jax2018github} GPU-accelerated, differentiable PM codes are now available, such as \texttt{PMWD}~\citep{Li__2024}; however, differentiating such high-dimensional simulations remains memory-intensive, making scaling to distributed GPU systems essential. Addressing this challenge, \texttt{jaxDecomp}~\citep{Kabalan_jaxDecomp_2025} provides differentiable and distributed PM components—including distributed 3D FFTs and halo-exchange routines—and integrates with \texttt{JAXPM}~\citep{JAXPM}, delivering a JAX-based, fast, differentiable, and distributed PM code that serves as an explicit forward model for large-scale cosmological inference.
 
 It is worth noting that such hierarchical full-field inference models are substantially more computationally expensive than alternative \acrshort{acr:sbi} methods (see next section~\ref{sec4:sbi}), but offer several advantages. First, analyzing statistical errors directly in data space is more interpretable than working with the compressed summary statistics typical of SBI workflows; even with optimal compression, signals can mix and model misspecification becomes difficult to detect. Here, systematic contamination can be treated as additional parameters to be sampled \citep{2019porqueres}, becoming a machine-aided report of contaminations that have a characteristic pattern on the sky. Second, hierarchical Bayesian inference is designed for extensible, modular models in which new physics can be added—e.g., augmenting the simulation with a baryonification model—whereas SBI would require retraining neural density estimators from scratch. Taken together, these properties make hierarchical Bayesian inference well suited to joint inference of cosmology, systematics, and redshift-distribution uncertainties—capabilities that are considerably more difficult with implicit approaches. Additionally, hierarchical inference provides a digital twin of the Universe, which has multiple scientific applications but also provides a unique way of testing the results by cross-validating with independent data \citep{stopyra24}.
 
@@ -92,7 +69,7 @@ Additionally, inference can be {\em amortized} within a certain prior range, mea
 
 \paragraph{Neural Density Estimation (NDE) methods} The fundamental building blocks of these methods is \acrshort{nde}, where a neural network is used to estimate a distribution, or a ratio of distributions. Various kinds of methods exist: \acrshort{nle} (e.g., \citealp{Papamakarios2019, Lueckmann2019, Alsing:2019}), \acrshort{acr:npe} (e.g., \citealp{PapamakariosMurray2016, Lueckmann2017}) and \acrshort{nre} are among the most popular (for an overview see~\citealp{Alsing:2019, Cranmer2020, Lueckmann2021}). Implementations of NLE and NPE both learn a density based on simulated parameter-data pairs (see, e.g., \citealp{Alsing:2019}), with a variety of different approaches used for learning the multivariate joint or conditional density. Approaches to this include Gaussian mixtures \citep[e.g.,][]{Alsing2018}, mixture density networks \citep[e.g.,][]{PapamakariosMurray2016}, and normalizing flows (e.g., \citealp{Papamakarios2017, Papamakarios2019, Alsing:2019, Jeffrey:2021, 2022ApJ...938...11H}; for a review see \citealp{Kobyzev2021, Papamakarios2021}). More sophisticated density estimators used in generative modeling -- such as continuous normalizing flows \citep{Grathwohl2018, Chen2018}, score-based diffusion models \citep{Song:2020}, flow-matching models \citep{Lipman:2022}, and transformers \citep{Transformers2017} -- are also well suited to NLE and NPE tasks \citep[e.g.,][]{DiazRiveroDvorkin2020, Geffner:2022, Wildberger:2023, Gloeckler:2024} alongside the generative modelling tasks they are commonly used for \citep[e.g.,][]{Alsing:2024, Cuesta:2024, Thorp:2025}. 
 
-\paragraph{Optimal Neural Summarization} %\todo{write this section to talk about IMNN, VMIM, and others, also comment on the debate between discriminative and generative (should we build summaries, or a generative model of the high dimensional data/problem)}.
+\paragraph{Optimal Neural Summarization} 
 To ensure the robustness of implicit inference, the process is usually divided into two main steps enabling each neural network to focus on a specific task: (1) compression of high-dimensional data into informative summary statistics, and (2) performing Bayesian inference using neural density estimation methods on this low dimensional but highly informative statistic. To maximize information extraction and improve constraints on cosmological parameters, the community has increasingly adopted neural network–based summarization techniques. While any neural network can be trained on the regression task of inferring parameters given data \citep[e.g.,][]{Gupta2018MAE, kacprzak2022deeplss, lu2023cosmological}, it is unclear how much of the information contained in the data is extracted. In particular, \cite{neural_summary_lanzieri_2025} demonstrate that standard regression loss functions do not guarantee the systematic construction of sufficient statistics. \Acrlongpl{imnn} (\acrshortpl{imnn}; \citealp{2018PhRvD..97h3004C}) directly address this problem by learning summary functions that maximize the Fisher information. They can produce nearly exact posteriors and are thus approximately sufficient statistics of the data. Another approach is to derive a loss function directly from the definition of sufficiency, i.e., by maximizing the mutual information between the summary statistics and parameters of interest \citep{Jeffrey:2021, chen2021neural}.
 
 
@@ -107,7 +84,6 @@ Ensembles in which multiple networks are trained from different random initializ
 \themebullet \themekey{Related Methodologies.} \meth{sbi} \\
 \themebullet \themekey{Addresses.} \challenge{covariate-shift}
 \end{ThemeBoxA}
-%\note{This section should be reworked a little bit further, be very clear that model mispecifiation is currently the main thing that holds us back in SBI for cosmo in wlss for instance, and when doing implicit inference it is very hard to know when we are working with a mispecified model. it is easier to know with explicit models.}
 
 From a technical standpoint, \acrshort{acr:sbi} has achieved impressive results: \acrshort{acr:npe} with normalizing flows performs well in low-dimensional regimes~\citep[e.g.,][]{srinivasan2025}, \acrshort{nle} scales satisfactorily to higher dimensions, and marginal \acrshort{nre} has shown success across diverse applications~\citep[e.g.,][]{alvey2024,list2023,Franco_Abell_n_2024,Saxena_2024}. Yet, these demonstrations rely primarily on simulated data and therefore represent best-case scenarios; direct validations of SBI on real data remain scarce~\citep{2024Karchev_SIDEreal,Lueber2025}.
 
@@ -128,8 +104,6 @@ When available datasets are incomplete or non-representative, physics-informed a
 \themebullet \themekey{Addresses.} \challenge{uq}, \challenge{metrics}
 \end{ThemeBoxA}
 
-%\note{This section needs to be fleshed out and talk about all the tests for calibration, detecting mispecication and such. Mention PQ-mass/TARP, and more generally good practices to validate the potentially high dimensional approximated posteriors.}
-
 While the quality of neural posteriors can be tested \citep{2018arXiv180406788T, 2023PMLR..20219256L}, and while statistical tests can be performed to determine the probability that the distribution learned by a generative model is identical to that of the training data \citep{PQMass}, an open issue is the determination and procurement of a sufficient volume of training data for those tests to be sufficiently sensitive and for the learned distribution to be accurate.
 
 Models trained on the same data but with different algorithms exhibit distinct probability calibration characteristics that must be evaluated and corrected. Similarly, identical algorithms trained on different training sets require independent calibration assessment. Common diagnostics include reliability diagrams used in time-series classification \citep{Moller:2020} or non-conformity scores from conformal inference techniques \citep{Xie:2025}, both of which compare predicted probabilities against observed frequencies. Detection of anomalies, i.e., the classification whether a signal is anomalous enough to be reported, is particularly vulnerable because it probes the tails of a learned distribution.  For regression tasks, calibration ensures that predicted uncertainties accurately capture the true error distribution. Poorly calibrated uncertainties can introduce systematic biases in downstream cosmological analyses, leading to incorrect parameter constraints. Recalibration methods for lens modeling are presented by, e.g.,  \citet{Perreault:2017}, \citet{Karchev2022GP}, and \citet{gentile23}. Regarding generative models, \cite{Campagne_2025} propose a “two-models” framework to evaluate their statistical consistencies trained on independent subsets of galaxy images. The results emphasize the need for large-enough datasets to enable calibration and validation strategies specific to each generative architecture (e.g., generative adversarial networks, normalizing flows and score-based diffusion), since apparent visual quality and morphological variable distributions alone do not guarantee statistical reliability.
@@ -137,11 +111,6 @@ Models trained on the same data but with different algorithms exhibit distinct p
 
 \subsection{Physics-Informed Approaches}
 \label{sec4:physics-informed}
-
-% \begin{ThemeBoxA}
-% \themebullet \themekey{Related Methodologies.} \meth{physics-informed}, \meth{differentiable-programming} \\
-% \themebullet \themekey{Addresses.} \challenge{model-misspecification}, \challenge{systematics-modeling}
-% \end{ThemeBoxA}
 
 From a high-level point of view, neural networks are never perfectly trustworthy and are often hardly interpretable. This motivates a general desire to build \textit{physics-informed} models, which can leverage as many explicit physical constraints as possible, thus limiting the potential failure modes of \acrshort{ai} components. 
 
@@ -161,7 +130,6 @@ While the widely used \href{https://github.com/GalSim-developers/GalSim}{\texttt
 
 
 \paragraph{High-Dimensional Inverse Problems with Explicit Likelihood and Data-Driven Priors} 
-% \todo{Populate this paragraph to talk about deblending, work by Alex Adam, and Benjamin Remy. Concentrate on what are the outstanding issues for these methods: e.g. sampling the posterior is not easy }
 High-dimensional inverse problems are central to cosmology, from galaxy deblending and strong-lensing source reconstruction to recovering the dark matter field from noisy data. In these settings, the forward process, such as instrumental response, noise model, or lensing distortion, is well understood and can be encoded in an explicit likelihood. The underlying components, however, such as galaxy morphologies or the non-Gaussian dark matter structure, lack closed-form descriptions and require expressive statistical models. Generative models, such as diffusion models, can learn realistic priors from high-dimensional observations or simulations. Combining such data-driven priors with explicit likelihoods yields a principled framework: the prior enforces realistic structure, while the likelihood anchors inference to the data, even under low \acrshort{snr} conditions where fully amortized approaches may drift. Recent works have demonstrated this hybrid approach for galaxy source reconstruction, strong lens modeling, and superresolution \citep{adam2022posterior,Barco2025blindinversion,2025Adam_SBProfiles} and dark matter field inference \citep{remy2023}. Moreover, the presence of an explicit likelihood enables learning data-driven priors directly from observations, through iterative refinement using posterior samples \citep{rozet2024learning, Barco_2025}, and can even allow for the correction of model misspecification \citep{Payot2025}. A remaining challenge is efficient posterior sampling, as inference with diffusion priors entails solving \acrfullpl{ode}, which is computationally demanding, although it can be performed practically at scale \citep[see, e.g.,][]{Thorp:2024, Thorp:2025}.
 
 
@@ -190,79 +158,3 @@ Generative models offer a powerful framework for unsupervised discovery by learn
 More specifically, standard unsupervised methods often struggle in the dense and homogeneous latent spaces produced by deep representations~\citep[e.g.,][]{Baron2025,StarEmbed2025}. E.g., while \citet{AstronomalyDecals2024} successfully combined Zoobot (a foundation model discussed in \autoref{sec:foundation_models}) features with the \href{https://github.com/MichelleLochner/astronomaly}{\tt Astronomaly} framework~\citep{2021Lochner_Astronomaly} to identify new sources, \citet{ZoobotApplications2022} found that tailored anomaly-detection techniques were necessary even within the well-studied Galaxy Zoo dataset. This line of work culminated in \texttt{Astronomaly} \texttt{Protege}~\citep{Protege2025}, a general-purpose, active anomaly detection system optimized for exploration in deep latent spaces.
 
 The emergence of deep learning and foundation models (\autoref{sec:foundation_models}) further elevates the importance of active learning, the tight integration of human expertise and machine-driven pattern recognition~\citep{Protege2025}. Self-supervised methods and foundation models promise the ability to generate rich, general-purpose representations, but expert oversight remains essential to interpret their outputs and assess scientific relevance. Automated systems may flag outliers or cluster data effectively, yet human judgment is required to determine which patterns constitute genuine discovery. As \acrshort{ai} systems evolve toward agentic operation (\autoref{sec:llm_agentic}), the collaboration between human and machine will become increasingly intertwined. Embedding active-learning capabilities directly within AI infrastructures will therefore be critical to enable rapid, scalable, and participatory scientific discovery—bridging expert analysis and citizen science within the LSST era.
-
-
-
-
-
-
-
-%\note{we can also have a deep dive into methods for anomaly detection, and talk about anomaly detection for stellar streams with methods like CWoLa(https://arxiv.org/abs/2305.03761)}
-
-% \subsection{Executive Summary of Research Priorities and Challenges}
-% \note{This is experimental, doesn't render well}
-% \paragraph{Bayesian Inference and Uncertainty Quantification}
-% \textbf{Key Challenges:} Scaling inference to high-dimensional hierarchical models; disentangling aleatoric and epistemic uncertainties; maintaining calibration under domain shift.\\  
-% \textbf{Research Priorities:}
-% \begin{itemize}
-%     \item Develop gradient-based and neural samplers (e.g., flow-MCMC, diffusion HMC) for large cosmological models.
-%     \item Establish standardized benchmarks for posterior calibration and robustness.
-%     \item Create automated uncertainty and calibration diagnostics integrated into DESC pipelines.
-%     \item Design frameworks for propagating uncertainty through multi-step cosmological analyses.
-%     \item Adapt inference software stacks to GPU-accelerated differentiable computing.
-% \end{itemize}
-
-% \paragraph{Model Misspecification and Covariate Shifts}
-% \textbf{Key Challenges:} Imperfect simulations; unreliable domain-shift detection; limited representativity of training sets; difficulty validating inference under model error.  \\
-% \textbf{Research Priorities:}
-% \begin{itemize}
-%     \item Develop simulation-based calibration and domain-shift diagnostics.
-%     \item Advance domain adaptation and transfer learning for improved robustness.
-%     \item Use hybrid real/simulated training with fake-source injection to increase realism.
-%     \item Integrate physics-hardening strategies combining SPS priors and observational data.
-%     \item Benchmark the robustness of SBI methods to model misspecification.
-% \end{itemize}
-
-% \paragraph{Physics-Informed Approaches}
-% \textbf{Key Challenges:} Neural networks are opaque and often unconstrained by physics; integrating differentiable simulators with data-driven models is complex; physics-informed networks are difficult to train stably.  
-% \textbf{Research Priorities:}
-% \begin{itemize}
-%     \item Develop hybrid generative–physical models with diffusion or flow priors for complex astrophysical processes.
-%     \item Expand differentiable simulation ecosystems (\texttt{FlowPM}, \texttt{jax-cosmo}, \texttt{diffsky}, \texttt{jax-galsim}).
-%     \item Implement architectures that encode conservation laws and symmetries directly.
-%     \item Benchmark physics-informed neural networks (PINNs) and geometric learning for LSST.
-%     \item Co-design analysis pipelines and differentiable simulators for end-to-end inference.
-% \end{itemize}
-
-% \paragraph{Novelty Discovery}
-% \textbf{Key Challenges:} Scaling anomaly detection to petabyte data volumes; false positives in dense latent spaces; limited integration of human feedback.  
-% \textbf{Research Priorities:}
-% \begin{itemize}
-%     \item Develop foundation-model representations for unsupervised discovery.
-%     \item Integrate active learning frameworks (e.g., Astronomaly:~Protege) for human–AI collaboration.
-%     \item Design representation learning strategies for sparse, temporal, or blended data.
-%     \item Create LSST-scale benchmark datasets for anomaly detection.
-%     \item Build interactive discovery pipelines that combine human expertise with machine efficiency.
-% \end{itemize}
-
-% \paragraph{Neural Architectures for Astronomical Data}
-% \textbf{Key Challenges:} Multi-modal data (images, spectra, time-series) require specialized architectures; handling sparsity, irregular sampling, and PSF effects; enforcing physical consistency.  
-% \textbf{Research Priorities:}
-% \begin{itemize}
-%     \item Develop architectures tailored to astronomical data modalities.
-%     \item Advance graph and geometric neural networks for cosmic structures and environments.
-%     \item Enable multi-modal fusion across imaging, spectroscopy, and time-domain data.
-%     \item Integrate physical priors and instrument models into architecture design.
-%     \item Benchmark architectures under realistic LSST-like observing conditions.
-% \end{itemize}
-
-% \paragraph{Cross-Cutting Recommendations}
-% \begin{itemize}
-%     \item Integrate validation, calibration, and interpretability checks at every analysis stage.
-%     \item Establish DESC-wide benchmarks and reproducibility standards.
-%     \item Maintain human-in-the-loop oversight for quality control and physical plausibility.
-%     \item Promote physics-aware ML that respects symmetries and differential constraints.
-%     \item Invest in differentiable, GPU-accelerated infrastructure for unified simulation–inference workflows.
-% \end{itemize}
-
-

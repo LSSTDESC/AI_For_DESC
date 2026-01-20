@@ -1,25 +1,10 @@
 \newpage
 \section{Infrastructure Requirements to Support AI/ML in DESC}
 \label{sec6:infra_requirements}
-% \coordinator{Adam Bolton}
-%\sectioninstr{Summary of the computing, data management, and infrastructure needed to deploy/scale existing and emerging AI/ML across DESC. Addresses benchmarking standards and frameworks for reproducibility. Subsections: Computing Resources, Data Management and Access, Benchmarking and Reproducibility.}
 
 Infrastructure is the shared technology needed to realize the methods, models, and scientific opportunities outlined in the preceding sections. It may be deployed in a distributed mode with individuals or small teams using local or institutional resources, or in a coordinated mode within a shared platform or environment. This latter mode is most relevant for the largest-scale \acrshort{ai}/\acrshort{ml}-enabled model training and inference workflows at the scale of the entire Rubin-\acrshort{lsst} data set, including via core infrastructure through \acrshort{doe}-funded high performance computing facilities in the US. The following subsections review the infrastructure elements most relevant to the future of AI/ML in \acrshort{desc}.
 
 \subsection{Software}
-% What are the important points we want to surface here?
-%  - There is a notion of building up a robust software stack for scientific AI.
-%      - What is critical to the success of a large organization like DESC is strong 
-%        Leadership on adoptingindustry standard solutions for that software stack. With a focus
-%        on ensuring that our stack will survive a few years (e.g. frameworks disappearing)
-%      - Notion of coordination with supporting facilities like CC/IN2P3 or NERSC on making 
-%        these choices and deploying them for DESC members
-%  - Then there is a notion that increasingly, DESC analysis pipelines may start to rely on
-%    AI components. 
-%       - Foundation models served as a service for X
-%       - Dedicated models integrated in analysis workflows
-%       - SBI and such 
-%       - All the way to integrating and/or enabling agents to interface with our systems
 
 Software is foundational to modern cosmology, especially for \acrshort{desc}, where scientific insight increasingly depends on sophisticated computational workflows. As \acrshort{ai} and \acrshort{ml} mature into core scientific technologies, software itself becomes a form of research infrastructure. In this context, two tightly connected priorities emerge: first, the development and long-term stewardship of a robust AI software stack that enables model development and experimentation; second, the strategic integration of AI methods into the DESC scientific pipelines, where they will ultimately shape how we reduce data, extract measurements, and perform inference.
 
@@ -36,7 +21,7 @@ To meet this goal, we recommend converging on a small set of shared practices an
 \item \textbf{Model and artifact registries} to version and archive trained models, datasets, and reports, mirroring survey data-release practices.
 \item \textbf{Standardized export formats} such as \acrfull{onnx} so models integrate cleanly with Rubin/DESC pipelines and \acrfull{hpc} environments.
 \item \textbf{\Acrfull{ci} and \acrfull{cd} for models} to test and validate training configurations, exported artifacts, and deployment environments.
-\item \textbf{Observability} and drift monitoring so ML components used in production behave predictably and transparently.
+\item \textbf{Observability} and drift monitoring so \acrshort{ml} components used in production behave predictably and transparently.
 \end{itemize}
 
 These elements are not overhead; they are the operational foundations that allow AI to become reliable scientific machinery rather than episodic experimentation. They also reduce long-term maintenance burden by enforcing shared conventions, minimizing bespoke tooling, and allowing learned models to be audited, reused, and trusted throughout the \acrshort{lsst} decade.
@@ -46,23 +31,12 @@ In addition to these considerations for ML model development, DESC will increasi
 Framework sustainability and openness should play an important role in guiding tooling choices. Solutions with strong governance and broad adoption (e.g., PyTorch under the Linux Foundation, ONNX, MLflow or self-hostable experiment-tracking systems) provide long-term stability and avoid dependence on proprietary silos. Finally, coordination with computing partners is essential to ensure portability of the software stack and deployment on more HPC-aligned facilities.
 
 \subsubsection{Integration of AI/ML within Analysis Pipelines}
-% PRevious content
-% The space of “AI for software” is extensive and rapidly evolving. A non-exhaustive selection of topics of interest to DESC science is:
-% \begin{itemize}
-% \item Integrated AI support within notebook environments enabling rapid development and iteration of scripting software for data exploration and analysis.
-% \item New approaches to data-reduction pipelines that optimize AI models directly against observational data rather than operating sequentially in a classical ``raw-to-reduced'' data pipeline workflow.
-% \item Foundation Model-based implementations of X-as-a-service, where X is, for example, photometry, astrometry, cross-matching, classification, or anomaly detection.
-% \item AI-based ``digital twin'' models for experimental apparatus that enable more precise and accurate calibration and control of systematics than traditional approaches.
-% \item AI/ML-based cosmological inference frameworks (e.g., FMs, simulation-based inference, field-level inference)
-% \item Use of specialized agents to complement DESC’s analyses by querying and exploring the heterogeneous landscape of astronomical data sets available across different repositories.
-% \end{itemize}
-
 
 As AI components mature, DESC pipelines may evolve from purely sequential “raw-to-reduced” workflows to systems where learned models are first-class, production-grade elements. The emphasis is on embedding AI in ways that enhance measurement fidelity, calibration control, and inference efficiency, while preserving transparency, reproducibility, and smooth integration with existing practices.
 
 \paragraph{Data reduction pipelines} AI/ML is already present in DESC workflows (e.g., \acrshort{photoz} estimation within \acrshort{rail}). Over time, more components are likely to incorporate learned models at defined stages such as deblending, \acrshort{psf} estimation, artifact rejection, and photometric calibration, tightly coupled to Rubin/DESC data structures and HPC execution. In parallel, DESC has interest in end-to-end approaches that optimize models directly against observational data and simulators, potentially replacing brittle stage boundaries while maintaining provenance through experiment tracking and model registries.
 
-\paragraph{Foundation Models as Services} With the advent of the foundation model paradigm, we envision the possibility of providing “X-as-a-service” (photometry, astrometry, cross-matching, classification, anomaly detection) behind stable APIs, so models can evolve without churn in downstream code.
+\paragraph{Foundation Models as Services} With the advent of the foundation model paradigm, we envision the possibility of providing “X-as-a-service” (photometry, astrometry, cross-matching, classification, anomaly detection) behind stable \acrshortpl{api}, so models can evolve without churn in downstream code.
 
 \paragraph{AI/ML-based cosmological inference} AI-based methods are shifting inference from sampler-centric workflows toward models that learn mappings from data to posteriors or summaries. Foundation-style surrogates can amortize computation and reduce \acrshort{mcmc}-heavy workloads, while simulation-based inference trains directly on forward models and field-level methods operate on minimally reduced data. Active-learning loops may trigger simulations on the fly to refine surrogates and concentrate the HPC budget where it most reduces uncertainty. For pipeline use, these elements remain tied to provenance systems and model registries.
 
@@ -71,7 +45,7 @@ As AI components mature, DESC pipelines may evolve from purely sequential “raw
 \paragraph{LLMs and agents} Large language models and specialized agents can contribute at multiple levels of DESC work: in notebook environments as integrated assistants that accelerate iteration on analysis code, diagnostics, and documentation/query synthesis; in data discovery and curation by searching heterogeneous archives and DESC repositories, proposing cross-matches, and flagging anomalies; and at facility scale by assembling templated workflows, submitting authenticated jobs, and recording outcomes into experiment tracking and model registries. Adoption pairs capability with governance: standardized interfaces for serving models, authenticated access, audit logs of prompts and actions, and human-in-the-loop checkpoints for any decision with scientific impact.
 
 
-Likely, investment in general-purpose AI tooling across industry, open-source, and public efforts will continue to exceed resources available for cosmology-specific software. When such tools meet DESC’s scientific and operational needs, adopting them can leverage broader community advances while allowing collaboration effort to focus on domain-specific modeling and validation. Finally, AI will also influence our approach to engaging with computing in the future. Computational infrastructure will increasingly be harnessed with the assistance of LLMs and agentic frameworks. Depending on how this transition proceeds, it may enable a larger community of researchers within DESC to engage directly with large-scale scientific computing.
+Likely, investment in general-purpose AI tooling across industry, open-source, and public efforts will continue to exceed resources available for cosmology-specific software. When such tools meet DESC’s scientific and operational needs, adopting them can leverage broader community advances while allowing collaboration effort to focus on domain-specific modeling and validation. Finally, AI will also influence our approach to engaging with computing in the future. Computational infrastructure will increasingly be harnessed with the assistance of \acrshortpl{llm} and agentic frameworks. Depending on how this transition proceeds, it may enable a larger community of researchers within DESC to engage directly with large-scale scientific computing.
 
 
 \subsection{Computing}
@@ -94,11 +68,9 @@ Anticipating an increasingly prominent role for AI in the scientific exploitatio
 
 The joint \acrshort{nsf}--DOE nature of Rubin Observatory opens the possibility of leveraging significant NSF-supported computing facility resources, especially if pursued in coordination with other Science Collaborations working in areas typically supported by NSF. These resources include the \acrfull{lccf} being constructed at the Texas Advanced Computing Center. DESC members also have connections to both astrophysics-oriented National Artificial Intelligence Research Institutes, funded jointly by NSF and the Simons Foundation (\acrshort{skai}, led by Northwestern University; and CosmicAI, led by the University of Texas at Austin), and to their associated computing resource allocations. Considering interests in Rubin--\textit{Roman}--\textit{Euclid} joint analysis, \acrfull{nasa}-funded computing resources may also be a viable option.
 
-More broadly, many DESC members have access to significant campus-level computing at their institutions. Members outside the US have access to their own networks of national resources, including national and regional initiatives prioritizing computing for AI in science. Through the in-kind contribution program that supports LSST data rights for scientists outside of the US and Chile, a network of \acrshortpl{idac} is being deployed, with some sites bringing additional CPU and GPU capabilities that DESC would be well positioned to make use of. The UK will host an IDAC, sized to satisfy the resource needs of 20\% of the global LSST community during survey operations. The UK IDAC will be connected to UK national research computing facilities, both traditional (simulation and modeling) supercomputing services and the coming generation of AI-focused Digital Research infrastructure currently being specified and prototyped through the \acrshort{ascend} process\footnote{\acrlong{ascend}; see \url{https://engagementhub.ukri.org/ukri-infrastructure/ascend-process/}}.
+More broadly, many DESC members have access to significant campus-level computing at their institutions. Members outside the US have access to their own networks of national resources, including national and regional initiatives prioritizing computing for AI in science. Through the in-kind contribution program that supports LSST data rights for scientists outside of the US and Chile, a network of \acrshortpl{idac} is being deployed, with some sites bringing additional \acrshort{cpu} and \acrshort{gpu} capabilities that DESC would be well positioned to make use of. The UK will host an IDAC, sized to satisfy the resource needs of 20\% of the global LSST community during survey operations. The UK IDAC will be connected to UK national research computing facilities, both traditional (simulation and modeling) supercomputing services and the coming generation of AI-focused Digital Research infrastructure currently being specified and prototyped through the \acrshort{ascend} process\footnote{\acrlong{ascend}; see \url{https://engagementhub.ukri.org/ukri-infrastructure/ascend-process/}}.
 
-Hyperscale commercial enterprises may also offer a viable path for certain novel and ambitious Rubin-LSST AI/ML applications, provided that their resources can be engaged through partnership or at significant discount. Potential partners include major cloud providers such as Google, Amazon, and Microsoft; major AI players such as OpenAI, Anthropic, and (again) Google; and GPU manufacturers such as NVIDIA and AMD. Additional effort would be required to develop private-sector partnerships that are mutually beneficial and compatible with the proprietary and non-commercial requirements of the Rubin--LSST data policy\footnote{\url{http://ls.st/RDO-013}}. On the positive side, timescales in industry are typically much shorter than in academia: work with an engaged hyperscale commercial partner could potentially deliver large-scale results quickly.
-
-% environmental impact text moved to section 8 -- risks & challenges
+Hyperscale commercial enterprises may also offer a viable path for certain novel and ambitious Rubin-LSST AI/ML applications, provided that their resources can be engaged through partnership or at significant discount. Potential partners include major cloud providers such as Google, Amazon, and Microsoft; major AI players such as OpenAI, Anthropic, and (again) Google; and \acrshort{gpu} manufacturers such as NVIDIA and AMD. Additional effort would be required to develop private-sector partnerships that are mutually beneficial and compatible with the proprietary and non-commercial requirements of the Rubin--LSST data policy\footnote{\url{http://ls.st/RDO-013}}. On the positive side, timescales in industry are typically much shorter than in academia: work with an engaged hyperscale commercial partner could potentially deliver large-scale results quickly.
 
 \subsection{Data}
 
@@ -117,7 +89,7 @@ Other major data sets of interest for cross-match, co-analysis, and multi-modal 
 
 Given the multi-petabyte size of the LSST data (and of simulations and other survey data sets on similar scales), both network transfer and disk storage will be limiting factors. DESC would likely benefit from strategic coordination with other LSST science collaborations, \acrshort{lincc} (see \autoref{sec7:broader_coordination}), and \acrshortpl{idac} regarding which LSST data products are mirrored where, for how long, at what quality of service, in conjunction with which \acrshort{cpu} and \acrshort{gpu} allocations, and for which analysis purposes.
 
-The current Rubin Data Management system was not primarily designed for large-scale AI/ML work. Hence the data will need to be fitted with additional data interfaces, APIs, and standards that enable efficient use in this new context, such as the following examples:
+The current Rubin Data Management system was not primarily designed for large-scale AI/ML work. Hence the data will need to be fitted with additional data interfaces, \acrshortpl{api}, and standards that enable efficient use in this new context, such as the following examples:
 \begin{itemize}
 \item Adoption of tools like the Hyrax framework\footnote{\url{https://hyrax.readthedocs.io/en/stable/}} that provides modular components for a full AI/ML workflow tailored to astrophysical data.
 \item Large-scale cross-match capabilities such as the \acrfull{hats}\footnote{\url{https://hats.readthedocs.io/en/latest/}} and Fink Xmatch\footnote{\url{https://fink-portal.org/xmatch}} that are critical to multi-modal dataset construction.
@@ -157,30 +129,3 @@ The vast data scale of \acrshort{lsst} has necessitated a fundamental evolution 
 While the \acrshort{rsp} serves as the primary portal for LSST data access, it was not designed for resource-intensive, large-scale AI applications. To bridge this gap, the Hyrax framework provides a  unified platform for exploring the latent space of foundation models. However, their operational deployment remains a significant undertaking that requires dedicated computational resources and a community-governed process for selection and validation.
 
 The rapid pace of innovation in ML means that \acrshortpl{fm} cannot be considered static, long-term solutions. They must be constructed for a dynamic life cycle that includes systematic processes for review, evaluation, and replacement. This agile strategy is critical for all modalities, especially for time-series models deployed on real-time alert brokers, which must reliably process transient astronomical events to enable rapid discovery.
-
-%
-% To ensure a robust and sustainable AI ecosystem for Rubin science, future development must adhere to three core principles:
-%  \begin{enumerate}
-%      \item Deployment Compatibility: New foundation models must be explicitly designed for deployment within Hyrax and/or relevant real-time alert brokers.
-
-%      \item Reproducibility: The model, its training data, and all relevant code must be versioned and archived to permit the complete replication of any scientific analysis (***point to where this is discussed in infrastructure***).
-     
-%      \item \note{What is the third core principle ?}
-% \end{enumerate}
-
-
-
-% This sub-section is commented out for now, can be added back later with more content
-%
-% \subsection{Human Support}
-% \note{please add content here if you have thoughts on this aspect, we might remove this subsection if not enough content}
-% \textit{This can include both the human efforts needed to maintain the other infrastructure (software, computing, data, reproducibility), and also the human oversight that is needed for vetting AI uses and policy development etc.}
-
-
-%\subsection{Hyrax Text-Dump}
-%\label{sec:hyrax}
-%Wider community-level adoption of advanced ML techniques in astronomy is often hampered by fragmented, project-specific infrastructure where each group develops bespoke pipelines, duplicating effort and limiting reproducibility. For foundation models and unsupervised learning specifically, standardized frameworks are needed for systematic comparison across architectures and for exploring the high-dimensional latent spaces they produce.
-%The Hyrax framework\footnote{\url{https://hyrax.readthedocs.io/en/stable/}} (Ghosh et al., in prep) attempts to address these gaps by providing modular, astronomy-tailored components for the full ML workflow. While supporting both supervised and unsupervised learning across diverse applications, it includes specialized tools particularly relevant for foundation models: interactive 2D/3D latent space visualization linked to source data, and vector-database similarity search scaling to billions of objects. Users can adopt community-produced foundation models, compare performance on standardized benchmarks, and perform downstream fine-tuning - or deploy entirely custom models using the same infrastructure. Integration with MLFlow, TensorBoard and Optuna enables systematic model comparison, hyperparameter tuning, and experiment tracking. 
-
-%For Rubin, Hyrax provides native Butler integration enabling on-the-fly image cutout generation without local storage, and can be deployed on the RSP or any platform with Butler access (e.g., USDF, IDACs). Combined with support for scaling from laptop prototypes to multi-node HPC environments, Hyrax is positioned as a key enabling technology for wider community-wide adoption of AI within DESC. However, realizing this vision will require coordinated and sustained investment in specialized software engineering talent -- embedded within LSST-DM, LINCC, and DESC-DM -- to ensure tight integration between training/visualization/exploration infrastructure and the LSST stack. Equally critical is dedicated computing infrastructure co-located with LSST data systems and focused specifically on training, deploying, and using LSST-scale ML models. These investments are essential both for developing models on petabyte-scale datasets and for lowering adoption barriers by providing researchers seamless access to models and data through familiar LSST interfaces.
-
