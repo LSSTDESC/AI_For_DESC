@@ -1,9 +1,13 @@
 # Opportunities in AI/ML for the Rubin LSST Dark Energy Science Collaboration
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18319954.svg)](https://doi.org/10.5281/zenodo.18319954) [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18319954.svg)](https://doi.org/10.5281/zenodo.18319954) [![PDF](https://img.shields.io/badge/PDF-Zenodo-blue.svg)](https://zenodo.org/records/18319954/files/main.pdf) [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 This repository contains the LaTeX source for the **AI for DESC Task Force** white paper, which presents an overview of artificial intelligence and machine learning integration into the LSST Dark Energy Science Collaboration (DESC).
 
 ![Chord diagram showing connections between DESC science applications, AI/ML methodologies, and shared challenges](figures/chord-diagram.png)
+
+An interactive version of this chord diagram showing the connections between DESC science applications, AI/ML methodologies, and shared challenges is available at:
+https://lsstdesc.org/AI_For_DESC/figures/chord-diagram.html
+
 
 ## Overview
 
@@ -60,8 +64,3 @@ pdflatex main.tex
 ├── desc-tex/                # LSST DESC LaTeX class files
 └── arxiv/                   # arXiv submission version
 ```
-
-## Interactive Resources
-
-An interactive chord diagram showing the connections between DESC science applications, AI/ML methodologies, and shared challenges is available at:
-https://lsstdesc.org/AI_For_DESC/figures/chord-diagram.html
