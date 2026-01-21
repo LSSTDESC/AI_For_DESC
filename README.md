@@ -3,6 +3,8 @@
 
 This repository contains the LaTeX source for the **AI for DESC Task Force** white paper, which presents an overview of artificial intelligence and machine learning integration into the LSST Dark Energy Science Collaboration (DESC).
 
+![Chord diagram showing connections between DESC science applications, AI/ML methodologies, and shared challenges](figures/chord-diagram.png)
+
 ## Overview
 
 The Vera C. Rubin Observatory's Legacy Survey of Space and Time (LSST) will produce unprecedented volumes of heterogeneous astronomical data—images, catalogs, and alerts—that challenge traditional analysis pipelines. DESC aims to derive robust constraints on dark energy and dark matter from these data, requiring methods that are statistically powerful, scalable, and operationally reliable.
