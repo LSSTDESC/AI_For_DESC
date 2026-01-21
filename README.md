@@ -1,4 +1,5 @@
 # Opportunities in AI/ML for the Rubin LSST Dark Energy Science Collaboration
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18319954.svg)](https://doi.org/10.5281/zenodo.18319954) [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 This repository contains the LaTeX source for the **AI for DESC Task Force** white paper, which presents an overview of artificial intelligence and machine learning integration into the LSST Dark Energy Science Collaboration (DESC).
 
